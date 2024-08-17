@@ -1,0 +1,216 @@
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-body>
+      <form [formGroup]="locationInformationForm" cForm>
+        <div class="row">
+
+          <input id="id_location_information"
+                 type="hidden"
+                 formControlName="idLocationInformation">
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>No</label>
+              <input cFormControl
+                     id="location_information_no"
+                     formControlName="locationInformationNo"
+                     placeholder="Enter no"
+                     type="text"
+              />
+            </div>
+
+            <!-- Display error messages for locationInformationNo field -->
+            <div
+              *ngIf="locationInformationForm.get('locationInformationNo').errors?.required && locationInformationForm.get('locationInformationNo').touched">
+              <p class="form-validation">No is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Street no1</label>
+              <input cFormControl
+                     id="location_information_street01"
+                     formControlName="streetNo1"
+                     placeholder="Enter street no 01"
+                     type="text"
+              />
+            </div>
+
+            <!-- Display error messages for locationInformationStreet01 field -->
+            <div
+              *ngIf="locationInformationForm.get('streetNo1').errors?.required && locationInformationForm.get('streetNo1').touched">
+              <p class="form-validation">Street no 01 is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Street no2</label>
+              <input cFormControl
+                     id="location_information_street02"
+                     formControlName="streetNo2"
+                     placeholder="Enter street no 02"
+                     type="text"
+              />
+            </div>
+
+            <!-- Display error messages for locationInformationStreet02 field -->
+            <div
+              *ngIf="locationInformationForm.get('streetNo2').errors?.required && locationInformationForm.get('streetNo2').touched">
+              <p class="form-validation">Street no 02 is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Country</label>
+              <select aria-label="Small select example" cSelect class="mb-3"
+                      id="locationinfo_country_id_country"
+                      formControlName="idCountry" (change)="onCountryChange($event)">
+                <option value="-1">Select a country</option>
+                <option *ngFor="let country of countries"
+                        [value]="country.idCountry">{{country.countryName}}</option>
+              </select>
+            </div>
+
+            <!-- Display error messages for idCountry field -->
+            <div
+              *ngIf="locationInformationForm.get('idCountry').errors?.required && locationInformationForm.get('idCountry').touched">
+              <p class="form-validation">Country is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Province</label>
+              <select aria-label="Small select example" cSelect class="mb-3"
+                      id="locationinfo_province_id_province"
+                      formControlName="idProvince" (change)="onProvinceChange($event)">
+                <option value="-1">Select a province</option>
+                <option *ngFor="let province of provinces"
+                        [value]="province.idProvince">{{province.provinceName}}</option>
+              </select>
+            </div>
+
+            <!-- Display error messages for idProvince field -->
+            <div
+              *ngIf="locationInformationForm.get('idProvince').errors?.required && locationInformationForm.get('idProvince').touched">
+              <p class="form-validation">Province is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>District</label>
+              <select aria-label="Small select example" cSelect class="mb-3"
+                      id="locationinfo_district_id_district"
+                      formControlName="idDistrict" (change)="onDistrictChange($event)">
+                <option value="-1">Select a district</option>
+                <option *ngFor="let district of districts"
+                        [value]="district.idDistrict">{{district.districtName}}</option>
+              </select>
+            </div>
+
+            <!-- Display error messages for idDistrict field -->
+            <div
+              *ngIf="locationInformationForm.get('idDistrict').errors?.required && locationInformationForm.get('idDistrict').touched">
+              <p class="form-validation">District is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>City</label>
+              <select aria-label="Small select example" cSelect class="mb-3"
+                      id="locationinfo_city_id_city"
+                      formControlName="idCity">
+                <option value="-1">Select a city</option>
+                <option *ngFor="let city of cities"
+                        [value]="city.idCity">{{city.cityName}}</option>
+              </select>
+            </div>
+
+            <!-- Display error messages for idCity field -->
+            <div
+              *ngIf="locationInformationForm.get('idCity').errors?.required && locationInformationForm.get('idCity').touched">
+              <p class="form-validation">City is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Status</label>
+              <select aria-label="Small select example" cSelect class="mb-3"
+                      id="locationinfo_common_status"
+                      formControlName="commonStatus">
+                <option value="-1">Select a status</option>
+                <option value="Active">Active</option>
+                <option value="In_Active">In active</option>
+              </select>
+            </div>
+
+            <!-- Display error messages for commonStatus field -->
+            <div
+              *ngIf="locationInformationForm.get('commonStatus').errors?.required && locationInformationForm.get('commonStatus').touched">
+              <p class="form-validation">Status is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel style="color: white">Status</label><br>
+              <input *ngIf="updateButton" cButton class="me-1" color="primary" type="button" value="Update"
+                     mat-button (click)="saveUpdateLocationInfo()">
+              <input cButton class="me-1" color="success" type="submit" value="Reset" style="color: white"
+                     (click)="resetLocationInformationForm()">
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </c-card-body>
+  </c-card>
+</c-col>
+
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-body>
+      <table [striped]="true" cTable>
+        <thead>
+        <tr>
+          <th scope="col">Customer</th>
+          <th scope="col">No</th>
+          <th scope="col">Street no1</th>
+          <th scope="col">Street no2</th>
+          <th scope="col">City</th>
+          <th scope="col">District</th>
+          <th scope="col">Province</th>
+          <th scope="col">Country</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let locationInfo of locationInfos">
+          <th scope="row">Maleesha</th>
+          <td>{{locationInfo.locationInformationNo}}</td>
+          <td>{{locationInfo.streetNo1}}</td>
+          <td>{{locationInfo.streetNo2}}</td>
+          <td>{{locationInfo.city.cityName}}</td>
+          <td>{{locationInfo.district.districtName}}</td>
+          <td>{{locationInfo.province.provinceName}}</td>
+          <td>{{locationInfo.country.countryName}}</td>
+          <td>{{locationInfo.commonStatus}}</td>
+          <td>
+            <input cButton class="me-1" color="primary" type="button" value="Edit" size="sm"
+                   (click)="getActiveLocationInformationById(locationInfo.idLocationInformation)">
+            <input cButton class="me-1" color="danger" type="button" value="Delete" size="sm"
+                   style="color: white" (click)="deleteLocationInformationById(locationInfo.idLocationInformation)">
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </c-card-body>
+  </c-card>
+</c-col>

@@ -1,0 +1,457 @@
+<c-row ngPreserveWhitespaces>
+
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Manage Communication Information</strong>
+      </c-card-header>
+
+      <c-card-body>
+        <c-nav variant="tabs">
+          <c-nav-item>
+            <a [cTabContent]="tabContent1" [routerLink] [tabPaneIdx]="0" cNavLink>
+              <svg cIcon class="me-2" name="cilHome"></svg>
+              Language
+            </a>
+          </c-nav-item>
+          <c-nav-item>
+            <a [cTabContent]="tabContent1" [routerLink] [tabPaneIdx]="1" cNavLink>
+              <svg cIcon class="me-2" name="cilUser"></svg>
+              Preferred Communication
+            </a>
+          </c-nav-item>
+          <c-nav-item>
+            <a [cTabContent]="tabContent1" [routerLink] [tabPaneIdx]="2" cNavLink
+               [disabled]="tabContent1.activeTabPaneIdx < 1">
+              <svg cIcon class="me-2" name="cilCode"></svg>
+              Communication Information
+            </a>
+          </c-nav-item>
+        </c-nav>
+        <c-tab-content #tabContent1="cTabContent" [activeTabPaneIdx]="0" cRounded="bottom">
+
+          <c-tab-pane class="p-3 preview" role="tabpanel">
+            <c-col xs="12">
+              <c-card class="mb-4">
+                <c-card-body>
+                  <form [formGroup]="languageForm" cForm>
+                    <div class="row">
+                      <input formControlName="idLanguage" id="id_language" type="hidden">
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Language name</label>
+                          <input cFormControl
+                                 formControlName="languageName"
+                                 id="language_name"
+                                 placeholder="Enter language name"
+                                 type="text"
+                          />
+                          <!-- Display error messages for languageName field -->
+                          <div
+                            *ngIf="languageForm.get('languageName').errors?.required && languageForm.get('languageName').touched">
+                            <p class="form-validation">Name is required.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Description</label>
+                          <input cFormControl
+                                 formControlName="languageDescription"
+                                 id="language_description"
+                                 placeholder="Enter description"
+                                 type="text"
+                          />
+                          <!-- Display error messages for languageDescription field -->
+                          <div
+                            *ngIf="languageForm.get('languageDescription').errors?.required && languageForm.get('languageDescription').touched">
+                            <p class="form-validation">Description is required.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Status</label>
+                          <select aria-label="Small select example" cSelect class="mb-3"
+                                  formControlName="languageCommonStatus" id="language_common_status">
+                            <option value="-1">Select a status</option>
+                            <option value="Active">Active</option>
+                            <option value="In_Active">In active</option>
+                          </select>
+                        </div>
+
+                        <div
+                          *ngIf="languageForm.get('languageCommonStatus').errors?.required">
+                          <p class="form-validation">Status is required.</p>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-3">
+                      <input cButton class="me-1" color="primary" type="button" value="Create"
+                             (click)="saveUpdateLanguage()">
+                      <input cButton class="me-1" color="success" type="submit" value="Reset" style="color: white"
+                             mat-button
+                             (click)="resetLanguageForm()">
+                    </div>
+                  </form>
+                </c-card-body>
+              </c-card>
+            </c-col>
+
+            <c-col xs="12">
+              <c-card class="mb-4">
+                <c-card-body>
+                  <table [striped]="true" cTable>
+                    <thead>
+                    <tr>
+                      <th scope="col">Language</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let language of languages">
+                      <td>{{language.languageName}}</td>
+                      <td>{{language.languageDescription}}</td>
+                      <td>{{language.languageCommonStatus}}</td>
+                      <td>
+                        <Button cButton class="me-1" color="primary" value="Edit" size="sm" mat-button
+                                (click)="getActiveLanguageById(language.idLanguage)">Edit
+                        </Button>
+                        <Button cButton class="me-1" color="danger" value="Delete" size="sm"
+                                style="color: white" mat-button (click)="deleteLanguageById(language.idLanguage)">Delete
+                        </Button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </c-card-body>
+              </c-card>
+            </c-col>
+          </c-tab-pane>
+
+          <c-tab-pane class="p-3 preview" role="tabpanel">
+            <c-col xs="12">
+              <c-card class="mb-4">
+                <c-card-body>
+                  <form [formGroup]="prefCommForm" cForm>
+                    <div class="row">
+
+                      <input id="id_preferred_communication" formControlName="idPreferredCommunication" type="hidden">
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Preferred communication method</label>
+                          <input cFormControl
+                                 formControlName="preferredCommunicationMethod"
+                                 id="preferred_communication_name"
+                                 placeholder="Enter preferred communication method"
+                                 type="text"
+                          />
+
+                          <!-- Display error messages for preferredCommunicationMethod field -->
+                          <div
+                            *ngIf="prefCommForm.get('preferredCommunicationMethod').errors?.required && prefCommForm.get('preferredCommunicationMethod').touched">
+                            <p class="form-validation">Name is required.</p>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Description</label>
+                          <input cFormControl
+                                 formControlName="preferredCommunicationDescription"
+                                 id="preferred_communication_description"
+                                 placeholder="Enter description"
+                                 type="text"
+                          />
+
+                          <!-- Display error messages for preferredCommunicationDescription field -->
+                          <div
+                            *ngIf="prefCommForm.get('preferredCommunicationDescription').errors?.required && prefCommForm.get('preferredCommunicationDescription').touched">
+                            <p class="form-validation">Description is required.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Status</label>
+                          <select aria-label="Small select example" cSelect class="mb-3"
+                                  formControlName="preferredCommunicationCommonStatus"
+                                  id="preferred_communication_common_status">
+                            <option value="-1">Select a status</option>
+                            <option value="Active">Active</option>
+                            <option value="In_Active">In active</option>
+                          </select>
+                        </div>
+
+                        <!-- Display error messages for preferredCommunicationCommonStatus field -->
+                        <div
+                          *ngIf="prefCommForm.get('preferredCommunicationCommonStatus').errors?.required && prefCommForm.get('preferredCommunicationCommonStatus').touched">
+                          <p class="form-validation">Status is required.</p>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-3">
+                      <input cButton class="me-1" color="primary" type="button" value="Create" mat-button
+                             (click)="saveUpdatePreferredCommunication()">
+                      <input cButton class="me-1" color="success" type="submit" value="Reset" style="color: white"
+                             mat-button
+                             (click)="resetPrefCommForm()">
+                    </div>
+                  </form>
+                </c-card-body>
+              </c-card>
+            </c-col>
+
+            <c-col xs="12">
+              <c-card class="mb-4">
+                <c-card-body>
+                  <table [striped]="true" cTable>
+                    <thead>
+                    <tr>
+                      <th scope="col">Preferred communication</th>
+                      <th scope="col">Description</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let preferredCommunication of preferredCommunications">
+                      <td>{{preferredCommunication.preferredCommunicationMethod}}</td>
+                      <td>{{preferredCommunication.preferredCommunicationDescription}}</td>
+                      <td>{{preferredCommunication.preferredCommunicationCommonStatus}}</td>
+                      <td>
+                        <Button cButton class="me-1" color="primary" value="Edit" size="sm" mat-button
+                                (click)="getActivePreferredCommunicationById(preferredCommunication.idPreferredCommunication)">
+                          Edit
+                        </Button>
+                        <Button cButton class="me-1" color="danger" value="Delete" size="sm"
+                                style="color: white" mat-button
+                                (click)="deletePreferredCommunicationById(preferredCommunication.idPreferredCommunication)">
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </c-card-body>
+              </c-card>
+            </c-col>
+          </c-tab-pane>
+
+          <c-tab-pane class="p-3 preview" role="tabpanel">
+            <c-col xs="12">
+              <c-card class="mb-4">
+                <c-card-body>
+                  <form [formGroup]="commInfoForm" cForm>
+                    <div class="row">
+
+                      <input id="id_communication_information"
+                             formControlName="idCommunicationInformation"
+                             type="hidden">
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Customer name</label>
+                          <input cFormControl
+                                 id="customer_name"
+                                 formControlName="customerName"
+                                 placeholder="Enter customer name"
+                                 type="text"
+                          />
+                        </div>
+
+                        <!-- Display error messages for customerName field -->
+                        <div
+                          *ngIf="commInfoForm.get('customerName').errors?.required && commInfoForm.get('customerName').touched">
+                          <p class="form-validation">Customer is required.</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Phone no</label>
+                          <input cFormControl
+                                 id="phone_no"
+                                 formControlName="phoneNo"
+                                 placeholder="Enter phone no"
+                                 type="text"
+                          />
+                        </div>
+
+                        <!-- Display error messages for phoneNo field -->
+                        <div
+                          *ngIf="commInfoForm.get('phoneNo').errors?.required && commInfoForm.get('phoneNo').touched">
+                          <p class="form-validation">Phone no is required.</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Mobile no</label>
+                          <input cFormControl
+                                 id="mobile_no"
+                                 formControlName="mobileNo"
+                                 placeholder="Enter mobile no"
+                                 type="text"
+                          />
+                        </div>
+
+                        <!-- Display error messages for mobileNo field -->
+                        <div
+                          *ngIf="commInfoForm.get('mobileNo').errors?.required && commInfoForm.get('mobileNo').touched">
+                          <p class="form-validation">Mobile no is required.</p>
+                        </div>
+                      </div>
+
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Email</label>
+                          <input cFormControl
+                                 id="email"
+                                 formControlName="email"
+                                 placeholder="Enter email"
+                                 type="email"
+                          />
+                        </div>
+
+                        <!-- Display error messages for mobileNo field -->
+                        <div
+                          *ngIf="commInfoForm.get('email').errors?.required && commInfoForm.get('email').touched">
+                          <p class="form-validation">Email no is required.</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Language</label>
+                          <select aria-label="Small select example" cSelect class="mb-3"
+                                  formControlName="commInfoIdLanguage"
+                                  id="communication_information_id_language">
+                            <option value="-1">Select a language</option>
+                            <option *ngFor="let language of languages"
+                                    [value]="language.idLanguage">{{language.languageName}}</option>
+                          </select>
+                        </div>
+
+                        <!-- Display error messages for commInfoIdLanguage field -->
+                        <div
+                          *ngIf="commInfoForm.get('commInfoIdLanguage').errors?.required && commInfoForm.get('commInfoIdLanguage').touched">
+                          <p class="form-validation">Language is required.</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Preferred Communication</label>
+                          <select aria-label="Small select example" cSelect class="mb-3"
+                                  formControlName="commInfoIdPreferredCommunication"
+                                  id="communication_information_id_preferred_communication">
+                            <option value="-1">Select a preferred communication</option>
+                            <option *ngFor="let preferredCommunication of preferredCommunications"
+                                    [value]="preferredCommunication.idPreferredCommunication">{{preferredCommunication.preferredCommunicationMethod}}</option>
+                          </select>
+                        </div>
+
+                        <!-- Display error messages for commInfoIdPreferredCommunication field -->
+                        <div
+                          *ngIf="commInfoForm.get('commInfoIdPreferredCommunication').errors?.required && commInfoForm.get('commInfoIdPreferredCommunication').touched">
+                          <p class="form-validation">Preferred communication is required.</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel>Status</label>
+                          <select aria-label="Small select example" cSelect class="mb-3"
+                                  formControlName="commInfoCommonStatus"
+                                  id="communication_information_common_status">
+                            <option value="-1">Select a status</option>
+                            <option value="Active">Active</option>
+                            <option value="In_Active">In active</option>
+                          </select>
+                        </div>
+
+                        <!-- Display error messages for commInfoCommonStatus field -->
+                        <div
+                          *ngIf="commInfoForm.get('commInfoCommonStatus').errors?.required && commInfoForm.get('commInfoCommonStatus').touched">
+                          <p class="form-validation">Status is required.</p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="mb-3">
+                          <label cLabel style="color: white">invisible</label><br>
+                          <input *ngIf="updateButton" cButton class="me-1" color="primary" type="button" value="Update"
+                                 mat-button (click)="saveUpdateCommunicationInformation()">
+                          <input cButton class="me-1" color="success" type="submit" value="Reset" style="color: white"
+                                 mat-button
+                                 (click)="resetCommInfoForm()">
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </form>
+                </c-card-body>
+              </c-card>
+            </c-col>
+
+            <c-col xs="12">
+              <c-card class="mb-4">
+                <c-card-body>
+                  <table [striped]="true" cTable>
+                    <thead>
+                    <tr>
+                      <th scope="row">Customer</th>
+                      <th scope="col">Phone no</th>
+                      <th scope="col">Mobile no</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Language</th>
+                      <th scope="col">Pref.Comm</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let communicationInformation of communicationInformationList">
+                      <th scope="row">Maleesha</th>
+                      <td>{{communicationInformation.phoneNo}}</td>
+                      <td>{{communicationInformation.mobileNo}}</td>
+                      <td>{{communicationInformation.email}}</td>
+                      <td>{{communicationInformation.language.languageName}}</td>
+                      <td>{{communicationInformation.preferredCommunication.preferredCommunicationMethod}}</td>
+                      <td>{{communicationInformation.commInfoCommonStatus}}</td>
+                      <td>
+                        <Button cButton class="me-1" color="primary" value="Edit" size="sm" mat-button
+                                (click)="getActiveCommunicationInformationById(communicationInformation.idCommunicationInformation)">
+                          Edit
+                        </Button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </c-card-body>
+              </c-card>
+            </c-col>
+          </c-tab-pane>
+
+        </c-tab-content>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+</c-row>

@@ -1,0 +1,40 @@
+
+// ------------------- OnDestroy() --------------- //
+OnDestroy() : 
+A lifecycle hook that is called when a directive, pipe, or service is destroyed. 
+Use for any custom cleanup that needs to occur when the instance is destroyed.
+Added OnDestroy lifecycle hook and used takeUntil to manage the subscription.
+
+// ------------------- private unsubscribe$ = new Subject<void>(); ------------- //
+private unsubscribe$ = new Subject<void>();
+This line declares a private property unsubscribe$ which is an instance of Subject<void>.
+Subject<void> is used here to manage the subscription lifecycle. It emits a void value to signal completion,
+which helps in unsubscribing from observables in the ngOnDestroy lifecycle hook to avoid memory leaks.
+
+// -------------------  ------------- //
+this.employerResponseDetails$
+  .pipe(takeUntil(this.unsubscribe$))
+  .subscribe((initialState) => {
+    console.log('This is initial state >> ');
+this.employerState = initialState;
+console.log(this.employerState.data);
+  });
+.pipe(takeUntil(this.unsubscribe$)) ensures that the subscription will automatically unsubscribe when 
+unsubscribe$ emits a value. This prevents memory leaks by ensuring the subscription is cleaned up 
+when the component is destroyed.
+
+// ------------------- ngOnDestroy() --------------- //
+ngOnDestroy(): void {
+    this.unsubscribe$.next();
+this.unsubscribe$.complete();
+}
+This method is part of Angular's component lifecycle hooks and is called just before the component is destroyed.
+this.unsubscribe$.next(); emits a value from the unsubscribe$ subject, signaling all subscriptions 
+using takeUntil(this.unsubscribe$) to complete.
+this.unsubscribe$.complete(); completes the unsubscribe$ subject, cleaning up any remaining resources.
+
+// ------------------- Summary --------------- //
+Summary:
+The unsubscribe$ subject and takeUntil operator are used to manage the lifecycle of observable subscriptions, 
+ensuring they are properly cleaned up when the component is destroyed.
+ngOnDestroy lifecycle hook ensures that all subscriptions are properly disposed of, preventing memory leaks.

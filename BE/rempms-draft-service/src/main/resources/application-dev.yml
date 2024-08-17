@@ -1,0 +1,11 @@
+server:
+  port: 8190
+
+##DB properties
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: rempms-draft
+

@@ -1,0 +1,171 @@
+<c-row ngPreserveWhitespaces>
+
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Family information</strong>
+      </c-card-header>
+      <c-card-body>
+        <form cForm>
+          <div class="row">
+
+            <input id="id_job_category" type="hidden">
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Name</label>
+                <input cFormControl
+                       id="jobs_sdme"
+                       placeholder="Enter name"
+                       type="text"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Relationship</label>
+                <input cFormControl
+                       id="jobsrdme"
+                       placeholder="Enter relationship"
+                       type="text"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Date of birth</label>
+                <input cFormControl
+                       id="job_cadsssteds"
+                       type="Date"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Gender</label><br>
+                <input type="radio" value="one" style="cursor:pointer;">
+                <label cFormCheckLabel>Male</label>
+
+                <input type="radio" value="two" style="cursor:pointer;"/>
+                <label cFormCheckLabel>Female</label>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Designation</label>
+                <input cFormControl
+                       id="jobsredme"
+                       placeholder="Enter designation"
+                       type="text"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Organization/School</label>
+                <input cFormControl
+                       id="jobtrme"
+                       placeholder="Enter organization"
+                       type="text"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Is she/he a dependent</label><br>
+                <input type="radio" value="one" style="cursor:pointer;">
+                <label cFormCheckLabel>Yes</label>
+
+                <input type="radio" value="two" style="cursor:pointer;"/>
+                <label cFormCheckLabel>No</label>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-2">
+                <label cLabel>Remark</label>
+                <textarea cFormControl
+                          id="jobsdzzs" rows="6" style="width: 600px"
+                          placeholder="Enter remark"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-2">
+              <input cButton class="btn-secondary" type="button" value="Add To List"
+                     style="text-align: center; color:white; height: 30px; line-height: 1px;"/>
+            </div>
+          </div>
+        </form>
+
+        <c-card-body>
+          <table [striped]="true" cTable>
+            <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Relationship</th>
+              <th scope="col">Designation</th>
+              <th scope="col">Organization</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>ddd</td>
+              <td>ddd</td>
+              <td>ddd</td>
+              <td>ddd</td>
+              <td><a href="#">remove</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </c-card-body>
+
+      </c-card-body>
+
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <div class="d-flex justify-content-end">
+          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
+          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
+          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+        </div>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <table [striped]="true" cTable>
+          <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Relationship</th>
+            <th scope="col">Designation</th>
+            <th scope="col">Organization</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+</c-row>
+
+

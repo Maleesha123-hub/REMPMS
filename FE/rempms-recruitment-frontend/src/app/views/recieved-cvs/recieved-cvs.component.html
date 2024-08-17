@@ -1,0 +1,115 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Manage Recieved Job Vacancies</strong>
+      </c-card-header>
+      <c-card-body>
+        <form [formGroup]="receivedCvsForm" cForm>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Job.Ref.No</label>
+                <input
+                  cFormControl
+                  formControlName="jobRefNo"
+                  id="job_ref_no"
+                  placeholder="Enter Job.Ref.No"
+                  type="text"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-2">
+                <label cLabel>Employer</label>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="employer"
+                  id="employerId"
+                >
+                  <option value="-1">Select employer</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-2">
+                <label cLabel>Position</label>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="position"
+                  id="positionId"
+                >
+                  <option value="-1">Select position</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mt-3">
+            <input
+              cButton
+              class="me-1"
+              color="primary"
+              type="button"
+              value="Search"
+            />
+            <input
+              cButton
+              class="me-1"
+              color="success"
+              type="submit"
+              value="Reset"
+              style="color: white"
+              (click)="resetForm()"
+            />
+          </div>
+        </form>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <table [striped]="true" cTable>
+          <thead>
+            <tr>
+              <th scope="col">Job.Ref.No</th>
+              <th scope="col">Position & Employer</th>
+              <th scope="col">Opening date</th>
+              <th scope="col">Closing date</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let jv of jobVacancies">
+              <td>{{ jv.jobVacancyRefNo }}</td>
+              <td>
+                {{ jv.employer.employerName }}<br />{{ jv.jobPosition.name }}
+              </td>
+              <td>{{ jv.openingDate }}</td>
+              <td>{{ jv.closingDate }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary Small"
+                  routerLinkActive="active"
+                  routerLink="cvspage"
+                  (click)="getRecievedCvsById(jv.id)"
+                >
+                  Go
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

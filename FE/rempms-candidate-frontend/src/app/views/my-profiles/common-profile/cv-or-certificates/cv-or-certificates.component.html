@@ -1,0 +1,98 @@
+<c-row ngPreserveWhitespaces>
+
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Documents</strong>
+      </c-card-header>
+      <c-card-body>
+        <form cForm>
+          <div class="row">
+
+            <input id="id_job_category" type="hidden">
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Document type</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        id="job_cateuss">
+                  <option value="-1">Select a document type</option>
+                </select>
+              </div>
+            </div>
+            &nbsp;&nbsp;&nbsp;
+            <div class="col-md-6" style="align-content: center">
+              <div class="mb-3">
+                <img id="imagePreview" [src]="imageSrc" alt="Preview" style="display: block;
+                                                            width: 500px; height: 500px;"/>
+                <br>
+                <input cFormControl #fileInput
+                       formControlName="userImage"
+                       id="user_image"
+                       type="file"
+                       (change)="previewImage()"
+                       style="width: 300px"/>
+              </div>
+
+            </div>
+
+          </div>
+        </form>
+
+        <c-card-body>
+          <table [striped]="true" cTable>
+            <thead>
+            <tr>
+              <th scope="col">Document</th>
+              <th scope="col">Document type</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>ddd</td>
+              <td>ddd</td>
+              <td><a href="#">remove</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </c-card-body>
+
+      </c-card-body>
+
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <div class="d-flex justify-content-end">
+          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
+          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
+        </div>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <table [striped]="true" cTable>
+          <thead>
+          <tr>
+            <th scope="col">Document</th>
+            <th scope="col">Document type</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+</c-row>
+
+

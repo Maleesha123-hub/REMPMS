@@ -1,0 +1,114 @@
+<c-row ngPreserveWhitespaces>
+
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Manage User Role</strong>
+      </c-card-header>
+      <c-card-body>
+        <form [formGroup]="userRoleForm" cForm>
+          <div class="row">
+
+            <input id="id_user_role" type="hidden" formControlName="idUserRole">
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>User role name</label>
+                <input cFormControl
+                       formControlName="userRoleName"
+                       id="user_role_name"
+                       placeholder="Enter user role name"
+                       type="text"
+                />
+              </div>
+
+              <!-- Display error messages for userRoleName field -->
+              <div
+                *ngIf="userRoleForm.get('userRoleName').errors?.required && userRoleForm.get('userRoleName').touched">
+                <p class="form-validation">Name is required.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Description</label>
+                <input cFormControl
+                       formControlName="userRoleDescription"
+                       id="user_role_description"
+                       placeholder="Enter description"
+                       type="text"
+                />
+              </div>
+
+              <!-- Display error messages for userRoleDescription field -->
+              <div
+                *ngIf="userRoleForm.get('userRoleDescription').errors?.required && userRoleForm.get('userRoleDescription').touched">
+                <p class="form-validation">Description field is empty.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Status</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        formControlName="commonStatus"
+                        id="user_role_common_status">
+                  <option value="-1">Select a status</option>
+                  <option value="Active">Active</option>
+                  <option value="In_Active">In active</option>
+                </select>
+              </div>
+
+              <!-- Display error messages for nationality field -->
+              <div
+                *ngIf="userRoleForm.get('commonStatus').errors?.required && userRoleForm.get('commonStatus').touched">
+                <p class="form-validation">Status is required.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="d-flex justify-content-end mt-3">
+            <input cButton class="me-1" color="primary" type="button" value="Create" (click)="saveUpdateUserRole()">
+            <input cButton class="me-1" color="success" type="submit" value="Reset" style="color: white"
+                   (click)="resetUserRoleForm()">
+          </div>
+        </form>
+
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <table [striped]="true" cTable>
+          <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let userRole of userRoles">
+            <td>{{userRole.userRoleName}}</td>
+            <td>{{userRole.userRoleDescription}}</td>
+            <td>{{userRole.commonStatus}}</td>
+            <td>
+              <input cButton class="me-1" color="primary" type="button" value="Edit" size="sm"
+                     (click)="getActiveUserRoleById(userRole.idUserRole)">
+              <input cButton class="me-1" color="danger" type="button" value="Delete" size="sm" style="color: white"
+                     (click)="deleteUserRoleById(userRole.idUserRole)">
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+</c-row>
+
+

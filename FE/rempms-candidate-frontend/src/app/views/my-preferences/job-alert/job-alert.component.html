@@ -1,0 +1,107 @@
+<c-row ngPreserveWhitespaces>
+
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Job Alert Preferences</strong>
+      </c-card-header>
+      <c-card-body>
+        <form cForm>
+          <div class="row">
+
+            <input id="id_job_category" type="hidden">
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Job category</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        id="job_category">
+                  <option value="-1">Select a job category</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Employee</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        id="employer">
+                  <option value="-1">Select an employer</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel style="color: white">Status</label><br>
+                <input cButton class="me-1" color="success" type="button" value="Add" style="color: white">
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-3" style="border: 1px dashed #BBB; padding: 5px;">
+                <p><b>Category:</b> Fashion/Design<br>
+                  <b>Employer:</b> Acentura Pvt Ltd.
+                  <a href="##"><b>remove</b></a></p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3" style="border: 1px dashed #BBB; padding: 5px;">
+                <p><b>Category:</b> Imports<br>
+                  <b>Employer:</b> IFS Pvt Ltd.
+                  <a href="##"><b>remove</b></a></p>
+              </div>
+            </div>
+            <br><br>
+            <p>If you want to change the email address to which the alerts are sent, please key in your new email
+              address in the box below.</p>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <input cFormControl
+                       id="job_category_description"
+                       placeholder="Enter email"
+                       type="text"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3">
+                <input cButton class="small" color="success" type="button" value="Save" style="color: white">
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <table [striped]="true" cTable>
+          <thead>
+          <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Employer</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Fashion/Design</td>
+            <td>Acentura Pvt Ltd.</td>
+            <td><input cButton class="me-1" color="danger" type="button" value="Remove" size="sm"
+                       style="color: white"></td>
+          </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+</c-row>
+
+

@@ -1,0 +1,50 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: rempms-api-gateway-service
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: rempms-location-service
+          uri: lb://rempms-location-service
+          predicates:
+            - Path=/api/location/**
+
+        - id: rempms-communication-service
+          uri: lb://rempms-communication-service
+          predicates:
+            - Path=/api/communication/**
+
+        - id: rempms-admin-service
+          uri: lb://rempms-admin-service
+          predicates:
+            - Path=/api/admin/**
+
+        - id: rempms-user-service
+          uri: lb://rempms-user-service
+          predicates:
+            - Path=/api/user/**
+
+        - id: rempms-recruitment-service
+          uri: lb://rempms-recruitment-service
+          predicates:
+            - Path=/api/recruitment/**
+
+        - id: rempms-candidate-service
+          uri: lb://rempms-candidate-service
+          predicates:
+            - Path=/api/candidate/**
+
+        - id: rempms-document-service
+          uri: lb://rempms-document-service
+          predicates:
+            - Path=/api/document/**
+
+        - id: rempms-draft-service
+          uri: lb://rempms-draft-service
+          predicates:
+            - Path=/api/draft/**

@@ -1,0 +1,187 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Manage Employers</strong>
+      </c-card-header>
+      <c-card-body>
+        <form [formGroup]="employerForm" cForm>
+          <div class="row">
+            <input
+              id="employer_id"
+              type="hidden"
+              formControlName="employerId"
+            />
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Employer name</label>
+                <input
+                  cFormControl
+                  formControlName="employerName"
+                  id="employer_name"
+                  placeholder="Enter employer name"
+                  type="text"
+                />
+              </div>
+
+              <!-- Display error messages for employerName field -->
+              <div
+                *ngIf="
+                  employerForm.get('employerName').errors?.required &&
+                  employerForm.get('employerName').touched
+                "
+              >
+                <p class="form-validation">Employer name is required.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Address</label>
+                <input
+                  cFormControl
+                  formControlName="employerAddress"
+                  id="employer_address"
+                  placeholder="Enter address"
+                  type="text"
+                />
+              </div>
+
+              <!-- Display error messages for employerAddress field -->
+              <div
+                *ngIf="
+                  employerForm.get('employerAddress').errors?.required &&
+                  employerForm.get('employerAddress').touched
+                "
+              >
+                <p class="form-validation">Address field is empty.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Telephone.No</label>
+                <input
+                  cFormControl
+                  formControlName="tpNo"
+                  id="tp_no"
+                  placeholder="Enter tp no"
+                  type="text"
+                />
+                <!-- Display error messages for tpNo field -->
+                <div
+                  *ngIf="
+                    employerForm.get('tpNo').errors?.required &&
+                    employerForm.get('tpNo').touched
+                  "
+                >
+                  <p class="form-validation">Telephone no field is empty.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Mobile.No</label>
+                <input
+                  cFormControl
+                  formControlName="mobileNo"
+                  id="mobile_no"
+                  placeholder="Enter mobile no"
+                  type="text"
+                />
+                <!-- Display error messages for mobileNo field -->
+                <div
+                  *ngIf="
+                    employerForm.get('mobileNo').errors?.required &&
+                    employerForm.get('mobileNo').touched
+                  "
+                >
+                  <p class="form-validation">Mobile no field is empty.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Employer.No</label>
+                <input
+                  cFormControl
+                  formControlName="employerNo"
+                  id="employer_no"
+                  placeholder="-"
+                  type="text" readonly
+                />
+
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mt-3">
+            <input
+              cButton
+              class="me-1"
+              color="primary"
+              type="button"
+              value="Create"
+              (click)="saveOrModifyEmployer()"
+            />
+            <input
+              cButton
+              class="me-1"
+              color="success"
+              type="submit"
+              value="Reset"
+              style="color: white"
+              (click)="resetForm()"
+            />
+          </div>
+        </form>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <table [striped]="true" cTable>
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Address</th>
+              <th scope="col">Telephone</th>
+              <th scope="col">Mobile</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let emp of employers">
+              <td>{{ emp.employerName }}</td>
+              <td>{{ emp.address }}</td>
+              <td>{{ emp.telephoneNo }}</td>
+              <td>{{ emp.mobileNo }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  style="color: white"
+                  (click)="onCreateClick(); getEmployerById(emp.id)"
+                >
+                  Edit
+                </button>
+                &nbsp;
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                  style="color: white"
+                  (click)="deleteById(emp.id)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

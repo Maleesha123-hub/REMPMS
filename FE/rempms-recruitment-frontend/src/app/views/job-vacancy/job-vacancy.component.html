@@ -1,0 +1,244 @@
+<c-row ngPreserveWhitespaces>
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Manage Job Vacancies</strong>
+      </c-card-header>
+      <c-card-body>
+        <form [formGroup]="jobVacancyForm" cForm>
+          <div class="row">
+            <input type="hidden" formControlName="jobVacancyId" />
+
+            <div class="col-md-4">
+              <div class="mb-2">
+                <label cLabel>Employer</label>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="employerId"
+                  id="employerId"
+                >
+                  <option value="-1">Select an Employer</option>
+                  <option
+                    *ngFor="let employer of employers"
+                    [value]="employer.id"
+                  >
+                    {{ employer.employerName }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- Display error messages for employer field -->
+              <div
+                *ngIf="
+                  jobVacancyForm.get('employerId').errors?.required &&
+                  jobVacancyForm.get('employerId').touched
+                "
+              >
+                <p class="form-validation">Employer is required.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-2">
+                <label cLabel>Position</label>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="positionId"
+                  id="positionId"
+                >
+                  <option value="-1">Select a Position</option>
+                  <option
+                    *ngFor="let jobPosition of jobPositions"
+                    [value]="jobPosition.id"
+                  >
+                    {{ jobPosition.name }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- Display error messages for position field -->
+              <div
+                *ngIf="
+                  jobVacancyForm.get('positionId').errors?.required &&
+                  jobVacancyForm.get('positionId').touched
+                "
+              >
+                <p class="form-validation">Position is required.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Description</label>
+                <input
+                  cFormControl
+                  formControlName="vacancyDescription"
+                  id="vacancyDescription"
+                  placeholder="Enter description"
+                  type="text"
+                />
+              </div>
+
+              <!-- Display error messages for description field -->
+              <div
+                *ngIf="
+                  jobVacancyForm.get('vacancyDescription').errors?.required &&
+                  jobVacancyForm.get('vacancyDescription').touched
+                "
+              >
+                <p class="form-validation">Description is required.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="mb-2">
+              <label cLabel>Closing Date</label>
+              <input
+                cFormControl
+                formControlName="closingDate"
+                id="closingDate"
+                type="Date"
+              />
+            </div>
+
+            <!-- Display error messages for closingDate field -->
+            <div
+              *ngIf="
+                jobVacancyForm.get('closingDate').errors?.required &&
+                jobVacancyForm.get('closingDate').touched
+              "
+            >
+              <p class="form-validation">Closing date is required.</p>
+            </div>
+          </div>
+
+          <br />
+          <div class="col-md-8">
+            <div class="mb-2">
+              <div class="form-check">
+                <input
+                  type="checkbox"
+                  value=""
+                  formControlName="govJob"
+                  style="cursor: pointer"
+                />
+                <label>Govt.Job</label>
+                &nbsp;&nbsp;&nbsp;
+
+                <input
+                  type="checkbox"
+                  value=""
+                  formControlName="walksInInterview"
+                  style="cursor: pointer"
+                />
+                <label>Walks in interview</label>
+                &nbsp;&nbsp;&nbsp;
+
+                <input
+                  type="checkbox"
+                  value=""
+                  formControlName="partTime"
+                  style="cursor: pointer"
+                />
+                <label>Part time</label>
+              </div>
+            </div>
+          </div>
+
+          &nbsp;&nbsp;&nbsp;
+          <div class="col-md-6" style="align-content: center">
+            <div class="mb-3">
+              <img
+                id="imagePreview"
+                [src]="imageSrc"
+                alt="Preview"
+                style="display: block; width: 500px; height: 500px"
+              />
+              <br />
+              <input
+                cFormControl
+                #fileInput
+                formControlName="jobPoster"
+                id="jobPoster"
+                type="file"
+                (change)="previewImage()"
+                style="width: 300px"
+              />
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end mt-3">
+            <input
+              cButton
+              class="me-1"
+              color="primary"
+              type="button"
+              value="Create"
+              (click)="saveOrModifyJobVacancy()"
+            />
+            <input
+              cButton
+              class="me-1"
+              color="success"
+              type="submit"
+              value="Reset"
+              style="color: white"
+              (click)="resetForm()"
+            />
+          </div>
+        </form>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <table [striped]="true" cTable>
+          <thead>
+            <tr>
+              <th scope="col">Job.Ref.No</th>
+              <th scope="col">Position & Employer</th>
+              <th scope="col">Opening date</th>
+              <th scope="col">Closing date</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let jv of jobVacancies">
+              <td>{{ jv.jobVacancyRefNo }}</td>
+              <td>
+                {{ jv.employer.employerName }}<br />{{ jv.jobPosition.name }}
+              </td>
+              <td>{{ jv.openingDate }}</td>
+              <td>{{ jv.closingDate }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-sm"
+                  style="color: white"
+                  (click)="getJobVacancyById(jv.id)"
+                >
+                  Edit
+                </button>
+                &nbsp;
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                  style="color: white"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>

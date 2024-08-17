@@ -1,0 +1,127 @@
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-body>
+      <form [formGroup]="countryForm" cForm>
+        <div class="row">
+
+          <input id="id_country" formControlName="idCountry" type="hidden">
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Country name</label>
+              <input cFormControl
+                     formControlName="countryName"
+                     id="country_name"
+                     placeholder="Enter country name"
+                     type="text"
+              />
+            </div>
+
+            <!-- Display error messages for countryName field -->
+            <div
+              *ngIf="countryForm.get('countryName').errors?.required && countryForm.get('countryName').touched">
+              <p class="form-validation">Country name is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Code</label>
+              <input cFormControl
+                     formControlName="countryCode"
+                     id="country_code"
+                     placeholder="Enter country code"
+                     type="text"
+              />
+            </div>
+
+            <!-- Display error messages for countryCode field -->
+            <div
+              *ngIf="countryForm.get('countryCode').errors?.required && countryForm.get('countryCode').touched">
+              <p class="form-validation">Country code is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Nationality</label>
+              <input cFormControl
+                     formControlName="nationality"
+                     id="country_nationality"
+                     placeholder="Enter country nationality"
+                     type="text"
+              />
+            </div>
+
+            <!-- Display error messages for nationality field -->
+            <div
+              *ngIf="countryForm.get('nationality').errors?.required && countryForm.get('nationality').touched">
+              <p class="form-validation">Nationality is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Status</label>
+              <select aria-label="Small select example" cSelect class="mb-3"
+                      formControlName="commonStatus"
+                      id="country_common_status">
+                <option value="-1">Select a status</option>
+                <option value="Active">Active</option>
+                <option value="In_Active">In active</option>
+              </select>
+            </div>
+
+            <!-- Display error messages for nationality field -->
+            <div
+              *ngIf="countryForm.get('commonStatus').errors?.required && countryForm.get('commonStatus').touched">
+              <p class="form-validation">Status is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel style="color: white">Status</label><br>
+              <input cButton class="me-1" color="primary" type="button" value="Create" (click)="saveUpdateCountry()">
+              <input cButton class="me-1" color="success" type="submit" value="Reset" style="color: white"
+                     (click)="resetCountryForm()">
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </c-card-body>
+  </c-card>
+</c-col>
+
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-body>
+      <table [striped]="true" cTable>
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Code</th>
+          <th scope="col">Nationality</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let country of countries">
+          <td>{{country.countryName}}</td>
+          <td>{{country.countryCode}}</td>
+          <td>{{country.nationality}}</td>
+          <td>{{country.commonStatus}}</td>
+          <td>
+            <input cButton class="me-1" color="primary" type="button" value="Edit" size="sm"
+                   (click)="getActiveCountryById(country.idCountry)">
+            <input cButton class="me-1" color="danger" type="button" value="Delete" size="sm"
+                   style="color: white" (click)="deleteCountryById(country.idCountry)">
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </c-card-body>
+  </c-card>
+</c-col>

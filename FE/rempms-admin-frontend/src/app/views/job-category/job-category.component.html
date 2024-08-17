@@ -1,0 +1,114 @@
+<c-row ngPreserveWhitespaces>
+
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Manage Job Category</strong>
+      </c-card-header>
+      <c-card-body>
+        <form [formGroup]="jobCategoryForm" cForm>
+          <div class="row">
+
+            <input id="id_job_category" type="hidden" formControlName="idJobCategory">
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Job category name</label>
+                <input cFormControl
+                       formControlName="jobCategoryName"
+                       id="job_category_name"
+                       placeholder="Enter job category name"
+                       type="text"
+                />
+              </div>
+
+              <!-- Display error messages for jobCategoryName field -->
+              <div
+                *ngIf="jobCategoryForm.get('jobCategoryName').errors?.required && jobCategoryForm.get('jobCategoryName').touched">
+                <p class="form-validation">Name is required.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Description</label>
+                <input cFormControl
+                       formControlName="jobCategoryDescription"
+                       id="job_category_description"
+                       placeholder="Enter description"
+                       type="text"
+                />
+              </div>
+
+              <!-- Display error messages for jobCategoryDescription field -->
+              <div
+                *ngIf="jobCategoryForm.get('jobCategoryDescription').errors?.required && jobCategoryForm.get('jobCategoryDescription').touched">
+                <p class="form-validation">Description field is empty.</p>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label cLabel>Status</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        formControlName="commonStatus"
+                        id="job_category_common_status">
+                  <option value="-1">Select a status</option>
+                  <option value="Active">Active</option>
+                  <option value="In_Active">In active</option>
+                </select>
+              </div>
+
+              <!-- Display error messages for commonStatus field -->
+              <div
+                *ngIf="jobCategoryForm.get('commonStatus').errors?.required && jobCategoryForm.get('commonStatus').touched">
+                <p class="form-validation">Status is required.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="d-flex justify-content-end mt-3">
+            <input cButton class="me-1" color="primary" type="button" value="Create" (click)="saveUpdateJobCategory()">
+            <input cButton class="me-1" color="success" type="submit" value="Reset" style="color: white"
+                   (click)="resetJobCategoryForm()">
+          </div>
+        </form>
+
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <table [striped]="true" cTable>
+          <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let jobCategory of jobCategories">
+            <td>{{jobCategory.jobCategoryName}}</td>
+            <td>{{jobCategory.jobCategoryDescription}}</td>
+            <td>{{jobCategory.commonStatus}}</td>
+            <td>
+              <input cButton class="me-1" color="primary" type="button" value="Edit" size="sm"
+                     (click)="getActiveJobCategoryById(jobCategory.idJobCategory)">
+              <input cButton class="me-1" color="danger" type="button" value="Delete" size="sm" style="color: white"
+                     (click)="deleteJobCategoryById(jobCategory.idJobCategory)">
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+</c-row>
+
+

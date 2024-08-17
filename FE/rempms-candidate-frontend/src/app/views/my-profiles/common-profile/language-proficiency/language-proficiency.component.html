@@ -1,0 +1,124 @@
+<c-row ngPreserveWhitespaces>
+
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Language Proficiency</strong>
+      </c-card-header>
+      <c-card-body>
+        <form cForm>
+          <div class="row">
+
+            <input id="id_job_category" type="hidden">
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Language</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        id="job_catsuss">
+                  <option value="-1">Select a language</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Spoken</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        id="job_caswuss">
+                  <option value="-1">Select spoken</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Reading</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        id="job_cwss">
+                  <option value="-1">Select reading</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Writing</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        id="job_cateswuss">
+                  <option value="-1">Select writing</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <input cButton class="btn-secondary" type="button" value="Add To List"
+                       style="text-align: center; color:white; height: 30px; line-height: 1px;"/>
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+        <c-card-body>
+          <table [striped]="true" cTable>
+            <thead>
+            <tr>
+              <th scope="col">Language</th>
+              <th scope="col">Spoken</th>
+              <th scope="col">Reading</th>
+              <th scope="col">Writing</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>ddd</td>
+              <td>ddd</td>
+              <td>ddd</td>
+              <td><a href="#">remove</a></td>
+            </tr>
+            </tbody>
+          </table>
+        </c-card-body>
+
+      </c-card-body>
+
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <div class="d-flex justify-content-end">
+          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
+          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
+          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+        </div>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <table [striped]="true" cTable>
+          <thead>
+          <tr>
+            <th scope="col">Language</th>
+            <th scope="col">Spoken</th>
+            <th scope="col">Reading</th>
+            <th scope="col">Writing</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+</c-row>
+
+

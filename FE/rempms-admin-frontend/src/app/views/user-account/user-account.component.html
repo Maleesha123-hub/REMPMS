@@ -1,0 +1,158 @@
+<c-row ngPreserveWhitespaces>
+
+  <c-col xs="12">
+    <c-card class="mb-3">
+      <c-card-header>
+        <strong>Manage User Account</strong>
+      </c-card-header>
+      <c-card-body>
+        <form [formGroup]="userAccountForm" cForm>
+          <div class="row">
+
+            <input id="id_user" type="hidden"
+                   formControlName="idUserAccount">
+            <input id="user_image_name" type="hidden"
+                   formControlName="hiddenUserImageName">
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label cLabel>User name</label>
+                <input cFormControl
+                       formControlName="userName"
+                       id="user_name"
+                       placeholder="Enter user name"
+                       type="text"
+                />
+              </div>
+              <!-- Display error messages for userName field -->
+              <div
+                *ngIf="userAccountForm.get('userName').errors?.required && userAccountForm.get('userName').touched">
+                <p class="form-validation">Name is required.</p>
+              </div>
+
+              <div class="mb-3">
+                <label cLabel>Password</label>
+                <input cFormControl
+                       formControlName="password"
+                       id="user_password"
+                       placeholder="Enter password"
+                       type="password"
+                />
+              </div>
+              <!-- Display error messages for userPassword field -->
+              <div
+                *ngIf="userAccountForm.get('password').errors?.required && userAccountForm.get('password').touched">
+                <p class="form-validation">Password is required.</p>
+              </div>
+
+              <div class="mb-3">
+                <label cLabel>Confirm password</label>
+                <input cFormControl
+                       formControlName="confirmPassword"
+                       id="user_confirm_password"
+                       placeholder="Enter confirm password"
+                       type="password"
+                />
+              </div>
+              <!-- Display error messages for userConfirmPassword field -->
+              <div
+                *ngIf="userAccountForm.get('confirmPassword').errors?.required && userAccountForm.get('confirmPassword').touched">
+                <p class="form-validation">Confirm password is required.</p>
+              </div>
+
+              <div class="mb-3">
+                <label cLabel>User role</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        formControlName="idUserRole"
+                        id="user_user_role_id_user_role">
+                  <option value="-1">Select a user role</option>
+                  <option *ngFor="let userRole of userRoles"
+                          [value]="userRole.idUserRole">{{userRole.userRoleName}}</option>
+                </select>
+              </div>
+              <!-- Display error messages for idUserRole field -->
+              <div
+                *ngIf="userAccountForm.get('idUserRole').errors?.required && userAccountForm.get('idUserRole').touched">
+                <p class="form-validation">User role not selected.</p>
+              </div>
+
+              <div class="mb-3">
+                <label cLabel>Status</label>
+                <select aria-label="Small select example" cSelect class="mb-3"
+                        formControlName="commonStatus"
+                        id="common_status">
+                  <option value="-1">Select a status</option>
+                  <option value="Active">Active</option>
+                  <option value="In_Active">In active</option>
+                </select>
+              </div>
+              <!-- Display error messages for userCommonStatus field -->
+              <div
+                *ngIf="userAccountForm.get('commonStatus').errors?.required && userAccountForm.get('commonStatus').touched">
+                <p class="form-validation">Status not selected.</p>
+              </div>
+
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <img id="imagePreview" [src]="imageSrc" alt="Preview" style="display: block;
+                                                            width: 180px; height: 180px;"/>
+                <input cFormControl #fileInput
+                       formControlName="userImage"
+                       id="user_image"
+                       type="file"
+                       (change)="previewImage()"
+                       style="width: 300px"/>
+              </div>
+              <!-- Display error messages for userImage field -->
+              <div
+                *ngIf="userAccountForm.get('userImage').errors?.required && userAccountForm.get('userImage').touched">
+                <p class="form-validation">User image is required.</p>
+              </div>
+
+            </div>
+          </div>
+          <input cButton class="me-1" color="primary" type="button" value="Create" (click)="uploadUserImage()">
+          <input cButton class="me-1" color="success" type="button" value="Reset" style="color: white"
+                 (click)="resetUserAccountForm()">
+          <input cButton class="me-1" color="warning" type="button" value="Sync" style="color: white"
+                 (click)="syncData()">
+        </form>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="12">
+    <c-card class="mb-4">
+      <c-card-body>
+        <table [striped]="true" cTable>
+          <thead>
+          <tr>
+            <th scope="col">User name</th>
+            <th scope="col">User role</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of userAccounts">
+            <td>{{user.userName}}</td>
+            <td>{{user.userRole.userRoleName}}</td>
+            <td>{{user.commonStatus}}</td>
+            <td>
+              <input cButton class="me-1" color="primary" type="button" value="Edit" size="sm"
+                     (click)="getActiveUserAccountById(user.idUserAccount)">
+              <input cButton class="me-1" color="danger" type="button" value="Delete" size="sm" style="color: white"
+                     (click)="deleteUserAccountById(user.idUserAccount)">
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+</c-row>
+
+

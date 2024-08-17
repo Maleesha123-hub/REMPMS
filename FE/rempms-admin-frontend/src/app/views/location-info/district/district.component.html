@@ -1,0 +1,132 @@
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-body>
+      <form [formGroup]="districtForm" cForm>
+        <div class="row">
+
+          <input id="id_district"
+                 formControlName="idDistrict"
+                 type="hidden">
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>District name</label>
+              <input cFormControl
+                     id="district_name"
+                     formControlName="districtName"
+                     placeholder="Enter district name"
+                     type="text"
+              />
+            </div>
+
+            <!-- Display error messages for districtName field -->
+            <div
+              *ngIf="districtForm.get('districtName').errors?.required && districtForm.get('districtName').touched">
+              <p class="form-validation">Name is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Country</label>
+              <select aria-label="Small select example" cSelect class="mb-3"
+                      id="district_country_id_country"
+                      formControlName="idCountry" (change)="onCountryChange($event)">
+                <option value="-1">Select a country</option>
+                <option *ngFor="let country of countries"
+                        [value]="country.idCountry">{{country.countryName}}</option>
+              </select>
+            </div>
+
+            <!-- Display error messages for districtName field -->
+            <div
+              *ngIf="districtForm.get('idCountry').errors?.required && districtForm.get('idCountry').touched">
+              <p class="form-validation">Country is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Province</label>
+              <select aria-label="Small select example" cSelect class="mb-3"
+                      formControlName="idProvince"
+                      id="district_province_id_province">
+                <option value="-1">Select a province</option>
+                <option *ngFor="let province of provinces"
+                        [value]="province.idProvince">{{province.provinceName}}</option>
+              </select>
+            </div>
+
+            <!-- Display error messages for idProvince field -->
+            <div
+              *ngIf="districtForm.get('idProvince').errors?.required && districtForm.get('idProvince').touched">
+              <p class="form-validation">Province is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel>Status</label>
+              <select aria-label="Small select example" cSelect class="mb-3"
+                      formControlName="commonStatus"
+                      id="district_common_status">
+                <option value="-1">Select a status</option>
+                <option value="Active">Active</option>
+                <option value="In_Active">In active</option>
+              </select>
+            </div>
+
+            <!-- Display error messages for commonStatus field -->
+            <div
+              *ngIf="districtForm.get('commonStatus').errors?.required && districtForm.get('commonStatus').touched">
+              <p class="form-validation">Status is required.</p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="mb-3">
+              <label cLabel style="color: white">Status</label><br>
+              <input cButton class="me-1" color="primary" type="button" value="Create" (click)="saveUpdateDistrict()">
+              <input cButton class="me-1" color="success" type="submit" value="Reset" style="color: white"
+                     (click)="resetDistrictForm()">
+            </div>
+          </div>
+        </div>
+      </form>
+    </c-card-body>
+  </c-card>
+</c-col>
+
+<c-col xs="12">
+  <c-card class="mb-4">
+    <c-card-body>
+      <table [striped]="true" cTable>
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Country</th>
+          <th scope="col">Province</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <tr *ngFor="let district of districts">
+          <td>{{district.districtName}}</td>
+          <td>{{district.country.countryName}}</td>
+          <td>{{district.province.provinceName}}</td>
+          <td>{{district.commonStatus}}</td>
+          <td>
+            <input cButton class="me-1" color="primary" type="button" value="Edit" size="sm"
+                   (click)="getActiveDistrictById(district.idDistrict)">
+            <input cButton class="me-1" color="danger" type="button" value="Delete" size="sm"
+                   style="color: white" (click)="deleteDistrictById(district.idDistrict)">
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
+    </c-card-body>
+  </c-card>
+</c-col>

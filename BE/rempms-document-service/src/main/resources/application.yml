@@ -1,0 +1,28 @@
+resilience4j:
+  retry:
+    instances:
+      retryApi:
+        max-attempts: 3
+        wait-duration: 5s
+        retry-exceptions: #The list of that exception that will trigger a retry
+          - com.pdev.rempms.documentservice.exception.FeignCustomException
+
+
+spring:
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        instanceId: ${spring.application.name}:${random.value}
+    openfeign:
+      okhttp:
+        enabled: true
+
+  profiles:
+    active: dev
+  application:
+    name: rempms-document-service
+
+
+
