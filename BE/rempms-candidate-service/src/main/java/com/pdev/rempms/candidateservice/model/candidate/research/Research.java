@@ -33,7 +33,7 @@ public class Research {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "research_area_id_research_area")
     private ResearchArea researchArea;
 
@@ -47,7 +47,7 @@ public class Research {
     private AuditData auditData;
 
     @JoinColumn(name = "candidate_id_candidate")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Candidate candidate;
 

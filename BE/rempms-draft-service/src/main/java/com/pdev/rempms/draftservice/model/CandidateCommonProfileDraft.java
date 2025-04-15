@@ -67,7 +67,7 @@ public class CandidateCommonProfileDraft {
 
     private List<JobPreferenceDTO> jobPreferences;
 
-    private PreferredJobLocationDTO preferredJobLocations;
+    private List<PreferredJobLocationDTO> preferredJobLocations;
 
     private List<CommonProfileDocumentRequest> documentDetails;
 

@@ -35,7 +35,7 @@ public class Achievement {
     private AuditData auditData;
 
     @JoinColumn(name = "candidate_id_candidate")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Candidate candidate;
 

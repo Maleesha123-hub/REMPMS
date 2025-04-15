@@ -1,7 +1,7 @@
 package com.pdev.rempms.communicationservice.controller;
 
 import com.pdev.rempms.communicationservice.dto.language.LanguageDTO;
-import com.pdev.rempms.communicationservice.service.LanguageService;
+import com.pdev.rempms.communicationservice.service.language.LanguageService;
 import com.pdev.rempms.communicationservice.util.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/communication/language")
+@RequestMapping("/api/communication/v1/language")
 public class LanguageController {
 
     private final LanguageService languageService;

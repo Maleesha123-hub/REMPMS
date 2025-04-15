@@ -1,0 +1,12 @@
+networks:
+  rempms-shared-network:
+    driver: bridge
+
+services:
+  rempms-candidate-fe:
+    image: "maleeshasa/rempms-recruitment-fe:0.0.1"
+    container_name: "rempms-recruitment-fe"
+    ports:
+      - "8080:80"
+    networks:
+      - rempms-shared-network

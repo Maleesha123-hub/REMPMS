@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { CommonResponse } from 'src/app/model/commonResponse/CommonResponse';
-import { environment } from 'src/environments/environment';
+import { CommonResponse } from '../../../app/model/commonResponse/CommonResponse';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +40,7 @@ export class RecievedCvsService {
         }),
         catchError((error) => {
           return this.handleError(error);
-        })
+        }),
       );
   }
 

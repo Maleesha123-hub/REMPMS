@@ -8,7 +8,6 @@ import { navItems } from './_nav';
   styleUrls: ['./default-layout.component.scss'],
 })
 export class DefaultLayoutComponent {
-
   public navItems = navItems;
 
   constructor() {}

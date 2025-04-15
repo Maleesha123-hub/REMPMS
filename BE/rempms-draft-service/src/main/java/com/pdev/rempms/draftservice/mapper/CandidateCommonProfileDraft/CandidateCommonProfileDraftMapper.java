@@ -1,6 +1,7 @@
 package com.pdev.rempms.draftservice.mapper.CandidateCommonProfileDraft;
 
 import com.pdev.rempms.draftservice.dto.commonProfile.CommonProfileRequestDTO;
+import com.pdev.rempms.draftservice.dto.commonProfile.CommonProfileResponseDTO;
 import com.pdev.rempms.draftservice.dto.document.CommonProfileDocumentRequest;
 import com.pdev.rempms.draftservice.exception.BaseException;
 import com.pdev.rempms.draftservice.model.CandidateCommonProfileDraft;
@@ -123,6 +124,109 @@ public class CandidateCommonProfileDraftMapper {
         log.info("CandidateCommonProfileDraftMapper.toEntity() => ended.");
         return candidateCommonProfileDraft;
 
+    }
+
+    public void toEntityV2(CandidateCommonProfileDraft candidateCommonProfileDraft,
+                           CommonProfileRequestDTO commonProfileRequest, MultipartFile[] documentList) {
+        log.info("CandidateCommonProfileDraftMapper.toEntityV2() => started.");
+
+        if (commonProfileRequest.getIdCandidate() != null) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting id candidate...");
+            candidateCommonProfileDraft.setIdCandidate(commonProfileRequest.getIdCandidate());
+
+        }
+        if (commonProfileRequest.getPersonalDetail() != null) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting personal details...");
+            candidateCommonProfileDraft.setPersonalDetail(commonProfileRequest.getPersonalDetail());
+
+        }
+        if (!commonProfileRequest.getProfessionalExperiences().isEmpty()) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting professional details...");
+            candidateCommonProfileDraft.setProfessionalExperiences(commonProfileRequest.getProfessionalExperiences());
+
+        }
+        if (commonProfileRequest.getAchievements() != null) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting achievements...");
+            candidateCommonProfileDraft.setAchievements(commonProfileRequest.getAchievements());
+
+        }
+        if (!commonProfileRequest.getMemberships().isEmpty()) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting memberships...");
+            candidateCommonProfileDraft.setMemberships(commonProfileRequest.getMemberships());
+
+        }
+        if (!commonProfileRequest.getHigherEducations().isEmpty()) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting higher educations...");
+            candidateCommonProfileDraft.setHigherEducations(commonProfileRequest.getHigherEducations());
+
+        }
+        if (!commonProfileRequest.getFamilyInformation().isEmpty()) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting family information...");
+            candidateCommonProfileDraft.setFamilyInformation(commonProfileRequest.getFamilyInformation());
+
+        }
+        if (!commonProfileRequest.getReferees().isEmpty()) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting referees...");
+            candidateCommonProfileDraft.setReferees(commonProfileRequest.getReferees());
+
+        }
+        if (!commonProfileRequest.getResearches().isEmpty()) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting researches...");
+            candidateCommonProfileDraft.setResearches(commonProfileRequest.getResearches());
+
+        }
+        if (!commonProfileRequest.getJobPreferences().isEmpty()) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting job proficiencies...");
+            candidateCommonProfileDraft.setJobPreferences(commonProfileRequest.getJobPreferences());
+
+        }
+        if (!commonProfileRequest.getLanguageProficiencies().isEmpty()) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting language proficiencies...");
+            candidateCommonProfileDraft.setLanguageProficiencies(commonProfileRequest.getLanguageProficiencies());
+
+        }
+        if (!commonProfileRequest.getSchoolEducations().isEmpty()) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting school educations...");
+            candidateCommonProfileDraft.setSchoolEducations(commonProfileRequest.getSchoolEducations());
+
+        }
+        if (commonProfileRequest.getPreferredJobLocations() != null) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting preferred job locations...");
+            candidateCommonProfileDraft.setPreferredJobLocations(commonProfileRequest.getPreferredJobLocations());
+        }
+
+        if (commonProfileRequest.getDocumentDetails() == null) {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Documents empty...");
+            candidateCommonProfileDraft.setDocumentDetails(new ArrayList<>());
+
+        } else {
+            log.info("CandidateCommonProfileDraftMapper.toEntityV2() => Setting documents...");
+            mapCommonProfileDocuments(commonProfileRequest.getDocumentDetails(), documentList);
+            candidateCommonProfileDraft.setDocumentDetails(commonProfileRequest.getDocumentDetails());
+
+        }
+        log.info("CandidateCommonProfileDraftMapper.toEntityV2() => ended.");
+    }
+
+    public CommonProfileResponseDTO toDto(CommonProfileResponseDTO dto, CandidateCommonProfileDraft candidateCommonProfileDraft) {
+        log.info("CandidateCommonProfileDraftMapper.toDto() => started.");
+        dto.setId(candidateCommonProfileDraft.getId());
+        dto.setIdCandidate(candidateCommonProfileDraft.getIdCandidate());
+        dto.setPersonalDetail(candidateCommonProfileDraft.getPersonalDetail());
+        dto.setProfessionalExperiences(candidateCommonProfileDraft.getProfessionalExperiences());
+        dto.setHigherEducations(candidateCommonProfileDraft.getHigherEducations());
+        dto.setSchoolEducations(candidateCommonProfileDraft.getSchoolEducations());
+        dto.setMemberships(candidateCommonProfileDraft.getMemberships());
+        dto.setLanguageProficiencies(candidateCommonProfileDraft.getLanguageProficiencies());
+        dto.setResearches(candidateCommonProfileDraft.getResearches());
+        dto.setAchievements(candidateCommonProfileDraft.getAchievements());
+        dto.setReferees(candidateCommonProfileDraft.getReferees());
+        dto.setFamilyInformation(candidateCommonProfileDraft.getFamilyInformation());
+        dto.setJobPreferences(candidateCommonProfileDraft.getJobPreferences());
+        dto.setPreferredJobLocations(candidateCommonProfileDraft.getPreferredJobLocations());
+        dto.setDocumentDetails(candidateCommonProfileDraft.getDocumentDetails());
+        log.info("CandidateCommonProfileDraftMapper.toDto() => ended.");
+        return dto;
     }
 
     /**

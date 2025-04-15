@@ -12,7 +12,7 @@ import * as EmployersActions from './employer.actions';
 export class EmployerEffects {
   constructor(
     private employerService: EmployerService,
-    private actions$: Actions
+    private actions$: Actions,
   ) {}
 
   /**
@@ -29,14 +29,14 @@ export class EmployerEffects {
       mergeMap(() =>
         this.employerService.getAll().pipe(
           map((response) =>
-            EmployersActions.loadEmployersSuccess({ response })
+            EmployersActions.loadEmployersSuccess({ response }),
           ),
           catchError((error) =>
-            of(EmployersActions.loadEmployersFailure({ error }))
-          )
-        )
-      )
-    )
+            of(EmployersActions.loadEmployersFailure({ error })),
+          ),
+        ),
+      ),
+    ),
   );
 
   saveOrModify$ = createEffect(() =>
@@ -47,14 +47,14 @@ export class EmployerEffects {
           map((response) =>
             EmployersActions.saveOrModifyEmployerSuccess({
               response,
-            })
+            }),
           ),
           catchError((error) =>
-            of(EmployersActions.saveOrModifyEmployerFailure({ error }))
-          )
-        )
-      )
-    )
+            of(EmployersActions.saveOrModifyEmployerFailure({ error })),
+          ),
+        ),
+      ),
+    ),
   );
 
   deleteById$ = createEffect(() =>
@@ -63,13 +63,13 @@ export class EmployerEffects {
       mergeMap((action) =>
         this.employerService.deleteById(action.id).pipe(
           map((response) =>
-            EmployersActions.deleteEmployerSuccess({ response })
+            EmployersActions.deleteEmployerSuccess({ response }),
           ),
           catchError((error) =>
-            of(EmployersActions.deleteEmployerFailure({ error }))
-          )
-        )
-      )
-    )
+            of(EmployersActions.deleteEmployerFailure({ error })),
+          ),
+        ),
+      ),
+    ),
   );
 }

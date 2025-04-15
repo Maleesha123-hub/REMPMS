@@ -1,265 +1,623 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>Personal Details</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="personalDetailsForm" cForm>
           <div class="row">
-
-            <input id="id_job_category" type="hidden">
+            <input
+              id="idPersonalDetail"
+              type="hidden"
+              formControlName="idPersonalDetail"
+            />
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Salutation</label>
-                <input cFormControl
-                       id="job_category_name"
-                       placeholder="Enter a salutation"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="salutation"
+                  id="salutation"
+                  placeholder="Enter a salutation"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for salutation field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('salutation').errors?.required &&
+                  personalDetailsForm.get('salutation').touched
+                "
+              >
+                <p class="form-validation">Salutation is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>First Name</label>
-                <input cFormControl
-                       id="job_category_description"
-                       placeholder="Enter a first name"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="firstName"
+                  id="firstName"
+                  placeholder="Enter a first name"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for first name field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('firstName').errors?.required &&
+                  personalDetailsForm.get('firstName').touched
+                "
+              >
+                <p class="form-validation">First name is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Last Name</label>
-                <input cFormControl
-                       id="job_cateds"
-                       placeholder="Enter a last name"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="lastName"
+                  id="lastName"
+                  placeholder="Enter a last name"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for last name field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('lastName').errors?.required &&
+                  personalDetailsForm.get('lastName').touched
+                "
+              >
+                <p class="form-validation">Last name is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Initials</label>
-                <input cFormControl
-                       id="job_casteds"
-                       placeholder="Enter initials"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="initial"
+                  id="initial"
+                  placeholder="Enter initials"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for initials field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('initial').errors?.required &&
+                  personalDetailsForm.get('initial').touched
+                "
+              >
+                <p class="form-validation">Initials is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
-                <label cLabel>Gender</label><br>
-                <input type="radio" value="one" style="cursor:pointer;">
+                <label cLabel>Gender</label><br />
+                <input
+                  type="radio"
+                  value="Male"
+                  formControlName="gender"
+                  style="cursor: pointer"
+                />
                 <label cFormCheckLabel>Male</label>
 
-                <input type="radio" value="two" style="cursor:pointer;"/>
+                <input
+                  type="radio"
+                  value="Female"
+                  formControlName="gender"
+                  style="cursor: pointer"
+                />
                 <label cFormCheckLabel>FeMale</label>
+              </div>
+
+              <!-- Display error messages for gender field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('gender').invalid &&
+                  personalDetailsForm.get('gender').touched
+                "
+              >
+                <p class="form-validation">Please select a gender.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Date of birth</label>
-                <input cFormControl
-                       id="job_cassteds"
-                       type="Date"
+                <input
+                  cFormControl
+                  formControlName="dob"
+                  id="dob"
+                  type="Date"
                 />
+              </div>
+
+              <!-- Display error messages for dob field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('dob').errors?.required &&
+                  personalDetailsForm.get('dob').touched
+                "
+              >
+                <p class="form-validation">Date of birth is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
-                <label cLabel>Maritial Status</label><br>
-                <input type="radio" value="one" style="cursor:pointer;">
+                <label cLabel>Martial Status</label><br />
+                <input
+                  type="radio"
+                  value="Single"
+                  formControlName="maritalStatus"
+                  style="cursor: pointer"
+                />
                 <label cFormCheckLabel>Single</label>
 
-                <input type="radio" value="two" style="cursor:pointer;"/>
+                <input
+                  type="radio"
+                  value="Married"
+                  formControlName="maritalStatus"
+                  style="cursor: pointer"
+                />
                 <label cFormCheckLabel>Married</label>
+              </div>
+
+              <!-- Display error messages for martial status field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('maritalStatus').invalid &&
+                  personalDetailsForm.get('maritalStatus').touched
+                "
+              >
+                <p class="form-validation">Please select a martial status.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>NIC</label>
-                <input cFormControl
-                       id="job_castweds"
-                       placeholder="Enter NIC"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="nic"
+                  id="nic"
+                  placeholder="Enter NIC"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for nic field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('nic').errors?.required &&
+                  personalDetailsForm.get('nic').touched
+                "
+              >
+                <p class="form-validation">NIC is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Passport No</label>
-                <input cFormControl
-                       id="job_castefds"
-                       placeholder="Enter passport no"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="passportNo"
+                  id="passportNo"
+                  placeholder="Enter passport no"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for passport no field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('passportNo').errors?.required &&
+                  personalDetailsForm.get('passportNo').touched
+                "
+              >
+                <p class="form-validation">Passport No is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Expected salary</label>
-                <input cFormControl
-                       placeholder="0"
-                       id="job_castnefdzs"
-                       type="Number"
+                <input
+                  cFormControl
+                  formControlName="expectedSalary"
+                  placeholder="0"
+                  id="expectedSalary"
+                  type="Number"
                 />
+              </div>
+
+              <!-- Display error messages for expected salary field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('expectedSalary').errors?.required &&
+                  personalDetailsForm.get('expectedSalary').touched
+                "
+              >
+                <p class="form-validation">Expected salary is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Notice period</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_category_common_status">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="noticePeriod"
+                  id="noticePeriod"
+                >
                   <option value="-1">Select notice period</option>
+                  <option value="2_weeks">2 weeks</option>
+                  <option value="3_weeks">3 weeks</option>
+                  <option value="4_weeks">4 weeks</option>
+                  <option value="5_weeks">5 weeks</option>
                 </select>
+              </div>
+
+              <!-- Display error messages for notice period field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('noticePeriod').errors?.required &&
+                  personalDetailsForm.get('noticePeriod').touched
+                "
+              >
+                <p class="form-validation">Notice period is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>No</label>
-                <input cFormControl
-                       id="job_casretweds"
-                       placeholder="Enter no"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="no"
+                  id="no"
+                  placeholder="Enter no"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for no field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('no').errors?.required &&
+                  personalDetailsForm.get('no').touched
+                "
+              >
+                <p class="form-validation">No is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Street No 1</label>
-                <input cFormControl
-                       id="job_castefdtys"
-                       placeholder="Enter street no 1"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="streetNo1"
+                  id="streetNo1"
+                  placeholder="Enter street no 1"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for street no 1 field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('streetNo1').errors?.required &&
+                  personalDetailsForm.get('streetNo1').touched
+                "
+              >
+                <p class="form-validation">Street no 1 is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Street No 2</label>
-                <input cFormControl
-                       id="job_casytefdzs"
-                       placeholder="Enter street no 2"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="streetNo2"
+                  id="streetNo2"
+                  placeholder="Enter street no 2"
+                  type="text"
                 />
               </div>
-            </div>
 
-            <div class="col-md-3">
-              <div class="mb-2">
-                <label cLabel>District</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_category_common_sftrrtatus">
-                  <option value="-1">Select a district</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="mb-2">
-                <label cLabel>Province</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_category_common_sftrrtasdtus">
-                  <option value="-1">Select a province</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="mb-2">
-                <label cLabel>City</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_category_common_sftrryttatus">
-                  <option value="-1">Select a city</option>
-                </select>
+              <!-- Display error messages for street no 2 field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('streetNo2').errors?.required &&
+                  personalDetailsForm.get('streetNo2').touched
+                "
+              >
+                <p class="form-validation">Street no 2 is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Country</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_category_common_sftrrt2atus">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idCountry"
+                  id="idCountry"
+                  (change)="onCountryChange($event)"
+                >
                   <option value="-1">Select a country</option>
+                  <option
+                    *ngFor="let country of countries"
+                    [value]="country.idCountry"
+                  >
+                    {{ country.countryName }}
+                  </option>
                 </select>
+              </div>
+
+              <!-- Display error messages for country field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('idCountry').errors?.required &&
+                  personalDetailsForm.get('idCountry').touched
+                "
+              >
+                <p class="form-validation">Country is required.</p>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>Province</label>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idProvince"
+                  id="idProvince"
+                  (change)="onProvinceChange($event)"
+                >
+                  <option value="-1">Select a province</option>
+                  <option
+                    *ngFor="let province of provinces"
+                    [value]="province.idProvince"
+                  >
+                    {{ province.provinceName }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- Display error messages for province field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('idProvince').errors?.required &&
+                  personalDetailsForm.get('idProvince').touched
+                "
+              >
+                <p class="form-validation">Province is required.</p>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>District</label>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idDistrict"
+                  id="idDistrict"
+                  (change)="onDistrictChange($event)"
+                >
+                  <option value="-1">Select a district</option>
+                  <option
+                    *ngFor="let district of districts"
+                    [value]="district.idDistrict"
+                  >
+                    {{ district.districtName }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- Display error messages for district field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('idDistrict').errors?.required &&
+                  personalDetailsForm.get('idDistrict').touched
+                "
+              >
+                <p class="form-validation">District is required.</p>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <label cLabel>City</label>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idCity"
+                  id="idCity"
+                >
+                  <option value="-1">Select a city</option>
+                  <option *ngFor="let city of cities" [value]="city.idCity">
+                    {{ city.cityName }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- Display error messages for city field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('idCity').errors?.required &&
+                  personalDetailsForm.get('idCity').touched
+                "
+              >
+                <p class="form-validation">City is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Phone no</label>
-                <input cFormControl
-                       id="job_casfdzs"
-                       placeholder="Enter phone no"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="phoneNo"
+                  id="phoneNo"
+                  placeholder="Enter phone no"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for phone no field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('phoneNo').errors?.required &&
+                  personalDetailsForm.get('phoneNo').touched
+                "
+              >
+                <p class="form-validation">Phone no is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Mobile no</label>
-                <input cFormControl
-                       id="jobsfdzs"
-                       placeholder="Enter mobile no"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="mobileNo"
+                  id="mobileNo"
+                  placeholder="Enter mobile no"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for mobile no field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('mobileNo').errors?.required &&
+                  personalDetailsForm.get('mobileNo').touched
+                "
+              >
+                <p class="form-validation">Mobile no is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Email</label>
-                <input cFormControl
-                       id="job_cass"
-                       placeholder="Enteremail"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="email"
+                  id="email"
+                  placeholder="Enter email"
+                  type="text"
                 />
+              </div>
+
+              <!-- Display error messages for email field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('email').errors?.required &&
+                  personalDetailsForm.get('email').touched
+                "
+              >
+                <p class="form-validation">Email is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Language</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_category_common_stftrrt2atus">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idLanguage"
+                  id="idLanguage"
+                >
                   <option value="-1">Select a language</option>
+                  <option
+                    *ngFor="let language of languages"
+                    [value]="language.idLanguage"
+                  >
+                    {{ language.languageName }}
+                  </option>
                 </select>
+              </div>
+
+              <!-- Display error messages for language field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('idLanguage').errors?.required &&
+                  personalDetailsForm.get('idLanguage').touched
+                "
+              >
+                <p class="form-validation">Language is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Preferred Communication</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_cateus">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idPreferredLanguage"
+                  id="idPreferredLanguage"
+                >
                   <option value="-1">Select a preferred communication</option>
+                  <option
+                    *ngFor="
+                      let preferredCommunication of preferredCommunications
+                    "
+                    [value]="preferredCommunication.idPreferredCommunication"
+                  >
+                    {{ preferredCommunication.preferredCommunicationMethod }}
+                  </option>
                 </select>
               </div>
-            </div>
 
+              <!-- Display error messages for preferred communication field -->
+              <div
+                *ngIf="
+                  personalDetailsForm.get('idPreferredLanguage').errors
+                    ?.required &&
+                  personalDetailsForm.get('idPreferredLanguage').touched
+                "
+              >
+                <p class="form-validation">
+                  Preferred Communication is required.
+                </p>
+              </div>
+            </div>
           </div>
         </form>
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -267,14 +625,14 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
-          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>"
-                 (click)="redirectToProfessionalExperience()"/>
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="Next>>"
+            (click)="redirectToProfessionalExperience()"
+          />
         </div>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

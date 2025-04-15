@@ -41,7 +41,7 @@ export const jobVacancyReducer = createReducer(
       posterImageResponse: null,
       error: null,
       loading: false,
-    })
+    }),
   ),
   // Handles the action when get job vacancy details fails.
   on(JobVacancyActions.loadJobVacanciesFailure, (state, { error }) => ({
@@ -74,7 +74,7 @@ export const jobVacancyReducer = createReducer(
       posterImageResponse: null,
       error: null,
       loading: false,
-    })
+    }),
   ),
   // Handles the action when job vacancy delete fails.
   on(JobVacancyActions.deleteJobVacancyFailure, (state, { error }) => ({
@@ -107,7 +107,7 @@ export const jobVacancyReducer = createReducer(
       posterImageResponse: null,
       error: null,
       loading: false,
-    })
+    }),
   ),
   // Handles the action when job vacancy save or modify fails.
   on(JobVacancyActions.saveOrModifyJobVacancyFailure, (state, { error }) => ({
@@ -118,5 +118,5 @@ export const jobVacancyReducer = createReducer(
     posterImageResponse: null,
     error: error,
     loading: false,
-  }))
+  })),
 );

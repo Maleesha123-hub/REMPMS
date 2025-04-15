@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 import { Downloader } from '../../model/document/Downloader';
 
 @Injectable({
@@ -34,7 +34,7 @@ export class DocumentService {
     formdata.append('requests', documentRequest, 'requests.json');
 
     console.info(
-      'DownloadImage method is calling for download poster image...'
+      'DownloadImage method is calling for download poster image...',
     );
 
     return this.http.post(downloaderApi, formdata, { responseType: 'blob' });

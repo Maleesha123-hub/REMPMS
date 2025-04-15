@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/v1/draft/candidate-common-profile")
+@RequestMapping(value = "/api/draft/v1/candidate-common-profile")
 public class CandidateCommonProfileDraftController {
 
     private final CandidateCommonProfileDraftService candidateCommonProfileDraftService;

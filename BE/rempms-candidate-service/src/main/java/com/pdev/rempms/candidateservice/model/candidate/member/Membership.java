@@ -26,7 +26,7 @@ public class Membership {
     private Integer id;
 
     @JoinColumn(name = "membership_type_id_membership_type")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private MembershipType membershipType;
 
     @Column(name = "country_id_country")
@@ -48,7 +48,7 @@ public class Membership {
     private AuditData auditData;
 
     @JoinColumn(name = "candidate_id_candidate")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Candidate candidate;
 

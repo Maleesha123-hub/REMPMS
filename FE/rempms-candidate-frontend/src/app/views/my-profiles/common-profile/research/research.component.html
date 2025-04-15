@@ -1,91 +1,160 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>Research</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="researchAreaForm" cForm>
           <div class="row">
-
-            <input id="id_job_category" type="hidden">
+            <input id="idResearch" type="hidden" formControlName="idResearch" />
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Research area</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_catsuss">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  id="idResearchArea"
+                  formControlName="idResearchArea"
+                >
                   <option value="-1">Select a research area</option>
+                  <option
+                    *ngFor="let researchArea of researchAreas"
+                    [value]="researchArea.id"
+                  >
+                    {{ researchArea.name }}
+                  </option>
                 </select>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                researchAreaForm.get('idResearchArea').errors?.required &&
+                researchAreaForm.get('idResearchArea').touched
+              "
+            >
+              <p class="form-validation">Research area is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Commenced date</label>
-                <input cFormControl
-                       id="job_cafdssteds"
-                       type="Date"
+                <input
+                  cFormControl
+                  id="commencedDate"
+                  formControlName="commencedDate"
+                  type="Date"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                researchAreaForm.get('commencedDate').errors?.required &&
+                researchAreaForm.get('commencedDate').touched
+              "
+            >
+              <p class="form-validation">Commenced date is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Completion date</label>
-                <input cFormControl
-                       id="job_cadfdssteds"
-                       type="Date"
+                <input
+                  cFormControl
+                  id="completionDate"
+                  formControlName="completionDate"
+                  type="Date"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                researchAreaForm.get('completionDate').errors?.required &&
+                researchAreaForm.get('completionDate').touched
+              "
+            >
+              <p class="form-validation">Completion date is required.</p>
             </div>
 
             <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>Description</label>
-                <textarea cFormControl
-                          id="jobsdzzs" rows="2" style="width: 300px"
-                          placeholder="Enter a description"></textarea>
+                <textarea
+                  cFormControl
+                  id="description"
+                  rows="2"
+                  style="width: 300px"
+                  formControlName="description"
+                  placeholder="Enter a description"
+                ></textarea>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                researchAreaForm.get('description').errors?.required &&
+                researchAreaForm.get('description').touched
+              "
+            >
+              <p class="form-validation">Description is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
-                <p style="color: white">##</p>&nbsp;
-                <input cButton class="btn-secondary" type="button" value="Add To List"
-                       style="text-align: center; color:white; height: 30px; line-height: 1px;"/>
+                <p style="color: white">##</p>
+                &nbsp;
+                <input
+                  cButton
+                  class="btn-secondary"
+                  type="button"
+                  value="Add To List"
+                  style="
+                    text-align: center;
+                    color: white;
+                    height: 30px;
+                    line-height: 1px;
+                  "
+                  (click)="researchForTempListTable()"
+                />
               </div>
             </div>
-
           </div>
         </form>
 
         <c-card-body>
+          <ng-container *ngIf="emptyListErrorVisible">
+            <div class="error-message" style="color: red">
+              The research cart table is empty.
+            </div>
+          </ng-container>
+
           <table [striped]="true" cTable>
             <thead>
-            <tr>
-              <th scope="col">Research/Project Area</th>
-              <th scope="col">Description</th>
-              <th scope="col">From</th>
-              <th scope="col">To</th>
-              <th scope="col">Action</th>
-            </tr>
+              <tr>
+                <th scope="col">Research/Project Area</th>
+                <th scope="col">Description</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Action</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td><a href="#">remove</a></td>
-            </tr>
+              <tr *ngFor="let tempList of tempList; let i = index">
+                <td>{{ tempList.researchArea }}</td>
+                <td>{{ tempList.description }}</td>
+                <td>{{ tempList.commencedDate }}</td>
+                <td>{{ tempList.completionDate }}</td>
+                <td><a (click)="removeTempResearchItem(i)">remove</a></td>
+              </tr>
             </tbody>
           </table>
         </c-card-body>
-
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -93,9 +162,43 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
-          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="<<Back"
+            (click)="redirectToBack()"
+          />
+          &nbsp;
+          <Button
+            cButton
+            class="me-1"
+            color="success"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showSaveButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >&nbsp;Save&nbsp;
+          </Button>
+
+          <Button
+            cButton
+            class="me-1"
+            color="info"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showUpdateButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >Update </Button
+          >&nbsp;
+
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="Next>>"
+            (click)="redirectToNext()"
+          />
         </div>
       </c-card-body>
     </c-card>
@@ -106,22 +209,46 @@
       <c-card-body>
         <table [striped]="true" cTable>
           <thead>
-          <tr>
-            <th scope="col">Research/Project Area</th>
-            <th scope="col">Description</th>
-            <th scope="col">From</th>
-            <th scope="col">To</th>
-            <th scope="col">Action</th>
-          </tr>
+            <tr>
+              <th scope="col">Research/Project Area</th>
+              <th scope="col">Description</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+              <th scope="col">Action</th>
+            </tr>
           </thead>
           <tbody>
-
+            <tr *ngFor="let tableList of tableList; let i = index">
+              <td>{{ tableList.researchArea }}</td>
+              <td>{{ tableList.description }}</td>
+              <td>{{ tableList.commencedDate }}</td>
+              <td>{{ tableList.completionDate }}</td>
+              <td>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="primary"
+                  value="Edit"
+                  size="sm"
+                  mat-button
+                  >Edit
+                </Button>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="danger"
+                  value="Delete"
+                  size="sm"
+                  mat-button
+                  style="color: white"
+                  (click)="deleteResearch(tableList)"
+                  >Delete
+                </Button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

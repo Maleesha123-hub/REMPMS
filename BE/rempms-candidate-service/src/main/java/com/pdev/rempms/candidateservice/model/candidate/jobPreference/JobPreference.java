@@ -23,11 +23,11 @@ public class JobPreference {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "industry_id_industry")
     private Industry industry;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "jobCategory_id_jobCategory")
     private JobCategory jobCategory;
 
@@ -50,7 +50,7 @@ public class JobPreference {
     private AuditData auditData;
 
     @JoinColumn(name = "candidate_id_candidate")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Candidate candidate;
 }

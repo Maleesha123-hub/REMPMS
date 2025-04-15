@@ -66,7 +66,7 @@ public class RestLocationInfoClientServiceImpl implements RestLocationInfoClient
      */
     @Override
     public CountryDTO getById(Integer idCountry) {
-        log.info("RestLocationInfoClientServiceImpl.saveLocationInfo() => started!");
+        log.info("RestLocationInfoClientServiceImpl.getById() => started!");
 
         try {
             ResponseEntity<CommonResponse> response = locationServiceClient.getById(idCountry);
@@ -83,7 +83,7 @@ public class RestLocationInfoClientServiceImpl implements RestLocationInfoClient
             }
 
         } catch (FeignCustomException ex) {
-            log.warn("Save location info data for location service body : {} message : {} ", ex.getBody(), ex.getMessage());
+            log.warn("Get country by id from location service body : {} message : {} ", ex.getBody(), ex.getMessage());
 
             throw new BaseException(500, "Country is not exists.");
 

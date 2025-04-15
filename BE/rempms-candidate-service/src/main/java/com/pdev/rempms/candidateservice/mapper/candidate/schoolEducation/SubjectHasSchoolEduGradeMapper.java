@@ -49,7 +49,7 @@ public class SubjectHasSchoolEduGradeMapper {
         dto.setGrade(subjectHasSchoolEduGrade.getGrade());
 
         dto.setIdSubject(subjectHasSchoolEduGrade.getSubject() == null ? null : subjectHasSchoolEduGrade.getSubject().getId());
-        dto.setSubject(subjectHasSchoolEduGrade.getSubject() == null ? null :
+        dto.setSubjects(subjectHasSchoolEduGrade.getSubject() == null ? null :
                 subjectMapper.toDto(new SubjectDTO(), subjectHasSchoolEduGrade.getSubject()));
 
         log.info("SubjectHasSchoolEduGradeMapper -> toDto() => ended!");

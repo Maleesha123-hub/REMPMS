@@ -1,13 +1,13 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {FlaggedJobsComponent} from "./flagged-jobs/flagged-jobs.component";
-import {PreferredCompaniesComponent} from "./preferred-companies/preferred-companies.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { FlaggedJobsComponent } from './flagged-jobs/flagged-jobs.component';
+import { PreferredCompaniesComponent } from './preferred-companies/preferred-companies.component';
 
 const routes: Routes = [
   {
     path: '',
     data: {
-      title: $localize`MyJobs`
+      title: $localize`MyJobs`,
     },
     children: [
       {
@@ -25,12 +25,11 @@ const routes: Routes = [
         },
       },
     ],
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MyJobsRoutingModule {
-}
+export class MyJobsRoutingModule {}

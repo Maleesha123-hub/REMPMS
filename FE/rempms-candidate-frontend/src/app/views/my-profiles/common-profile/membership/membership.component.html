@@ -1,89 +1,171 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>Membership</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="membershipForm" cForm>
           <div class="row">
+            <input
+              id="idMembership"
+              type="hidden"
+              formControlName="idMembership"
+            />
 
-            <input id="id_job_category" type="hidden">
-
-            <div class="col-md-3">
+            <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>Membership</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_cateuss">
-                  <option value="-1">Select a membership</option>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-4"
+                  id="idMembershipType"
+                  formControlName="idMembershipType"
+                >
+                  <option value="-1">Select a membership type</option>
+                  <option
+                    *ngFor="let membershipType of membershipTypes"
+                    [value]="membershipType.id"
+                  >
+                    {{ membershipType.name }}
+                  </option>
                 </select>
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div
+              *ngIf="
+                membershipForm.get('idMembershipType').errors?.required &&
+                membershipForm.get('idMembershipType').touched
+              "
+            >
+              <p class="form-validation">Membership type is required.</p>
+            </div>
+
+            <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>Country</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_cateswuss">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-4"
+                  id="idCountry"
+                  formControlName="idCountry"
+                >
                   <option value="-1">Select a country</option>
+                  <option
+                    *ngFor="let country of countries"
+                    [value]="country.idCountry"
+                  >
+                    {{ country.countryName }}
+                  </option>
                 </select>
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div
+              *ngIf="
+                membershipForm.get('idCountry').errors?.required &&
+                membershipForm.get('idCountry').touched
+              "
+            >
+              <p class="form-validation">Country is required.</p>
+            </div>
+
+            <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>Year obtained</label>
-                <input cFormControl
-                       id="job_cadsssteds"
-                       type="Date"
+                <input
+                  cFormControl
+                  id="yearObtained"
+                  formControlName="yearObtained"
+                  type="Date"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                membershipForm.get('yearObtained').errors?.required &&
+                membershipForm.get('yearObtained').touched
+              "
+            >
+              <p class="form-validation">Year Obtained is required.</p>
             </div>
 
             <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>Job description</label>
-                <textarea cFormControl
-                          id="jobsdzzs" rows="2" style="width: 300px"
-                          placeholder="Enter a description"></textarea>
+                <textarea
+                  cFormControl
+                  id="description"
+                  formControlName="description"
+                  rows="2"
+                  style="width: 300px"
+                  placeholder="Enter a description"
+                ></textarea>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                membershipForm.get('description').errors?.required &&
+                membershipForm.get('description').touched
+              "
+            >
+              <p class="form-validation">Description is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
-                <p style="color: white">##</p>&nbsp;
-                <input cButton class="btn-secondary" type="button" value="Add To List"
-                       style="text-align: center; color:white; height: 30px; line-height: 1px;"/>
+                <p style="color: white">##</p>
+                &nbsp;
+                <input
+                  cButton
+                  class="btn-secondary"
+                  type="button"
+                  value="Add To List"
+                  style="
+                    text-align: center;
+                    color: white;
+                    height: 30px;
+                    line-height: 1px;
+                  "
+                  (click)="membershipsForTempListTable()"
+                />
               </div>
             </div>
-
           </div>
         </form>
 
         <c-card-body>
+          <ng-container *ngIf="emptyListErrorVisible">
+            <div class="error-message" style="color: red">
+              The membership cart table is empty.
+            </div>
+          </ng-container>
+
           <table [striped]="true" cTable>
             <thead>
-            <tr>
-              <th scope="col">Membership</th>
-              <th scope="col">Country</th>
-              <th scope="col">Year obtained</th>
-              <th scope="col">Action</th>
-            </tr>
+              <tr>
+                <th scope="col">Membership</th>
+                <th scope="col">Country</th>
+                <th scope="col">Year obtained</th>
+                <th scope="col">Action</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td><a href="#">remove</a></td>
-            </tr>
+              <tr *ngFor="let tempList of membershipTempList; let i = index">
+                <td>{{ tempList.membershipTypeName }}</td>
+                <td>{{ tempList.countryName }}</td>
+                <td>{{ tempList.yearObtained }}</td>
+                <td><a (click)="removeTempMembershipItem(i)">remove</a></td>
+              </tr>
             </tbody>
           </table>
         </c-card-body>
-
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -91,9 +173,44 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
-          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="<<Back"
+            (click)="redirectToBack()"
+          />
+          &nbsp;
+
+          <Button
+            cButton
+            class="me-1"
+            color="success"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showSaveButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >&nbsp;Save&nbsp;
+          </Button>
+
+          <Button
+            cButton
+            class="me-1"
+            color="info"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showUpdateButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >Update </Button
+          >&nbsp;
+
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="Next>>"
+            (click)="redirectToNext()"
+          />
         </div>
       </c-card-body>
     </c-card>
@@ -104,21 +221,44 @@
       <c-card-body>
         <table [striped]="true" cTable>
           <thead>
-          <tr>
-            <th scope="col">Membership</th>
-            <th scope="col">Country</th>
-            <th scope="col">Year obtained</th>
-            <th scope="col">Action</th>
-          </tr>
+            <tr>
+              <th scope="col">Membership</th>
+              <th scope="col">Country</th>
+              <th scope="col">Year obtained</th>
+              <th scope="col">Action</th>
+            </tr>
           </thead>
           <tbody>
-
+            <tr *ngFor="let tableList of tableList; let i = index">
+              <td>{{ tableList.membershipTypeName }}</td>
+              <td>{{ tableList.countryName }}</td>
+              <td>{{ tableList.yearObtained }}</td>
+              <td>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="primary"
+                  value="Edit"
+                  size="sm"
+                  mat-button
+                  >Edit
+                </Button>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="danger"
+                  value="Delete"
+                  size="sm"
+                  mat-button
+                  style="color: white"
+                  (click)="deleteMembership(tableList)"
+                  >Delete
+                </Button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

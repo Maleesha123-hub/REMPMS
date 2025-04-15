@@ -1,43 +1,63 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { LoginComponent } from './views/pages/login/login.component';
+import { RegisterComponent } from './views/pages/register/register.component';
+import { Page500Component } from './views/pages/page500/page500.component';
 import { DefaultLayoutComponent } from './containers';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full'
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
   {
     path: '',
     component: DefaultLayoutComponent,
     data: {
-      title: 'Home'
+      title: 'Home',
     },
     children: [
       {
         path: 'job-vacancies',
         loadChildren: () =>
-          import('./views/job-vacancies/job-vacancies.module').then((m) => m.JobVacanciesModule)
+          import('./views/job-vacancies/job-vacancies.module').then(
+            (m) => m.JobVacanciesModule,
+          ),
+        canActivate: [AuthGuard],
       },
       {
         path: 'my-jobs',
         loadChildren: () =>
-          import('./views/my-jobs/my-jobs.module').then((m) => m.MyJobsModule)
-      },{
+          import('./views/my-jobs/my-jobs.module').then((m) => m.MyJobsModule),
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'my-profiles',
         loadChildren: () =>
-          import('./views/my-profiles/my-profiles.module').then((m) => m.MyProfilesModule)
-      },{
+          import('./views/my-profiles/my-profiles.module').then(
+            (m) => m.MyProfilesModule,
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'my-preferences',
         loadChildren: () =>
-          import('./views/my-preferences/my-preferences.module').then((m) => m.MyPreferencesModule)
-      },{
+          import('./views/my-preferences/my-preferences.module').then(
+            (m) => m.MyPreferencesModule,
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'common-profile',
         loadChildren: () =>
-          import('./views/my-profiles/common-profile/common-profile.module').then((m) => m.CommonProfileModule)
-      }
+          import(
+            './views/my-profiles/common-profile/common-profile.module'
+          ).then((m) => m.CommonProfileModule),
+        canActivate: [AuthGuard],
+      },
       // {
       //   path: 'buttons',
       //   loadChildren: () =>
@@ -78,7 +98,28 @@ const routes: Routes = [
       //   loadChildren: () =>
       //     import('./views/pages/pages.module').then((m) => m.PagesModule)
       // },
-    ]
+    ],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: {
+      title: 'Login Page',
+    },
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    data: {
+      title: 'Register Page',
+    },
+  },
+  {
+    path: 'unauthorized',
+    component: Page500Component,
+    data: {
+      title: 'Unauthorized Page',
+    },
   },
   // {
   //   path: '404',
@@ -95,32 +136,25 @@ const routes: Routes = [
   //   }
   // },
   // {
-  //   path: 'login',
-  //   component: LoginComponent,
-  //   data: {
-  //     title: 'Login Page'
-  //   }
-  // },
-  // {
   //   path: 'register',
   //   component: RegisterComponent,
   //   data: {
   //     title: 'Register Page'
   //   }
   // },
-  {path: '**', redirectTo: 'dashboard'}
+  { path: '**', redirectTo: 'dashboard' },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
+      useHash: true,
       scrollPositionRestoration: 'top',
       anchorScrolling: 'enabled',
-      initialNavigation: 'enabledBlocking'
+      initialNavigation: 'enabledBlocking',
       // relativeLinkResolution: 'legacy'
-    })
+    }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

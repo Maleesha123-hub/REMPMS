@@ -1,8 +1,6 @@
 package com.pdev.rempms.candidateservice.controller;
 
 import com.pdev.rempms.candidateservice.dto.candidate.CandidateSearchParamsDTO;
-import com.pdev.rempms.candidateservice.dto.candidate.commonProfile.CommonProfileRequestDTO;
-import com.pdev.rempms.candidateservice.dto.document.DocumentDetails;
 import com.pdev.rempms.candidateservice.service.CommonProfileService;
 import com.pdev.rempms.candidateservice.util.CommonResponse;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author @Maleesha99
@@ -28,22 +25,31 @@ public class CommonProfileController {
     /**
      * save candidate common profile
      *
-     * @param dto - common profile data
+     * @param idCandidate - candidate id
      * @return - {@link ResponseEntity<CommonResponse>} - save success info.
      * @author @Maleesha99
      */
     @PostMapping(value = "/saveUpdate")
-    public ResponseEntity<CommonResponse> saveUpdate(@RequestPart("commonProfileDetails") CommonProfileRequestDTO dto,
-                                                     @RequestPart("documentDetails") DocumentDetails documentDetails,
-                                                     @RequestPart("documents") MultipartFile[] documents) {
+    public ResponseEntity<CommonResponse> saveUpdate(@RequestParam(value = "idCandidate") Integer idCandidate) {
         log.info("CommonProfileController.saveUpdate() => started.");
 
-        CommonResponse response = commonProfileService.saveUpdateByJPA(dto);
+        CommonResponse response = commonProfileService.saveUpdateByJPA(idCandidate);
 
         log.info("CommonProfileController.saveUpdate() => ended.");
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
+//    @PostMapping(value = "/saveUpdate")
+//    public ResponseEntity<CommonResponse> saveUpdate(@RequestPart("commonProfileDetails") CommonProfileRequestDTO dto,
+//                                                     @RequestPart(name = "documentDetails", required = false) List<DocumentDetails> documentDetails,
+//                                                     @RequestPart(name = "documents", required = false) MultipartFile[] documents) {
+//        log.info("CommonProfileController.saveUpdate() => started.");
+//
+//        CommonResponse response = commonProfileService.saveUpdateByJPA(dto);
+//
+//        log.info("CommonProfileController.saveUpdate() => ended.");
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//
+//    }
 
     /**
      * This method is allowed to get candidate profile by candidate id
@@ -60,7 +66,6 @@ public class CommonProfileController {
 
         log.info("CommonProfileController.getByCandidateId() => ended.");
         return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
 
     /**
@@ -82,7 +87,5 @@ public class CommonProfileController {
 
         log.info("CommonProfileController.searchCandidates() => ended.");
         return new ResponseEntity<>(commonResponse, HttpStatus.OK);
-
     }
-
 }

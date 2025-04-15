@@ -8,7 +8,7 @@ import { catchError, map, mergeMap, of } from 'rxjs';
 export class JobPositionEffects {
   constructor(
     private jobPositionService: JobPositionService,
-    private actions$: Actions
+    private actions$: Actions,
   ) {}
 
   saveOrModify$ = createEffect(() =>
@@ -19,14 +19,14 @@ export class JobPositionEffects {
           map((commonResponse) =>
             JobPositionActions.saveOrModifyJobPositionSuccess({
               commonResponse,
-            })
+            }),
           ),
           catchError((error) =>
-            of(JobPositionActions.saveOrModifyJobPositionFailure({ error }))
-          )
-        )
-      )
-    )
+            of(JobPositionActions.saveOrModifyJobPositionFailure({ error })),
+          ),
+        ),
+      ),
+    ),
   );
 
   deleteById$ = createEffect(() =>
@@ -35,14 +35,14 @@ export class JobPositionEffects {
       mergeMap((action) =>
         this.jobPositionService.deleteById(action.id).pipe(
           map((commonResponse) =>
-            JobPositionActions.deleteJobPositionSuccess({ commonResponse })
+            JobPositionActions.deleteJobPositionSuccess({ commonResponse }),
           ),
           catchError((error) =>
-            of(JobPositionActions.deleteJobPositionFailure({ error }))
-          )
-        )
-      )
-    )
+            of(JobPositionActions.deleteJobPositionFailure({ error })),
+          ),
+        ),
+      ),
+    ),
   );
 
   getAll$ = createEffect(() =>
@@ -51,14 +51,14 @@ export class JobPositionEffects {
       mergeMap(() =>
         this.jobPositionService.getAll().pipe(
           map((response) =>
-            JobPositionActions.getAllJobPositionSuccess({ response })
+            JobPositionActions.getAllJobPositionSuccess({ response }),
           ),
           catchError((error) =>
-            of(JobPositionActions.getAllJobPositionFailure({ error }))
-          )
-        )
-      )
-    )
+            of(JobPositionActions.getAllJobPositionFailure({ error })),
+          ),
+        ),
+      ),
+    ),
   );
 
   getAllIndustries$ = createEffect(() =>
@@ -67,13 +67,13 @@ export class JobPositionEffects {
       mergeMap(() =>
         this.jobPositionService.getAllActiveIndustries().pipe(
           map((response) =>
-            JobPositionActions.getAllActiveIndustriesSuccess({ response })
+            JobPositionActions.getAllActiveIndustriesSuccess({ response }),
           ),
           catchError((error) =>
-            of(JobPositionActions.getAllJobPositionFailure({ error }))
-          )
-        )
-      )
-    )
+            of(JobPositionActions.getAllJobPositionFailure({ error })),
+          ),
+        ),
+      ),
+    ),
   );
 }

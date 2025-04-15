@@ -26,6 +26,7 @@ import java.util.List;
 @Setter
 public class CommonProfileRequestDTO {
 
+    private Integer id;
     private Integer idCandidate;
     private PersonalDetailRequestDTO personalDetail;
     private List<ProfessionalExperienceRequestDTO> professionalExperiences;

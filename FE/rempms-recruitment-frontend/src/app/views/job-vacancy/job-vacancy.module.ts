@@ -51,7 +51,11 @@ import { employerReducer } from '../employer/store/employer.reducer';
     StoreModule.forFeature('jobPositionState', jobPositionReducer),
     StoreModule.forFeature('employerState', employerReducer),
     StoreModule.forFeature('jobVacancyState', jobVacancyReducer),
-    EffectsModule.forFeature([JobPositionEffects, EmployerEffects, JobVacancyEffects]),
+    EffectsModule.forFeature([
+      JobPositionEffects,
+      EmployerEffects,
+      JobVacancyEffects,
+    ]),
   ],
   declarations: [JobVacancyComponent],
 })

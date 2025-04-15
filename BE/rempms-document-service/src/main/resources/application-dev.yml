@@ -1,5 +1,5 @@
 server:
-  port: 8190
+  port: 8197
 
 ##DB properties
 spring:

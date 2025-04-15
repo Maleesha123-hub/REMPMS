@@ -1,4 +1,4 @@
 export interface Downloader {
-    contentType: string;
-    documentPath: string;
+  contentType: string;
+  documentPath: string;
 }

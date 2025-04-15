@@ -1,30 +1,44 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>Achievements</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="achievementForm" cForm>
           <div class="row">
-
-            <input id="id_job_category" type="hidden">
+            <input
+              id="idAchievement"
+              formControlName="idAchievement"
+              type="hidden"
+            />
 
             <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>Achievements</label>
-                <textarea cFormControl
-                          id="jobsdzzs" rows="6" cols="30" style="width: 600px"
-                          placeholder="Write your achievements"></textarea>
+                <textarea
+                  cFormControl
+                  id="achievement"
+                  formControlName="achievement"
+                  rows="6"
+                  cols="30"
+                  style="width: 600px"
+                  placeholder="Write your achievements"
+                ></textarea>
               </div>
             </div>
 
+            <div
+              *ngIf="
+                achievementForm.get('achievement').errors?.required &&
+                achievementForm.get('achievement').touched
+              "
+            >
+              <p class="form-validation">Achievement is required.</p>
+            </div>
           </div>
         </form>
-
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -32,14 +46,45 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
-          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="<<Back"
+            (click)="redirectToBack()"
+          />
+          &nbsp; &nbsp;
+          <Button
+            cButton
+            class="me-1"
+            color="success"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showSaveButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >&nbsp;Save&nbsp;
+          </Button>
+
+          <Button
+            cButton
+            class="me-1"
+            color="info"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showUpdateButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >Update </Button
+          >&nbsp;
+
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="Next>>"
+            (click)="redirectToNext()"
+          />
         </div>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

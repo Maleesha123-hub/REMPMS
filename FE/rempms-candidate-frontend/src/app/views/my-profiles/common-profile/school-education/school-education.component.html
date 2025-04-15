@@ -1,140 +1,357 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>School Education</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="schoolEducationForm" cForm>
           <div class="row">
+            <input
+              id="idSchoolEducation"
+              type="hidden"
+              formControlName="idSchoolEducation"
+            />
 
-            <input id="id_job_category" type="hidden">
-
-            <div class="col-md-3">
-              <div class="mb-2">
-                <label cLabel>Qualification</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_category_atus">
-                  <option value="-1">Select a qualification</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <div class="mb-2">
-                <label cLabel>Scheme</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_category_common_sftrrt2atus">
-                  <option value="-1">Select a scheme</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="col-md-3">
+            <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>School/Institute</label>
-                <input cFormControl
-                       id="job_category_name"
-                       placeholder="Enter a school"
-                       type="text"
+                <input
+                  cFormControl
+                  formControlName="school"
+                  id="school"
+                  placeholder="Enter a school"
+                  type="text"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                schoolEducationForm.get('school').errors?.required &&
+                schoolEducationForm.get('school').touched
+              "
+            >
+              <p class="form-validation">School is required.</p>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-2">
+                <label cLabel>Qualification</label>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="schoolEduQualification"
+                  id="schoolEduQualification"
+                  (change)="
+                    onQualificationChange($event);
+                    getBySchoolEduQualification($event);
+                    getSubjectsBySchoolEduQualification($event)
+                  "
+                >
+                  <option value="-1">Select a qualification</option>
+                  <option value="G_C_E_A_L">G.C.E A/L</option>
+                  <option value="G_C_E_O_L">G.C.E O/L</option>
+                </select>
+              </div>
+            </div>
+
+            <div
+              *ngIf="
+                schoolEducationForm.get('schoolEduQualification').errors
+                  ?.required &&
+                schoolEducationForm.get('schoolEduQualification').touched
+              "
+            >
+              <p class="form-validation">
+                School education qualification is required.
+              </p>
+            </div>
+
+            <div class="col-md-4">
+              <div class="mb-2">
+                <label cLabel>Scheme</label>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idScheme"
+                  id="idScheme"
+                  (change)="getBySchoolEduQualificationAndScheme($event)"
+                >
+                  <option value="-1">Select a scheme</option>
+                  <option *ngFor="let scheme of schemes" [value]="scheme.id">
+                    {{ scheme.schemeName }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div
+              *ngIf="
+                schoolEducationForm.get('idScheme').errors?.required &&
+                schoolEducationForm.get('idScheme').touched
+              "
+            >
+              <p class="form-validation">Scheme is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Subject</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_categost2atus">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idSubject"
+                  id="idSubject"
+                >
                   <option value="-1">Select a subject</option>
+                  <option *ngFor="let subject of subjects" [value]="subject.id">
+                    {{ subject.subjectName }}
+                  </option>
                 </select>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                schoolEducationForm.get('idSubject').errors?.required &&
+                schoolEducationForm.get('idSubject').touched
+              "
+            >
+              <p class="form-validation">Subject is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Grade</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_categort2atus">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="grade"
+                  id="grade"
+                >
                   <option value="-1">Select a grade</option>
+                  <option value="HIGHER_DISTINCTION">Higher Distinction</option>
+                  <option value="DISTINCTION">Distinction</option>
+                  <option value="CREDIT_PASS">Credit Pass</option>
+                  <option value="SIMPLE_PASS">Simple Pass</option>
+                  <option value="Fail">Fail</option>
                 </select>
               </div>
             </div>
 
+            <div
+              *ngIf="
+                schoolEducationForm.get('grade').errors?.required &&
+                schoolEducationForm.get('grade').touched
+              "
+            >
+              <p class="form-validation">Grade is required.</p>
+            </div>
+
+            <div class="col-md-3">
+              <div class="mb-2">
+                <p style="color: white">##</p>
+                <input
+                  cButton
+                  class="btn-warning"
+                  type="button"
+                  value="+"
+                  style="
+                    text-align: center;
+                    color: white;
+                    height: 30px;
+                    line-height: 1px;
+                    font-size: 15px;
+                  "
+                  (click)="subjectHasSchoolEduGradeListForTempListTable()"
+                />
+              </div>
+            </div>
+
+            <c-card-body>
+              <table [striped]="true" cTable>
+                <thead>
+                  <tr>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Results</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let tempList of subjectHasSchoolEduGradeTempList;
+                      let i = index
+                    "
+                  >
+                    <td>{{ tempList.subject }}</td>
+                    <td>{{ tempList.grade }}</td>
+                    <td>
+                      <a (click)="removeTempSubHasGradeItem(i)">remove</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </c-card-body>
+
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Achieved on</label>
-                <input cFormControl
-                       id="job_cadsssteds"
-                       type="Date"
+                <input
+                  cFormControl
+                  formControlName="achievedOn"
+                  id="achievedOn"
+                  type="Date"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                schoolEducationForm.get('achievedOn').errors?.required &&
+                schoolEducationForm.get('achievedOn').touched
+              "
+            >
+              <p class="form-validation">Achieved on is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Medium</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_csdtus">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idLanguage"
+                  id="idLanguage"
+                >
                   <option value="-1">Select a medium</option>
+                  <option
+                    *ngFor="let language of languages"
+                    [value]="language.idLanguage"
+                  >
+                    {{ language.languageName }}
+                  </option>
                 </select>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                schoolEducationForm.get('idLanguage').errors?.required &&
+                schoolEducationForm.get('idLanguage').touched
+              "
+            >
+              <p class="form-validation">Language is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Country</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_castus">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idCountry"
+                  id="idCountry"
+                >
                   <option value="-1">Select a country</option>
+                  <option
+                    *ngFor="let country of countries"
+                    [value]="country.idCountry"
+                  >
+                    {{ country.countryName }}
+                  </option>
                 </select>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                schoolEducationForm.get('idCountry').errors?.required &&
+                schoolEducationForm.get('idCountry').touched
+              "
+            >
+              <p class="form-validation">Country is required.</p>
             </div>
 
             <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>Description</label>
-                <textarea cFormControl
-                          id="jobsdzzs" rows="2" style="width: 300px"
-                          placeholder="Enter a description"></textarea>
+                <textarea
+                  cFormControl
+                  formControlName="description"
+                  id="description"
+                  rows="2"
+                  style="width: 300px"
+                  placeholder="Enter a description"
+                ></textarea>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                schoolEducationForm.get('description').errors?.required &&
+                schoolEducationForm.get('description').touched
+              "
+            >
+              <p class="form-validation">Description is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
-                <p style="color: white">##</p>&nbsp;
-                <input cButton class="btn-secondary" type="button" value="Add To List"
-                       style="text-align: center; color:white; height: 30px; line-height: 1px;"/>
+                <p style="color: white">##</p>
+                &nbsp;
+                <input
+                  cButton
+                  class="btn-secondary"
+                  type="button"
+                  value="Add To List"
+                  style="
+                    text-align: center;
+                    color: white;
+                    height: 30px;
+                    line-height: 1px;
+                  "
+                  (click)="schoolEducationsForTempListTable()"
+                />
               </div>
             </div>
-
           </div>
         </form>
 
         <c-card-body>
+          <ng-container *ngIf="emptyListErrorVisible">
+            <div class="error-message" style="color: red">
+              The school education cart table is empty.
+            </div>
+          </ng-container>
+
           <table [striped]="true" cTable>
             <thead>
-            <tr>
-              <th scope="col">Education Level</th>
-              <th scope="col">Scheme</th>
-              <th scope="col">Achieved on</th>
-              <th scope="col">Action</th>
-            </tr>
+              <tr>
+                <th scope="col">Education Level</th>
+                <th scope="col">Scheme</th>
+                <th scope="col">Achieved on</th>
+                <th scope="col">Action</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td><a href="#">remove</a></td>
-            </tr>
+              <tr *ngFor="let tempList of tempList; let i = index">
+                <td>{{ tempList.schoolEduQualification }}</td>
+                <td>{{ tempList.schemeName }}</td>
+                <td>{{ tempList.achievedOn }}</td>
+                <td><a (click)="removeTempListItem(i)">remove</a></td>
+              </tr>
             </tbody>
           </table>
         </c-card-body>
-
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -142,9 +359,44 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
-          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="<<Back"
+            (click)="redirectToBack()"
+          />
+          &nbsp;
+
+          <Button
+            cButton
+            class="me-1"
+            color="success"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showSaveButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >&nbsp;Save&nbsp;
+          </Button>
+
+          <Button
+            cButton
+            class="me-1"
+            color="info"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showUpdateButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >Update </Button
+          >&nbsp;
+
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="Next>>"
+            (click)="redirectToNext()"
+          />
         </div>
       </c-card-body>
     </c-card>
@@ -155,21 +407,46 @@
       <c-card-body>
         <table [striped]="true" cTable>
           <thead>
-          <tr>
-            <th scope="col">Education Level</th>
-            <th scope="col">Scheme</th>
-            <th scope="col">Achieved on</th>
-            <th scope="col">Action</th>
-          </tr>
+            <tr>
+              <th scope="col">Education Level</th>
+              <th scope="col">Scheme</th>
+              <th scope="col">Achieved on</th>
+              <th scope="col">Action</th>
+            </tr>
           </thead>
           <tbody>
-
+            <tr *ngFor="let schEdu of tableList; let i = index">
+              <td>{{ schEdu.schoolEduQualification }}</td>
+              <td>{{ schEdu.schemeName }}</td>
+              <td>{{ schEdu.achievedOn }}</td>
+              <td>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="primary"
+                  value="Edit"
+                  size="sm"
+                  mat-button
+                  (click)="editSchoolEducation(schEdu)"
+                  >Edit
+                </Button>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="danger"
+                  value="Delete"
+                  size="sm"
+                  mat-button
+                  style="color: white"
+                  (click)="deleteSchoolEducation(schEdu)"
+                >
+                  Delete
+                </Button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

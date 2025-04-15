@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 import { CommonResponse } from '../../model/commonResponse/CommonResponse';
 import { Employer } from '../../model/employer/Employer';
 
@@ -29,7 +29,7 @@ export class EmployerService {
       map((response) => response),
       catchError((error) => {
         return this.handleError(error);
-      })
+      }),
     );
   }
 
@@ -45,7 +45,7 @@ export class EmployerService {
       map((response) => response),
       catchError((error) => {
         return this.handleError(error);
-      })
+      }),
     );
   }
 
@@ -61,7 +61,7 @@ export class EmployerService {
       map((response) => response),
       catchError((error) => {
         return this.handleError(error);
-      })
+      }),
     );
   }
 

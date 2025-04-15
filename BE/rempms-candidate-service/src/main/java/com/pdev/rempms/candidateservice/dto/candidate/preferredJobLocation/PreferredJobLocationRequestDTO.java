@@ -12,6 +12,6 @@ import lombok.Setter;
 public class PreferredJobLocationRequestDTO {
 
     private Integer idPreferredJobLocation;
-    private Integer countryId;
+    private Integer idCountry;
 
 }

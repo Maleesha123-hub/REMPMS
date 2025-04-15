@@ -1,0 +1,109 @@
+<div
+  class="fade show"
+  *ngIf="loading"
+  style="text-align: center; padding-top: calc(100vh / 2); height: 100vh"
+>
+  <i class="spinner-grow spinner-grow-sm"></i>
+  <span class="m-1">Loading...</span>
+</div>
+
+<div
+  class="bg-light dark:bg-transparent min-vh-100 d-flex flex-row align-items-center"
+>
+  <c-container breakpoint="md">
+    <c-row class="justify-content-center">
+      <c-col lg="10" xl="8">
+        <c-card-group>
+          <c-card class="p-4">
+            <c-card-body>
+              <form [formGroup]="loginForm" cForm>
+                <h1>Login</h1>
+                <p class="text-body-secondary">Sign In to your account</p>
+                <c-input-group class="mb-3">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilUser"></svg>
+                  </span>
+                  <input
+                    autoComplete="username"
+                    formControlName="username"
+                    cFormControl
+                    placeholder="Username"
+                    required="true"
+                  />
+                </c-input-group>
+                <div
+                  *ngIf="
+                    loginForm.get('username').errors?.required &&
+                    loginForm.get('username').touched
+                  "
+                >
+                  <p class="form-validation">Username is required.</p>
+                </div>
+                <c-input-group class="mb-4">
+                  <span cInputGroupText>
+                    <svg cIcon name="cilLockLocked"></svg>
+                  </span>
+                  <input
+                    autoComplete="current-password"
+                    formControlName="password"
+                    cFormControl
+                    placeholder="Password"
+                    type="password"
+                    required="true"
+                  />
+                </c-input-group>
+                <div
+                  *ngIf="
+                    loginForm.get('password').errors?.required &&
+                    loginForm.get('password').touched
+                  "
+                >
+                  <p class="form-validation">Password is required.</p>
+                </div>
+                <c-row>
+                  <c-col xs="6">
+                    <button
+                      cButton
+                      class="px-4"
+                      color="primary"
+                      (click)="login()"
+                    >
+                      Login
+                    </button>
+                  </c-col>
+                  <c-col class="text-right" xs="6">
+                    <button cButton class="px-0" color="link">
+                      Forgot password?
+                    </button>
+                  </c-col>
+                </c-row>
+              </form>
+            </c-card-body>
+          </c-card>
+          <c-card
+            [ngStyle]="{ 'minWidth.%': 44 }"
+            class="text-white bg-primary py-5"
+          >
+            <!-- <c-card-body class="text-center">
+              <div>
+                <h2>Sign up</h2>
+                <p>
+                  If you are not yet registered as a candidate, please take a
+                  moment to create your profile and join us today.
+                </p>
+                <button
+                  cButton
+                  class="mt-3"
+                  color="primary"
+                  (click)="redirectToRegister()"
+                >
+                  Register Now!
+                </button>
+              </div>
+            </c-card-body> -->
+          </c-card>
+        </c-card-group>
+      </c-col>
+    </c-row>
+  </c-container>
+</div>

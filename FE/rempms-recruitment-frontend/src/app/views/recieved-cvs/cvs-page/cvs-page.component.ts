@@ -29,7 +29,7 @@ export class CvsPageComponent {
   constructor(
     private formBuilder: FormBuilder,
     private recivedCvsStore: Store<{ recievedCvsState: RecievedCvsState }>,
-    private documentService: DocumentService
+    private documentService: DocumentService,
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +51,7 @@ export class CvsPageComponent {
 
   getRecievedCvsFromStore() {
     this.selectRecievedCvsDetails$ = this.recivedCvsStore.select(
-      selectRecievedCvsDetails
+      selectRecievedCvsDetails,
     );
     this.selectRecievedCvsDetails$
       .pipe(takeUntil(this.unsubscribe$))
@@ -85,7 +85,7 @@ export class CvsPageComponent {
           icon: 'error',
           confirmButtonText: 'OK',
         });
-      }
+      },
     );
   }
 
@@ -124,7 +124,7 @@ export class CvsPageComponent {
           icon: 'error',
           confirmButtonText: 'OK',
         });
-      }
+      },
     );
   }
 
@@ -174,14 +174,14 @@ export class CvsPageComponent {
             icon: 'error',
             confirmButtonText: 'OK',
           });
-        }
+        },
       );
     }
   }
 
   onMasterCheckboxChange(masterCheckbox: HTMLInputElement) {
     const checkboxes = document.querySelectorAll(
-      'tbody input[type="checkbox"]'
+      'tbody input[type="checkbox"]',
     );
     checkboxes.forEach((element) => {
       const checkbox = element as HTMLInputElement;
@@ -198,7 +198,7 @@ export class CvsPageComponent {
 
   handleError(): void {
     this.error$ = this.recivedCvsStore.pipe(
-      select(selectRecievedCvsErrorResponse)
+      select(selectRecievedCvsErrorResponse),
     );
     this.error$.pipe(takeUntil(this.unsubscribe$)).subscribe((state) => {
       if (state) {

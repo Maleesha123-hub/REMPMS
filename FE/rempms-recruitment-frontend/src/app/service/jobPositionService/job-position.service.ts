@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { JobPositionRequest } from '../../model/jobPosition/JobPositionRequest';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { CommonResponse } from 'src/app/model/commonResponse/CommonResponse';
+import { environment } from '../../../environments/environment';
+import { CommonResponse } from '../../../app/model/commonResponse/CommonResponse';
 import { Observable, catchError, map, throwError } from 'rxjs';
 
 /**
@@ -30,7 +30,7 @@ export class JobPositionService {
       map((response) => response),
       catchError((error) => {
         return this.handleError(error);
-      })
+      }),
     );
   }
 
@@ -46,7 +46,7 @@ export class JobPositionService {
       map((response) => response),
       catchError((error) => {
         return this.handleError(error);
-      })
+      }),
     );
   }
 
@@ -62,7 +62,7 @@ export class JobPositionService {
       map((response) => response),
       catchError((error) => {
         return this.handleError(error);
-      })
+      }),
     );
   }
 
@@ -73,7 +73,7 @@ export class JobPositionService {
       map((response) => response),
       catchError((error) => {
         return this.handleError(error);
-      })
+      }),
     );
   }
 

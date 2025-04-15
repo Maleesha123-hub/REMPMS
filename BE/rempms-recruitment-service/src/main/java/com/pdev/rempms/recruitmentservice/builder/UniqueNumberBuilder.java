@@ -1,6 +1,6 @@
 package com.pdev.rempms.recruitmentservice.builder;
 
-import com.pdev.rempms.recruitmentservice.constants.enums.ReferenceNo;
+import com.pdev.rempms.recruitmentservice.enums.ReferenceNo;
 import com.pdev.rempms.recruitmentservice.exception.BaseException;
 import com.pdev.rempms.recruitmentservice.model.employer.Employer;
 import com.pdev.rempms.recruitmentservice.model.jobVacancy.JobVacancy;

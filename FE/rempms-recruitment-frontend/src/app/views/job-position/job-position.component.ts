@@ -15,7 +15,7 @@ import { selectJobPositionSavedResponse } from './store/job-position.selector';
 import { Store, select } from '@ngrx/store';
 import Swal from 'sweetalert2';
 import { Industry } from '../../model/industry/Industry';
-import { HandleErrors } from 'src/app/model/errors/handle-errors';
+import { HandleErrors } from '../../model/errors/handle-errors';
 
 @Component({
   selector: 'app-job-position',
@@ -35,8 +35,8 @@ export class JobPositionComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<{ jobPosition: JobPositionState }>
-  ) { }
+    private store: Store<{ jobPosition: JobPositionState }>,
+  ) {}
 
   ngOnInit(): void {
     this.jobPositionForm = this.formBuilder.group({
@@ -56,7 +56,7 @@ export class JobPositionComponent implements OnInit {
   getAllJobPositions(): void {
     this.store.dispatch(JobPositionActions.getAllJobPositions());
     this.jobPositionsResponseDetails$ = this.store.pipe(
-      select(selectJobPositionsDetails)
+      select(selectJobPositionsDetails),
     );
     this.jobPositionsResponseDetails$
       .pipe(takeUntil(this.unsubscribe$))
@@ -78,14 +78,14 @@ export class JobPositionComponent implements OnInit {
             confirmButtonText: 'OK',
           });
           console.warn('Error loading job positions', error);
-        }
+        },
       );
   }
 
   getAllActiveIndustries(): void {
     this.store.dispatch(JobPositionActions.getAllActiveIndustries());
     this.jobPositionsResponseDetails$ = this.store.pipe(
-      select(selectActiveIndustries)
+      select(selectActiveIndustries),
     );
     this.jobPositionsResponseDetails$
       .pipe(takeUntil(this.unsubscribe$))
@@ -107,7 +107,7 @@ export class JobPositionComponent implements OnInit {
             confirmButtonText: 'OK',
           });
           console.warn('Error loading industries', error);
-        }
+        },
       );
   }
 
@@ -131,10 +131,10 @@ export class JobPositionComponent implements OnInit {
         industryId: formValue.industryId,
       };
       this.store.dispatch(
-        JobPositionActions.saveOrModifyJobPosition({ jobPosition })
+        JobPositionActions.saveOrModifyJobPosition({ jobPosition }),
       );
       this.jobPositionSavedResponseDetails$ = this.store.pipe(
-        select(selectJobPositionSavedResponse)
+        select(selectJobPositionSavedResponse),
       );
       this.jobPositionSavedResponseDetails$
         .pipe(takeUntil(this.unsubscribe$))
@@ -161,7 +161,7 @@ export class JobPositionComponent implements OnInit {
               confirmButtonText: 'OK',
             });
             console.warn('Error saving the job position', error);
-          }
+          },
         );
     } else {
       this.jobPositionForm.markAllAsTouched();
@@ -171,7 +171,7 @@ export class JobPositionComponent implements OnInit {
   deleteById(id: number): void {
     this.store.dispatch(JobPositionActions.deleteJobPosition({ id }));
     this.jobPositionDeletedResponseDetails$ = this.store.pipe(
-      select(selectJobPositionDeletedResponse)
+      select(selectJobPositionDeletedResponse),
     );
     this.jobPositionDeletedResponseDetails$
       .pipe(takeUntil(this.unsubscribe$))
@@ -198,7 +198,7 @@ export class JobPositionComponent implements OnInit {
             confirmButtonText: 'OK',
           });
           console.warn('Error deleting a job position', error);
-        }
+        },
       );
   }
 
@@ -231,7 +231,7 @@ export class JobPositionComponent implements OnInit {
   // This method is allowed to change the 'Create' btn name as 'Update.
   onCreateClick(): void {
     const createButton = document.querySelector(
-      'input[value="Create"]'
+      'input[value="Create"]',
     ) as HTMLInputElement;
     if (createButton) {
       createButton.value = 'Update';
@@ -242,7 +242,7 @@ export class JobPositionComponent implements OnInit {
   resetForm(): void {
     this.jobPositionForm.reset();
     const updateButton = document.querySelector(
-      'input[value="Update"]'
+      'input[value="Update"]',
     ) as HTMLInputElement;
     if (updateButton) {
       updateButton.value = 'Create';

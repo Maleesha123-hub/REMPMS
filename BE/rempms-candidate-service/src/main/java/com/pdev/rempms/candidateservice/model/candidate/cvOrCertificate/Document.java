@@ -25,7 +25,7 @@ public class Document {
     private String documentName;
 
     @JoinColumn(name = "document_type_id_document_type")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private DocumentType documentType;
 
     @Column(name = "file_path")
@@ -44,7 +44,7 @@ public class Document {
     private Boolean active;
 
     @JoinColumn(name = "candidate_id_candidate")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Candidate candidate;
 

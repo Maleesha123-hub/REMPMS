@@ -8,7 +8,7 @@ import { catchError, map, mergeMap, of } from 'rxjs';
 export class RecievedCvsEffects {
   constructor(
     private actions$: Actions,
-    private recievedCvsService: RecievedCvsService
+    private recievedCvsService: RecievedCvsService,
   ) {}
 
   getRecievedCvsById$ = createEffect(() =>
@@ -19,13 +19,15 @@ export class RecievedCvsEffects {
           map((commonResponse) =>
             RecievdedCvsActions.loadRecievedCvsByVacancyIdSuccess({
               commonResponse,
-            })
+            }),
           ),
           catchError((error) =>
-            of(RecievdedCvsActions.loadRecievedCvsByVacancyIdFailure({ error }))
-          )
-        )
-      )
-    )
+            of(
+              RecievdedCvsActions.loadRecievedCvsByVacancyIdFailure({ error }),
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 }

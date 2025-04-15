@@ -10,13 +10,13 @@ resilience4j:
 spring:
   cloud:
     consul:
-      host: localhost
+      host: ${CONSUL_SERVER_ADDRESS:localhost}
       port: 8500
       discovery:
         instanceId: ${spring.application.name}:${random.value}
     openfeign:
       okhttp:
-        enabled: true
+        enabled: true         # Enable okhttp for OpenFeign clients
 
   profiles:
     active: dev

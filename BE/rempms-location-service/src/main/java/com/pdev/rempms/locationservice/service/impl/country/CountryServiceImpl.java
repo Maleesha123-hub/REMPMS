@@ -1,6 +1,6 @@
 package com.pdev.rempms.locationservice.service.impl.country;
 
-import com.pdev.rempms.locationservice.constants.enums.CommonStatus;
+import com.pdev.rempms.locationservice.enums.CommonStatus;
 import com.pdev.rempms.locationservice.constants.validation.CommonValidationMessage;
 import com.pdev.rempms.locationservice.constants.validation.CountryValidationMessage;
 import com.pdev.rempms.locationservice.dto.country.CountryDTO;
@@ -11,6 +11,7 @@ import com.pdev.rempms.locationservice.model.Country;
 import com.pdev.rempms.locationservice.repository.CountryRepository;
 import com.pdev.rempms.locationservice.service.country.CountryService;
 import com.pdev.rempms.locationservice.util.CommonResponse;
+import com.pdev.rempms.locationservice.util.CommonUtil;
 import com.pdev.rempms.locationservice.util.CommonValidation;
 import com.pdev.rempms.locationservice.util.DateTimeUtil;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +33,7 @@ import java.util.Optional;
 @Service
 public class CountryServiceImpl implements CountryService {
 
+    private final CommonUtil commonUtil;
     private final CountryMapper countryMapper;
     private final CountryRepository countryRepository;
 
@@ -58,13 +61,11 @@ public class CountryServiceImpl implements CountryService {
             country = countryRepository.findById(Long.valueOf(dto.getIdCountry())).get();
             country = countryMapper.toEntity(country, dto);
             country.getAuditData().setUpdatedOn(DateTimeUtil.getSriLankaTime());
-            country.getAuditData().setUpdatedBy(Long.valueOf(1)); //need further development for authorization
+            country.getAuditData().setUpdatedBy(commonUtil.getUsername()); //need further development for authorization
         } else {
             log.info("CountryServiceImpl -> saveUpdateCountry() => Save new country!");
-            AuditData auditData = new AuditData();
+            AuditData auditData = new AuditData(LocalDateTime.now(), commonUtil.getUsername());
             country = countryMapper.toEntity(country, dto);
-            auditData.setCreatedOn(DateTimeUtil.getSriLankaTime());
-            auditData.setCreatedBy(Long.valueOf(1)); //need further development for authorization
             country.setAuditData(auditData);
         }
         country.setCommonStatus(CommonStatus.ACTIVE.getValue());
@@ -172,7 +173,7 @@ public class CountryServiceImpl implements CountryService {
             log.info("CountryServiceImpl -> deleteCountryById() => Country found.");
             country.get().setCommonStatus(CommonStatus.DELETED.getValue());
             country.get().getAuditData().setUpdatedOn(DateTimeUtil.getSriLankaTime());
-            country.get().getAuditData().setUpdatedBy(Long.valueOf(1));
+            country.get().getAuditData().setUpdatedBy(commonUtil.getUsername());
             countryRepository.save(country.get());
             commonResponse.setMessage(CountryValidationMessage.COUNTRY_DELETED_SUCCESS);
             commonResponse.setStatus(HttpStatus.OK);

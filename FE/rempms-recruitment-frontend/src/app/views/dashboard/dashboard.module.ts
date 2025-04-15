@@ -12,7 +12,7 @@ import {
   NavModule,
   ProgressModule,
   TableModule,
-  TabsModule
+  TabsModule,
 } from '@coreui/angular';
 import { IconModule } from '@coreui/icons-angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
@@ -37,9 +37,8 @@ import { DashboardComponent } from './dashboard.component';
     ButtonGroupModule,
     ChartjsModule,
     AvatarModule,
-    TableModule
+    TableModule,
   ],
-  declarations: [DashboardComponent]
+  declarations: [DashboardComponent],
 })
-export class DashboardModule {
-}
+export class DashboardModule {}

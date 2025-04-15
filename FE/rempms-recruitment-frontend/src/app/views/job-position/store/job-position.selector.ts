@@ -6,25 +6,25 @@ export const selectJobPositionState =
 
 export const selectJobPositionsDetails = createSelector(
   selectJobPositionState,
-  (state: JobPositionState) => state.jobPositionsResponse
+  (state: JobPositionState) => state.jobPositionsResponse,
 );
 
 export const selectJobPositionDeletedResponse = createSelector(
   selectJobPositionState,
-  (state: JobPositionState) => state.deleteJobPositionResponse
+  (state: JobPositionState) => state.deleteJobPositionResponse,
 );
 
 export const selectJobPositionSavedResponse = createSelector(
   selectJobPositionState,
-  (state: JobPositionState) => state.savedJobPositionResponse
+  (state: JobPositionState) => state.savedJobPositionResponse,
 );
 
 export const selectActiveIndustries = createSelector(
   selectJobPositionState,
-  (state: JobPositionState) => state.activeIndustriesResponse
+  (state: JobPositionState) => state.activeIndustriesResponse,
 );
 
 export const selectJobPositionErrorResponse = createSelector(
   selectJobPositionState,
-  (state: JobPositionState) => state.error
+  (state: JobPositionState) => state.error,
 );

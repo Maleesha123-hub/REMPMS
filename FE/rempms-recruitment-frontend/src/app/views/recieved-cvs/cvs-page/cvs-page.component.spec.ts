@@ -8,7 +8,7 @@ describe('CvsPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CvsPageComponent]
+      declarations: [CvsPageComponent],
     });
     fixture = TestBed.createComponent(CvsPageComponent);
     component = fixture.componentInstance;

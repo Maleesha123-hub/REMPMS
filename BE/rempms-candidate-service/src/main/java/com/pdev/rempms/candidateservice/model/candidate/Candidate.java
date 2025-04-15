@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +38,9 @@ public class Candidate {
 
     @Column(name = "candidate_no") // should auto generate
     private String candidateNo;
+
+    @Column(name = "draft_id_draft", nullable = false) // should auto generate
+    private Integer idDraft;
 
     @Column(name = "user_account_id_user_account") // After creating user account during the sign up - get that id
     private Integer userAccount; // user-service
@@ -57,43 +61,55 @@ public class Candidate {
     @Column(name = "is_verify")
     private Boolean isVerify;
 
-    @OneToOne(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
     private PersonalDetail personalDetail;
 
-    @OneToOne(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
     private Achievement achievement;
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ProfessionalExperience> professionalExperienceList;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<ProfessionalExperience> professionalExperienceList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<HigherEducation> higherEducationList;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<HigherEducation> higherEducationList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<SchoolEducation> schoolEducationList;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<SchoolEducation> schoolEducationList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Membership> membershipList;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<Membership> membershipList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<LanguageProficiency> languageProficiencyList;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<LanguageProficiency> languageProficiencyList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Research> researchList;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<Research> researchList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Referee> refereeList;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<Referee> refereeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<FamilyInformation> familyInformationList;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<FamilyInformation> familyInformationList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<JobPreference> jobPreferenceList;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<JobPreference> jobPreferenceList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PreferredJobLocation> preferredJobLocations;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<PreferredJobLocation> preferredJobLocations = new ArrayList<>();
 
-    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Document> documentList;
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+    private List<Document> documentList = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "id=" + id +
+                ", candidateNo='" + candidateNo + '\'' +
+                ", idDraft=" + idDraft +
+                ", userAccount=" + userAccount +
+                ", commonStatus='" + commonStatus + '\'' +
+                ", auditData=" + auditData +
+                ", isVerify=" + isVerify +
+                '}';
+    }
 }

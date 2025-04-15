@@ -53,7 +53,7 @@ export class JobVacancyComponent implements OnInit {
     private store: Store<{ jobVacancy: JobVacancyState }>,
     private jobPositionStore: Store<{ jobPosition: JobPositionState }>,
     private employerStore: Store<{ employer: EmployerState }>,
-    private documentService: DocumentService
+    private documentService: DocumentService,
   ) {}
 
   ngOnInit(): void {
@@ -81,7 +81,7 @@ export class JobVacancyComponent implements OnInit {
   getAllJobPositions(): void {
     this.jobPositionStore.dispatch(JobPositionActions.getAllJobPositions());
     this.jobPositionsResponseDetails$ = this.jobPositionStore.pipe(
-      select(selectJobPositionsDetails)
+      select(selectJobPositionsDetails),
     );
     this.jobPositionsResponseDetails$
       .pipe(takeUntil(this.unsubscribe$))
@@ -97,7 +97,7 @@ export class JobVacancyComponent implements OnInit {
   getAllEmployers(): void {
     this.employerStore.dispatch(EmployerActions.loadEmployers());
     this.employersResponseDetails$ = this.employerStore.pipe(
-      select(selectEmployersData)
+      select(selectEmployersData),
     );
     this.employersResponseDetails$
       .pipe(takeUntil(this.unsubscribe$))
@@ -132,10 +132,10 @@ export class JobVacancyComponent implements OnInit {
         JobVacancyActions.saveOrModifyJobVacancy({
           jobVacancy: jobVacancy,
           file: this.file,
-        })
+        }),
       );
       this.selectJobVacancySavedResponse$ = this.store.select(
-        selectJobVacancySavedResponse
+        selectJobVacancySavedResponse,
       );
       this.selectJobVacancySavedResponse$
         .pipe(takeUntil(this.unsubscribe$))
@@ -161,7 +161,7 @@ export class JobVacancyComponent implements OnInit {
   getAllJobVacancies() {
     this.store.dispatch(JobVacancyActions.loadJobVacancies());
     this.selectJobVacanciesDetails$ = this.store.select(
-      selectJobVacanciesDetails
+      selectJobVacanciesDetails,
     );
     this.selectJobVacanciesDetails$
       .pipe(takeUntil(this.unsubscribe$))
@@ -206,7 +206,7 @@ export class JobVacancyComponent implements OnInit {
           icon: 'error',
           confirmButtonText: 'OK',
         });
-      }
+      },
     );
   }
 
@@ -251,7 +251,7 @@ export class JobVacancyComponent implements OnInit {
     this.jobVacancyForm.reset();
     this.imageSrc = 'assets/img/default_image.jpg';
     const updateButton = document.querySelector(
-      'input[value="Update"]'
+      'input[value="Update"]',
     ) as HTMLInputElement;
     if (updateButton) {
       updateButton.value = 'Create';

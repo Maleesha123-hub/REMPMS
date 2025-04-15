@@ -1,6 +1,6 @@
 {
-  "name": "coreui-free-angular-admin-template",
-  "version": "4.7.0",
+  "name": "rempms-candidate-fe",
+  "version": "0.0.1",
   "copyright": "Copyright 2023 creativeLabs Łukasz Holeczek",
   "license": "MIT",
   "author": "The CoreUI Team (https://github.com/orgs/coreui/people) and contributors",
@@ -12,7 +12,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -28,6 +28,7 @@
     "@angular/platform-browser": "^17.0.4",
     "@angular/platform-browser-dynamic": "^17.0.4",
     "@angular/router": "^17.0.4",
+    "@auth0/angular-jwt": "^5.2.0",
     "@coreui/angular": "~4.7.0",
     "@coreui/angular-chartjs": "~4.7.0",
     "@coreui/chartjs": "^3.1.2",
@@ -35,10 +36,15 @@
     "@coreui/icons": "^3.0.1",
     "@coreui/icons-angular": "~4.7.0",
     "@coreui/utils": "^2.0.2",
+    "@ngrx/effects": "^17.2.0",
+    "@ngrx/store": "^17.2.0",
+    "@ngrx/store-devtools": "^17.2.0",
     "chart.js": "^3.9.1",
     "lodash-es": "^4.17.21",
     "ngx-scrollbar": "^13.0.3",
+    "ngx-spinner": "^17.0.0",
     "rxjs": "~7.8.1",
+    "sweetalert2": "^11.6.13",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },

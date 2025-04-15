@@ -1,7 +1,7 @@
 package com.pdev.rempms.recruitmentservice.listeners;
 
 import com.pdev.rempms.recruitmentservice.builder.UniqueNumberBuilder;
-import com.pdev.rempms.recruitmentservice.constants.enums.ReferenceNo;
+import com.pdev.rempms.recruitmentservice.enums.ReferenceNo;
 import com.pdev.rempms.recruitmentservice.helper.AutowiredHelper;
 import com.pdev.rempms.recruitmentservice.model.jobVacancy.JobVacancy;
 import com.pdev.rempms.recruitmentservice.service.jobVacancy.JobVacancyService;

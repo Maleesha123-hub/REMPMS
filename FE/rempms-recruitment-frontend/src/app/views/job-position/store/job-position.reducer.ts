@@ -38,7 +38,7 @@ export const jobPositionReducer = createReducer(
       loading: false,
       savedJobPositionResponse: commonResponse,
       error: null,
-    })
+    }),
   ),
   // Handle the action when save or modifying job position failure.
   on(JobPositionActions.saveOrModifyJobPositionFailure, (state, { error }) => ({
@@ -62,7 +62,7 @@ export const jobPositionReducer = createReducer(
       loading: false,
       deleteJobPositionResponse: commonResponse,
       error: null,
-    })
+    }),
   ),
   // Handle the action when delete a job position failure
   on(JobPositionActions.deleteJobPositionFailure, (state, { error }) => ({
@@ -107,7 +107,7 @@ export const jobPositionReducer = createReducer(
       loading: false,
       activeIndustriesResponse: response,
       error: null,
-    })
+    }),
   ),
   // Handle the action when loading active industries failure
   on(JobPositionActions.getActiveIndustriesFailure, (state, { error }) => ({
@@ -115,5 +115,5 @@ export const jobPositionReducer = createReducer(
     loading: false,
     activeIndustriesResponse: null,
     error: error,
-  }))
+  })),
 );

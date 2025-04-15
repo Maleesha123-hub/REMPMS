@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/location/country")
+@RequestMapping("/api/location/v1/country")
 public class CountryController {
 
     private final CountryService countryService;
@@ -38,8 +38,8 @@ public class CountryController {
      * @author maleeshasa
      */
     @GetMapping(value = "/getById/{idCountry}")
-    public ResponseEntity<CommonResponse> getActiveCountryById(@PathVariable Long idCountry) {
-        return countryService.getActiveCountryById(idCountry);
+    public ResponseEntity<CommonResponse> getActiveCountryById(@PathVariable Integer idCountry) {
+        return countryService.getActiveCountryById(Long.valueOf(idCountry));
     }
 
     /**

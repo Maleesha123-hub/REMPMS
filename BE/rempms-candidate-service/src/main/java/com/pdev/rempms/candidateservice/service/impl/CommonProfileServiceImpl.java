@@ -1,5 +1,6 @@
 package com.pdev.rempms.candidateservice.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pdev.rempms.candidateservice.controller.response.PageResponse;
 import com.pdev.rempms.candidateservice.dto.candidate.CandidateSaveLazyResponseDTO;
 import com.pdev.rempms.candidateservice.dto.candidate.CandidateSearchLazyResponseDTO;
@@ -21,8 +22,10 @@ import com.pdev.rempms.candidateservice.dto.candidate.research.ResearchResponseD
 import com.pdev.rempms.candidateservice.dto.candidate.schoolEducation.SchoolEducationResponseDTO;
 import com.pdev.rempms.candidateservice.dto.communication.CommunicationInformationRequestDTO;
 import com.pdev.rempms.candidateservice.dto.communication.language.LanguageDTO;
+import com.pdev.rempms.candidateservice.dto.document.upload.DocumentUploadResponseDTO;
 import com.pdev.rempms.candidateservice.dto.location.LocationInformationRequestDTO;
 import com.pdev.rempms.candidateservice.dto.location.country.CountryDTO;
+import com.pdev.rempms.candidateservice.enums.FolderType;
 import com.pdev.rempms.candidateservice.exception.BaseException;
 import com.pdev.rempms.candidateservice.exception.RecordNotFoundException;
 import com.pdev.rempms.candidateservice.mapper.candidate.CandidateMapper;
@@ -42,6 +45,7 @@ import com.pdev.rempms.candidateservice.mapper.candidate.schoolEducation.SchoolE
 import com.pdev.rempms.candidateservice.model.candidate.Candidate;
 import com.pdev.rempms.candidateservice.model.candidate.achievement.Achievement;
 import com.pdev.rempms.candidateservice.model.candidate.cvOrCertificate.Document;
+import com.pdev.rempms.candidateservice.model.candidate.cvOrCertificate.DocumentType;
 import com.pdev.rempms.candidateservice.model.candidate.familyInformation.FamilyInformation;
 import com.pdev.rempms.candidateservice.model.candidate.higherEducation.AreaOfStudy;
 import com.pdev.rempms.candidateservice.model.candidate.higherEducation.HigherEduQualification;
@@ -62,22 +66,27 @@ import com.pdev.rempms.candidateservice.repository.*;
 import com.pdev.rempms.candidateservice.repository.candidate.*;
 import com.pdev.rempms.candidateservice.service.CommonProfileService;
 import com.pdev.rempms.candidateservice.service.rest.RestCommunicationInfoClientService;
+import com.pdev.rempms.candidateservice.service.rest.RestDocumentClientService;
+import com.pdev.rempms.candidateservice.service.rest.RestDraftClientService;
 import com.pdev.rempms.candidateservice.service.rest.RestLocationInfoClientService;
-import com.pdev.rempms.candidateservice.service.validation.CandidateProfileValidation;
 import com.pdev.rempms.candidateservice.specification.CandidateSpecification;
 import com.pdev.rempms.candidateservice.util.CommonResponse;
-import com.pdev.rempms.candidateservice.util.CommonValidation;
+import com.pdev.rempms.candidateservice.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -91,6 +100,8 @@ public class CommonProfileServiceImpl implements CommonProfileService {
 
     private final RestLocationInfoClientService restLocationInfoClientService;
     private final RestCommunicationInfoClientService restCommunicationInfoClientService;
+    private final RestDraftClientService restDraftClientService;
+    private final RestDocumentClientService restDocumentClientService;
 
     private final PersonalDetailMapper personalDetailMapper;
     private final ProfessionalExperienceMapper professionalExperienceMapper;
@@ -106,16 +117,15 @@ public class CommonProfileServiceImpl implements CommonProfileService {
     private final PreferredJobLocationMapper preferredJobLocationMapper;
     private final DocumentMapper documentMapper;
     private final CandidateMapper candidateMapper;
+    private final ObjectMapper objectMapper;
 
     private final CandidateRepository candidateRepository;
-    private final PersonalDetailRepository personalDetailRepository;
     private final ProfessionalExperienceRepository professionalExperienceRepository;
     private final HigherEducationRepository higherEducationRepository;
     private final SchoolEducationRepository schoolEducationRepository;
     private final MembershipRepository membershipRepository;
     private final LanguageProficiencyRepository languageProficiencyRepository;
     private final ResearchRepository researchRepository;
-    private final AchievementsRepository achievementsRepository;
     private final RefereeRepository refereeRepository;
     private final FamilyInformationRepository familyInformationRepository;
     private final JobPreferenceRepository jobPreferenceRepository;
@@ -126,9 +136,7 @@ public class CommonProfileServiceImpl implements CommonProfileService {
     private final HigherEduQualificationRepository higherEduQualificationRepository;
     private final AreaOfStudyRepository areaOfStudyRepository;
     private final MembershipTypeRepository membershipTypeRepository;
-
-    private final CandidateProfileValidation candidateProfileValidation;
-
+    private final DocumentTypeRepository documentTypeRepository;
     private final CandidateSpecification candidateSpecification;
 
     /**
@@ -142,7 +150,7 @@ public class CommonProfileServiceImpl implements CommonProfileService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public CommonResponse saveUpdate(CommonProfileRequestDTO dto) {
 
-        log.info("CommonProfileServiceImpl -> saveUpdate() => started!");
+        /*log.info("CommonProfileServiceImpl -> saveUpdate() => started!");
 
         // Validate candidate profile request data
         candidateProfileValidation.validateCandidateCommonProfile(dto);
@@ -163,7 +171,7 @@ public class CommonProfileServiceImpl implements CommonProfileService {
         PersonalDetail personalDetail = CommonValidation.integerNullValidation(dto.getPersonalDetail().getIdPersonalDetail()) ? new PersonalDetail() :
                 personalDetailRepository.findById(dto.getPersonalDetail().getIdPersonalDetail()).
                         orElseThrow(() -> new RecordNotFoundException("Personal details not exists."));
-        personalDetailMapper.toEntity(personalDetail, candidate, idCommunication, idLocation, dto.getPersonalDetail());
+        personalDetailMapper.toEntity(personalDetail, idCommunication, idLocation, dto.getPersonalDetail());
 
         // Professional experiences
         List<ProfessionalExperience> professionalExperienceList = dto.getProfessionalExperiences().stream()
@@ -253,7 +261,7 @@ public class CommonProfileServiceImpl implements CommonProfileService {
         List<PreferredJobLocation> preferredJobLocations = dto.getPreferredJobLocations()
                 .stream()
                 .map(pjl -> {
-                    CountryDTO country = restLocationInfoClientService.getById(pjl.getCountryId());
+                    CountryDTO country = restLocationInfoClientService.getById(pjl.getIdCountry());
                     return preferredJobLocationMapper.dtoToModel(new PreferredJobLocation(), pjl, country, candidate);
                 }).toList();
 
@@ -298,7 +306,7 @@ public class CommonProfileServiceImpl implements CommonProfileService {
         savePreferredJobLocation(preferredJobLocations);
 
         // Save document details
-        saveDocumentList(documentList);
+        saveDocumentList(documentList);*/
 
         CommonResponse commonResponse = new CommonResponse();
         commonResponse.setData(null);
@@ -313,18 +321,23 @@ public class CommonProfileServiceImpl implements CommonProfileService {
     /**
      * save candidate common profile with jap and BiDirectional relationships
      *
-     * @param dto - common profile data
+     * @param idCandidate - common profile candidate id
      * @return - {@link CommonResponse} - save success info.
      * @author @Maleesha99
      */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public CommonResponse saveUpdateByJPA(CommonProfileRequestDTO dto) {
+    public CommonResponse saveUpdateByJPA(Integer idCandidate) {
         log.info("CommonProfileServiceImpl -> saveUpdateByJPA() => started!");
 
+        // Fetch draft data by draft id
+        CommonProfileRequestDTO dto = restDraftClientService.findByIdCandidate(idCandidate);
+
         // Find candidate by id
-        Candidate candidate = candidateRepository.findById(dto.getIdCandidate())
+        Candidate candidate = candidateRepository.findByUserAccount(dto.getIdCandidate())
                 .orElseThrow(() -> new RecordNotFoundException("Candidate not exists."));
+        candidate.setIdDraft(dto.getId());
+        candidate.setIsVerify(Boolean.TRUE);
 
         // Location information save
         LocationInformationRequestDTO location = restLocationInfoClientService.saveLocationInfo(dto.getPersonalDetail());
@@ -335,19 +348,16 @@ public class CommonProfileServiceImpl implements CommonProfileService {
         Integer idCommunication = communication.getIdCommunicationInformation();
 
         // Personal details
-        PersonalDetail personalDetail = CommonValidation.integerNullValidation(dto.getPersonalDetail().getIdPersonalDetail()) ? new PersonalDetail() :
-                personalDetailRepository.findById(dto.getPersonalDetail().getIdPersonalDetail()).
-                        orElseThrow(() -> new RecordNotFoundException("Personal details not exists."));
-        personalDetailMapper.toEntity(personalDetail, candidate, idCommunication, idLocation, dto.getPersonalDetail());
+        candidate.setPersonalDetail(personalDetailMapper.toEntity(new PersonalDetail(), idCommunication, idLocation, dto.getPersonalDetail()));
 
         // Achievements
-        Achievement achievement = CommonValidation.integerNullValidation(dto.getAchievements().getIdAchievement()) ? new Achievement() :
-                achievementsRepository.findById(dto.getAchievements().getIdAchievement()).
-                        orElseThrow(() -> new RecordNotFoundException("Achievements not exists."));
-        achievementMapper.dtoToModel(achievement, dto.getAchievements(), candidate);
+        Achievement achievement = new Achievement();
+        achievement.setAchievements(dto.getAchievements().getAchievements());
+        candidate.setAchievement(achievement);
 
         // Professional experiences
         List<ProfessionalExperience> professionalExperienceList = new ArrayList<>();
+        professionalExperienceRepository.deleteByCandidate(candidate);
         dto.getProfessionalExperiences().forEach(pfx -> {
 
             Industry industry = industryRepository.findById(pfx.getIdIndustry())
@@ -356,16 +366,12 @@ public class CommonProfileServiceImpl implements CommonProfileService {
             JobCategory jobCategory = jobCategoryRepository.findById(pfx.getIdJobCategory())
                     .orElseThrow(() -> new RecordNotFoundException("Job category not found!"));
 
-            ProfessionalExperience professionalExperience = CommonValidation.integerNullValidation(pfx.getIdProfessionalExperience()) ? new ProfessionalExperience() :
-                    professionalExperienceRepository.findById(pfx.getIdProfessionalExperience())
-                            .orElseThrow(() -> new RecordNotFoundException("Professional experience not exists."));
-
-            professionalExperienceList.add(professionalExperienceMapper.toEntity(professionalExperience, pfx, industry, jobCategory, candidate));
-
+            professionalExperienceList.add(professionalExperienceMapper.toEntity(new ProfessionalExperience(), pfx, industry, jobCategory, candidate));
         });
 
         //Higher educations
         List<HigherEducation> higherEducationList = new ArrayList<>();
+        higherEducationRepository.deleteByCandidate(candidate);
         dto.getHigherEducations().forEach(higherEducation -> {
 
             HigherEduQualification higherEduQualification = higherEduQualificationRepository.findById(higherEducation.getIdHigherEduQualification())
@@ -377,31 +383,23 @@ public class CommonProfileServiceImpl implements CommonProfileService {
             CountryDTO country = restLocationInfoClientService.getById(higherEducation.getIdCountry());
             LanguageDTO language = restCommunicationInfoClientService.getActiveLanguageById(higherEducation.getIdLanguage());
 
-            HigherEducation education = CommonValidation.integerNullValidation(higherEducation.getIdHigherEducation()) ? new HigherEducation() :
-                    higherEducationRepository.findById(higherEducation.getIdHigherEducation())
-                            .orElseThrow(() -> new RecordNotFoundException("Higher education not exists."));
-
-            higherEducationList.add(higherEducationMapper.toEntity(education, higherEducation, higherEduQualification, areaOfStudy, country, language, candidate));
-
+            higherEducationList.add(higherEducationMapper.toEntity(new HigherEducation(), higherEducation, higherEduQualification, areaOfStudy, country, language, candidate));
         });
 
         // School educations
         List<SchoolEducation> schoolEducationList = new ArrayList<>();
+        schoolEducationRepository.deleteByCandidate(candidate);
         dto.getSchoolEducations().forEach(schoolEducation -> {
 
             CountryDTO country = restLocationInfoClientService.getById(schoolEducation.getIdCountry());
             LanguageDTO language = restCommunicationInfoClientService.getActiveLanguageById(schoolEducation.getIdLanguage());
 
-            SchoolEducation education = CommonValidation.integerNullValidation(schoolEducation.getIdSchoolEducation()) ? new SchoolEducation() :
-                    schoolEducationRepository.findById(schoolEducation.getIdSchoolEducation())
-                            .orElseThrow(() -> new RecordNotFoundException("School education not exists."));
-
-            schoolEducationList.add(schoolEducationMapper.toEntity(education, schoolEducation, country, language, candidate));
-
+            schoolEducationList.add(schoolEducationMapper.toEntity(new SchoolEducation(), schoolEducation, country, language, candidate));
         });
 
         // Memberships
         List<Membership> membershipList = new ArrayList<>();
+        membershipRepository.deleteByCandidate(candidate);
         dto.getMemberships().forEach(membership -> {
 
             CountryDTO country = restLocationInfoClientService.getById(membership.getIdCountry());
@@ -409,113 +407,83 @@ public class CommonProfileServiceImpl implements CommonProfileService {
             MembershipType membershipType = membershipTypeRepository.findById(membership.getIdMembershipType())
                     .orElseThrow(() -> new RecordNotFoundException("Membership type not exists."));
 
-            Membership membership1 = CommonValidation.integerNullValidation(membership.getIdMembership()) ? new Membership() :
-                    membershipRepository.findById(membership.getIdMembership())
-                            .orElseThrow(() -> new RecordNotFoundException("Membership not exists."));
-
-            membershipList.add(memberMapper.toEntity(membership1, membership, country, membershipType, candidate));
-
+            membershipList.add(memberMapper.toEntity(new Membership(), membership, country, membershipType, candidate));
         });
 
         // Language proficiencies
         List<LanguageProficiency> languageProficiencyList = new ArrayList<>();
+        languageProficiencyRepository.deleteByCandidate(candidate);
         dto.getLanguageProficiencies().forEach(languageProficiency -> {
 
             LanguageDTO language = restCommunicationInfoClientService.getActiveLanguageById(languageProficiency.getIdLanguage());
 
-            LanguageProficiency proficiency = CommonValidation.integerNullValidation(languageProficiency.getIdLanguageProficiency()) ? new LanguageProficiency() :
-                    languageProficiencyRepository.findById(languageProficiency.getIdLanguageProficiency())
-                            .orElseThrow(() -> new RecordNotFoundException("Language proficiency not exists."));
-
-            languageProficiencyList.add(languageProficiencyMapper.dtoToModel(proficiency, languageProficiency, language, candidate));
-
+            languageProficiencyList.add(languageProficiencyMapper.dtoToModel(new LanguageProficiency(), languageProficiency, language, candidate));
         });
 
 
         // Researches
         List<Research> researchList = new ArrayList<>();
-        dto.getResearches().forEach(rsc -> {
-
-            Research research = CommonValidation.integerNullValidation(rsc.getIdResearch()) ? new Research() :
-                    researchRepository.findById(rsc.getIdResearch())
-                            .orElseThrow(() -> new RecordNotFoundException("Research not exists."));
-
-            researchList.add(researchMapper.dtoToModel(research, rsc, candidate));
-
-        });
+        researchRepository.deleteByCandidate(candidate);
+        dto.getResearches().forEach(rsc -> researchList.add(researchMapper.dtoToModel(new Research(), rsc, candidate)));
 
         // Referees
         List<Referee> refereeList = new ArrayList<>();
-        dto.getReferees().forEach(rfr -> {
-
-            Referee referee = CommonValidation.integerNullValidation(rfr.getIdReferee()) ? new Referee() :
-                    refereeRepository.findById(rfr.getIdReferee())
-                            .orElseThrow(() -> new RecordNotFoundException("Referee not exists."));
-
-            refereeList.add(refereeMapper.dtoToModel(referee, rfr, candidate));
-
-        });
+        refereeRepository.deleteByCandidate(candidate);
+        dto.getReferees().forEach(rfr -> refereeList.add(refereeMapper.dtoToModel(new Referee(), rfr, candidate)));
 
         // Family information
         List<FamilyInformation> familyInformationList = new ArrayList<>();
-        dto.getFamilyInformation().forEach(fmli -> {
-
-            FamilyInformation familyInformation = CommonValidation.integerNullValidation(fmli.getIdFamilyInformation()) ? new FamilyInformation() :
-                    familyInformationRepository.findById(fmli.getIdFamilyInformation())
-                            .orElseThrow(() -> new RecordNotFoundException("Family information not exists."));
-
-            familyInformationList.add(familyInformationMapper.dtoToModel(familyInformation, fmli, candidate));
-
-        });
+        familyInformationRepository.deleteByCandidate(candidate);
+        dto.getFamilyInformation().forEach(fmli -> familyInformationList.add(familyInformationMapper.dtoToModel(new FamilyInformation(), fmli, candidate)));
 
         // Job preferences
         List<JobPreference> jobPreferenceList = new ArrayList<>();
-        dto.getJobPreferences().forEach(jpref -> {
-
-            JobPreference jobPreference = CommonValidation.integerNullValidation(jpref.getIdJobPreference()) ? new JobPreference() :
-                    jobPreferenceRepository.findById(jpref.getIdJobPreference())
-                            .orElseThrow(() -> new RecordNotFoundException("Job preference not exists."));
-
-            jobPreferenceList.add(jobPreferenceMapper.dtoToModel(jobPreference, jpref, candidate));
-
-        });
+        jobPreferenceRepository.deleteByCandidate(candidate);
+        dto.getJobPreferences().forEach(jpref -> jobPreferenceList.add(jobPreferenceMapper.dtoToModel(new JobPreference(), jpref, candidate)));
 
         // Preferred job location
         List<PreferredJobLocation> preferredJobLocationList = new ArrayList<>();
+        preferredJobLocationRepository.deleteByCandidate(candidate);
         dto.getPreferredJobLocations().forEach(prefjl -> {
 
-            candidate.getPreferredJobLocations().forEach(previousJobLocation -> {
-                previousJobLocation.setActive(false);
-                preferredJobLocationList.add(previousJobLocation);
-            });
-
-            CountryDTO country = restLocationInfoClientService.getById(prefjl.getCountryId());
+            CountryDTO country = restLocationInfoClientService.getById(prefjl.getIdCountry());
 
             preferredJobLocationList.add(preferredJobLocationMapper.dtoToModel(new PreferredJobLocation(), prefjl, country, candidate));
-
         });
 
         //Document details
         List<Document> documentList = new ArrayList<>();
+        documentRepository.deleteByCandidate(candidate);
         dto.getDocumentDetails().forEach(doc -> {
+            HashMap<String, String> hashMap = objectMapper.convertValue(doc.getFile(), HashMap.class);
+            String base64EncodedString = hashMap.get("data");
+            byte[] file = Base64.getDecoder().decode(base64EncodedString);
 
-            candidate.getDocumentList().forEach(previousDoc -> {
-                previousDoc.setActive(false);
-                documentList.add(previousDoc);
-            });
+            // Assuming you have only one file in the base64 string
+            MultipartFile[] files = new MultipartFile[1];
+            files[0] = new MockMultipartFile(doc.getActualFileName(), doc.getActualFileName(), CommonUtil.getContentType(doc.getActualFileName()), file);
 
-            documentList.add(documentMapper.toEntity(new Document(), doc, candidate));
+            DocumentType type = documentTypeRepository.findById(doc.getDocumentTypeId())
+                    .orElseThrow(() -> new RecordNotFoundException("Document type is not exists."));
 
+            List<DocumentUploadResponseDTO> uploaded = restDocumentClientService.uploadDocuments(
+                    FolderType.CANDIDATE,
+                    candidate.getCandidateNo(),
+                    type.getName(),
+                    files);
+
+            if (!uploaded.isEmpty()) {
+                documentList.add(documentMapper.toEntity(new Document(), uploaded.get(0), type, candidate));
+            }
         });
 
         // Candidate
-        candidateMapper.toEntity(candidate, personalDetail, professionalExperienceList, higherEducationList, schoolEducationList, membershipList,
-                languageProficiencyList, researchList, achievement, refereeList, familyInformationList, jobPreferenceList, preferredJobLocationList, documentList);
+        candidateMapper.toEntity(candidate, professionalExperienceList, higherEducationList, schoolEducationList, membershipList,
+                languageProficiencyList, researchList, refereeList, familyInformationList, jobPreferenceList, preferredJobLocationList, documentList);
 
         CommonResponse commonResponse = new CommonResponse();
 
         try {
-
             // Save candidate
             Candidate savedCandidate = candidateRepository.save(candidate);
 
@@ -525,204 +493,12 @@ public class CommonProfileServiceImpl implements CommonProfileService {
             commonResponse.setMessage("Candidate profile save successful for BiDirectional relationship with jpa.");
 
         } catch (Exception e) {
-
-            e.printStackTrace();
             commonResponse.setData(null);
             commonResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             commonResponse.setMessage("Candidate profile save failed.");
-
         }
-
         log.info("CommonProfileServiceImpl -> saveUpdateByJPA() => ended!");
         return commonResponse;
-
-    }
-
-    private void saveProfessionalExperiences(List<ProfessionalExperience> professionalExperienceList) {
-
-        try {
-
-            log.info("Saving professional experiences...");
-            professionalExperienceRepository.saveAll(professionalExperienceList);
-            log.info("Professional experiences saved.");
-
-        } catch (Exception e) {
-            log.warn("Professional experiences save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "Professional experiences save failed.");
-
-        }
-
-    }
-
-    private void saveHigherEducationLists(List<HigherEducation> higherEducationList) {
-
-        try {
-
-            log.info("Saving higher education list...");
-            higherEducationRepository.saveAll(higherEducationList);
-            log.info("Higher education list saved.");
-
-        } catch (Exception e) {
-            log.warn("Higher education list save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "Higher education list save failed.");
-
-        }
-
-    }
-
-    private void saveSchoolEducationList(List<SchoolEducation> schoolEducations) {
-
-        try {
-
-            log.info("Saving school education list...");
-            schoolEducationRepository.saveAll(schoolEducations);
-            log.info("School education list saved.");
-
-        } catch (Exception e) {
-            log.warn("School education list save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "School education list save failed.");
-
-        }
-
-    }
-
-    private void saveMembershipList(List<Membership> membershipList) {
-
-        try {
-
-            log.info("Saving memberships...");
-            membershipRepository.saveAll(membershipList);
-            log.info("Memberships saved.");
-
-        } catch (Exception e) {
-            log.warn("Memberships save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "Memberships save failed.");
-
-        }
-
-    }
-
-    private void saveLanguageProficiencyList(List<LanguageProficiency> languageProficiencyList) {
-
-        try {
-
-            log.info("Saving language proficiencies...");
-            languageProficiencyRepository.saveAll(languageProficiencyList);
-            log.info("Language proficiencies saved.");
-
-        } catch (Exception e) {
-            log.warn("Language proficiencies save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "Language proficiencies save failed.");
-
-        }
-
-    }
-
-    private void saveResearchList(List<Research> researchList) {
-
-        try {
-
-            log.info("Saving research list...");
-            researchRepository.saveAll(researchList);
-            log.info("Research list saved.");
-
-        } catch (Exception e) {
-            log.warn("Researches save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "Researches save failed.");
-
-        }
-
-    }
-
-    private void saveRefereeList(List<Referee> refereeList) {
-
-        try {
-
-            log.info("Saving referee list...");
-            refereeRepository.saveAll(refereeList);
-            log.info("Referee list saved.");
-
-        } catch (Exception e) {
-            log.warn("Referees save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "Referees save failed.");
-
-        }
-
-    }
-
-    private void saveFamilyInformationList(List<FamilyInformation> familyInformationList) {
-
-        try {
-
-            log.info("Saving family information list...");
-            familyInformationRepository.saveAll(familyInformationList);
-            log.info("Family information list saved.");
-
-        } catch (Exception e) {
-            log.warn("Family information list save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "Family information list save failed.");
-
-        }
-
-    }
-
-    private void saveJobPreferenceList(List<JobPreference> jobPreferenceList) {
-
-        try {
-
-            log.info("Saving job preference list...");
-            jobPreferenceRepository.saveAll(jobPreferenceList);
-            log.info("Job preference list saved.");
-
-        } catch (Exception e) {
-            log.warn("Job preferences save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "Job preferences save failed.");
-
-        }
-
-    }
-
-    private void savePreferredJobLocation(List<PreferredJobLocation> preferredJobLocations) {
-
-        try {
-
-            log.info("Saving preferred job location...");
-            preferredJobLocationRepository.saveAll(preferredJobLocations);
-            log.info("Preferred job location saved.");
-
-        } catch (Exception e) {
-            log.warn("Preferred job locations save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "Preferred job locations save failed.");
-
-        }
-
-    }
-
-    private void saveDocumentList(List<Document> documentList) {
-
-        try {
-
-            log.info("Saving document list...");
-            documentRepository.saveAll(documentList);
-            log.info("Document list saved.");
-
-        } catch (Exception e) {
-            log.warn("Documents save failed: {}", e.getMessage());
-
-            throw new BaseException(500, "Documents save failed.");
-
-        }
-
     }
 
     /**

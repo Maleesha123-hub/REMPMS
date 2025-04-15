@@ -1,135 +1,260 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>Family information</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="familyInformationForm" cForm>
           <div class="row">
-
-            <input id="id_job_category" type="hidden">
+            <input
+              id="idFamilyInformation"
+              formControlName="idFamilyInformation"
+              type="hidden"
+            />
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Name</label>
-                <input cFormControl
-                       id="jobs_sdme"
-                       placeholder="Enter name"
-                       type="text"
+                <input
+                  cFormControl
+                  id="name"
+                  formControlName="name"
+                  placeholder="Enter name"
+                  type="text"
                 />
+              </div>
+
+              <div
+                *ngIf="
+                  familyInformationForm.get('name').errors?.required &&
+                  familyInformationForm.get('name').touched
+                "
+              >
+                <p class="form-validation">Name is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Relationship</label>
-                <input cFormControl
-                       id="jobsrdme"
-                       placeholder="Enter relationship"
-                       type="text"
+                <input
+                  cFormControl
+                  id="relationship"
+                  formControlName="relationship"
+                  placeholder="Enter relationship"
+                  type="text"
                 />
+              </div>
+
+              <div
+                *ngIf="
+                  familyInformationForm.get('relationship').errors?.required &&
+                  familyInformationForm.get('relationship').touched
+                "
+              >
+                <p class="form-validation">Relationship is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Date of birth</label>
-                <input cFormControl
-                       id="job_cadsssteds"
-                       type="Date"
+                <input
+                  cFormControl
+                  id="dob"
+                  formControlName="dob"
+                  type="Date"
                 />
+              </div>
+
+              <div
+                *ngIf="
+                  familyInformationForm.get('dob').errors?.required &&
+                  familyInformationForm.get('dob').touched
+                "
+              >
+                <p class="form-validation">Date of birth is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
-                <label cLabel>Gender</label><br>
-                <input type="radio" value="one" style="cursor:pointer;">
+                <label cLabel>Gender</label><br />
+                <input
+                  type="radio"
+                  value="male"
+                  formControlName="gender"
+                  style="cursor: pointer"
+                />
                 <label cFormCheckLabel>Male</label>
 
-                <input type="radio" value="two" style="cursor:pointer;"/>
+                <input
+                  type="radio"
+                  value="female"
+                  formControlName="gender"
+                  style="cursor: pointer"
+                />
                 <label cFormCheckLabel>Female</label>
+              </div>
+
+              <div
+                *ngIf="
+                  familyInformationForm.get('gender').invalid &&
+                  familyInformationForm.get('gender').touched
+                "
+              >
+                <p class="form-validation">Please select a gender.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Designation</label>
-                <input cFormControl
-                       id="jobsredme"
-                       placeholder="Enter designation"
-                       type="text"
+                <input
+                  cFormControl
+                  id="designation"
+                  formControlName="designation"
+                  placeholder="Enter designation"
+                  type="text"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                familyInformationForm.get('designation').errors?.required &&
+                familyInformationForm.get('designation').touched
+              "
+            >
+              <p class="form-validation">Designation is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Organization/School</label>
-                <input cFormControl
-                       id="jobtrme"
-                       placeholder="Enter organization"
-                       type="text"
+                <input
+                  cFormControl
+                  id="schoolOrOrganization"
+                  formControlName="schoolOrOrganization"
+                  placeholder="Enter organization"
+                  type="text"
                 />
               </div>
             </div>
 
+            <div
+              *ngIf="
+                familyInformationForm.get('schoolOrOrganization').errors
+                  ?.required &&
+                familyInformationForm.get('schoolOrOrganization').touched
+              "
+            >
+              <p class="form-validation">Organization/School is required.</p>
+            </div>
+
             <div class="col-md-3">
               <div class="mb-2">
-                <label cLabel>Is she/he a dependent</label><br>
-                <input type="radio" value="one" style="cursor:pointer;">
+                <label cLabel>Is she/he a dependent</label><br />
+                <input
+                  type="radio"
+                  value="true"
+                  formControlName="isDependent"
+                  style="cursor: pointer"
+                />
                 <label cFormCheckLabel>Yes</label>
 
-                <input type="radio" value="two" style="cursor:pointer;"/>
+                <input
+                  type="radio"
+                  value="false"
+                  formControlName="isDependent"
+                  style="cursor: pointer"
+                />
                 <label cFormCheckLabel>No</label>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                familyInformationForm.get('isDependent').invalid &&
+                familyInformationForm.get('isDependent').touched
+              "
+            >
+              <p class="form-validation">Please select a dependent.</p>
             </div>
 
             <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>Remark</label>
-                <textarea cFormControl
-                          id="jobsdzzs" rows="6" style="width: 600px"
-                          placeholder="Enter remark"></textarea>
+                <textarea
+                  cFormControl
+                  id="remark"
+                  formControlName="remark"
+                  rows="6"
+                  style="width: 600px"
+                  placeholder="Enter remark"
+                ></textarea>
               </div>
             </div>
           </div>
 
+          <div
+            *ngIf="
+              familyInformationForm.get('remark').invalid &&
+              familyInformationForm.get('remark').touched
+            "
+          >
+            <p class="form-validation">Please select a remark.</p>
+          </div>
+
           <div class="col-md-3">
             <div class="mb-2">
-              <input cButton class="btn-secondary" type="button" value="Add To List"
-                     style="text-align: center; color:white; height: 30px; line-height: 1px;"/>
+              <input
+                cButton
+                class="btn-secondary"
+                type="button"
+                value="Add To List"
+                style="
+                  text-align: center;
+                  color: white;
+                  height: 30px;
+                  line-height: 1px;
+                "
+                (click)="familyInformationTempListTable()"
+              />
             </div>
           </div>
         </form>
 
         <c-card-body>
+          <ng-container *ngIf="emptyListErrorVisible">
+            <div class="error-message" style="color: red">
+              The research cart table is empty.
+            </div>
+          </ng-container>
+
           <table [striped]="true" cTable>
             <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Relationship</th>
-              <th scope="col">Designation</th>
-              <th scope="col">Organization</th>
-              <th scope="col">Action</th>
-            </tr>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Relationship</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Organization</th>
+                <th scope="col">Action</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td><a href="#">remove</a></td>
-            </tr>
+              <tr *ngFor="let tempList of tempList; let i = index">
+                <td>{{ tempList.name }}</td>
+                <td>{{ tempList.relationship }}</td>
+                <td>{{ tempList.designation }}</td>
+                <td>{{ tempList.schoolOrOrganization }}</td>
+                <td><a (click)="removeFamilyInformationItem(i)">remove</a></td>
+              </tr>
             </tbody>
           </table>
         </c-card-body>
-
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -137,9 +262,43 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
-          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="<<Back"
+            (click)="redirectToBack()"
+          />
+          &nbsp; &nbsp;
+          <Button
+            cButton
+            class="me-1"
+            color="success"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showSaveButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >&nbsp;Save&nbsp;
+          </Button>
+
+          <Button
+            cButton
+            class="me-1"
+            color="info"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showUpdateButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >Update </Button
+          >&nbsp;
+
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="Next>>"
+            (click)="redirectToNext()"
+          />
         </div>
       </c-card-body>
     </c-card>
@@ -150,22 +309,46 @@
       <c-card-body>
         <table [striped]="true" cTable>
           <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Relationship</th>
-            <th scope="col">Designation</th>
-            <th scope="col">Organization</th>
-            <th scope="col">Action</th>
-          </tr>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Relationship</th>
+              <th scope="col">Designation</th>
+              <th scope="col">Organization</th>
+              <th scope="col">Action</th>
+            </tr>
           </thead>
           <tbody>
-
+            <tr *ngFor="let tableList of tableList; let i = index">
+              <td>{{ tableList.name }}</td>
+              <td>{{ tableList.relationship }}</td>
+              <td>{{ tableList.designation }}</td>
+              <td>{{ tableList.schoolOrOrganization }}</td>
+              <td>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="primary"
+                  value="Edit"
+                  size="sm"
+                  mat-button
+                  >Edit
+                </Button>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="danger"
+                  value="Delete"
+                  size="sm"
+                  mat-button
+                  style="color: white"
+                  (click)="deleteFamilyInformation(tableList)"
+                  >Delete
+                </Button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

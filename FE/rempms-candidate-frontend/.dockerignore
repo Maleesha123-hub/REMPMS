@@ -1,0 +1,9 @@
+**/node_modules/
+**/.git/
+**/.idea/
+**/.vscode/
+**/dist/
+**/LICENSE
+**/README.md
+**/aws-exports.js
+**/awsconfiguration.json

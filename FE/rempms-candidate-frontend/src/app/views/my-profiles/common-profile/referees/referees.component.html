@@ -1,114 +1,197 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>Refrees</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="refereeForm" cForm>
           <div class="row">
-
-            <input id="id_job_category" type="hidden">
+            <input id="idReferee" formControlName="idReferee" type="hidden" />
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Name</label>
-                <input cFormControl
-                       id="jobs_sdme"
-                       placeholder="Enter name"
-                       type="text"
+                <input
+                  cFormControl
+                  id="name"
+                  formControlName="name"
+                  placeholder="Enter name"
+                  type="text"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                refereeForm.get('name').errors?.required &&
+                refereeForm.get('name').touched
+              "
+            >
+              <p class="form-validation">Name is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Relationship</label>
-                <input cFormControl
-                       id="jobsrdme"
-                       placeholder="Enter relationship"
-                       type="text"
+                <input
+                  cFormControl
+                  id="relationship"
+                  formControlName="relationship"
+                  placeholder="Enter relationship"
+                  type="text"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                refereeForm.get('relationship').errors?.required &&
+                refereeForm.get('relationship').touched
+              "
+            >
+              <p class="form-validation">Relationship is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Designation</label>
-                <input cFormControl
-                       id="jobs_sdsse"
-                       placeholder="Enter name"
-                       type="text"
+                <input
+                  cFormControl
+                  id="designation"
+                  formControlName="designation"
+                  placeholder="Enter designation"
+                  type="text"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                refereeForm.get('designation').errors?.required &&
+                refereeForm.get('designation').touched
+              "
+            >
+              <p class="form-validation">Designation is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Phone</label>
-                <input cFormControl
-                       id="jobs_wqdme"
-                       placeholder="Enter name"
-                       type="text"
+                <input
+                  cFormControl
+                  id="phone"
+                  formControlName="phone"
+                  placeholder="Enter phone"
+                  type="text"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                refereeForm.get('phone').errors?.required &&
+                refereeForm.get('phone').touched
+              "
+            >
+              <p class="form-validation">Phone is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Email</label>
-                <input cFormControl
-                       id="jobsyye"
-                       placeholder="Enter name"
-                       type="text"
+                <input
+                  cFormControl
+                  id="email"
+                  formControlName="email"
+                  placeholder="Enter email"
+                  type="text"
                 />
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                refereeForm.get('email').errors?.required &&
+                refereeForm.get('email').touched
+              "
+            >
+              <p class="form-validation">Email is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Address</label>
-                <input cFormControl
-                       id="jobsytrme"
-                       placeholder="Enter name"
-                       type="text"
+                <input
+                  cFormControl
+                  id="address"
+                  formControlName="address"
+                  placeholder="Enter address"
+                  type="text"
                 />
               </div>
             </div>
 
-            <div class="col-md-3">
-              <div class="mb-2">
-                <p style="color: white">##</p>&nbsp;
-                <input cButton class="btn-secondary" type="button" value="Add To List"
-                       style="text-align: center; color:white; height: 30px; line-height: 1px;"/>
-              </div>
+            <div
+              *ngIf="
+                refereeForm.get('address').errors?.required &&
+                refereeForm.get('address').touched
+              "
+            >
+              <p class="form-validation">Address is required.</p>
             </div>
 
+            <div class="col-md-3">
+              <div class="mb-2">
+                <p style="color: white">##</p>
+                &nbsp;
+                <input
+                  cButton
+                  class="btn-secondary"
+                  type="button"
+                  value="Add To List"
+                  style="
+                    text-align: center;
+                    color: white;
+                    height: 30px;
+                    line-height: 1px;
+                  "
+                  (click)="refereeTempListTable()"
+                />
+              </div>
+            </div>
           </div>
         </form>
 
         <c-card-body>
+          <ng-container *ngIf="emptyListErrorVisible">
+            <div class="error-message" style="color: red">
+              The research cart table is empty.
+            </div>
+          </ng-container>
+
           <table [striped]="true" cTable>
             <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Action</th>
-            </tr>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Relationship</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Action</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td><a href="#">remove</a></td>
-            </tr>
+              <tr *ngFor="let tempList of tempList; let i = index">
+                <td>{{ tempList.name }}</td>
+                <td>{{ tempList.relationship }}</td>
+                <td>{{ tempList.designation }}</td>
+                <td>{{ tempList.phone }}</td>
+                <td><a (click)="removeTempRefereeItem(i)">remove</a></td>
+              </tr>
             </tbody>
           </table>
         </c-card-body>
-
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -116,9 +199,43 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
-          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="<<Back"
+            (click)="redirectToBack()"
+          />
+          &nbsp; &nbsp;
+          <Button
+            cButton
+            class="me-1"
+            color="success"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showSaveButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >&nbsp;Save&nbsp;
+          </Button>
+
+          <Button
+            cButton
+            class="me-1"
+            color="info"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showUpdateButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >Update </Button
+          >&nbsp;
+
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="Next>>"
+            (click)="redirectToNext()"
+          />
         </div>
       </c-card-body>
     </c-card>
@@ -129,20 +246,46 @@
       <c-card-body>
         <table [striped]="true" cTable>
           <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Action</th>
-          </tr>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Relationship</th>
+              <th scope="col">Designation</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Action</th>
+            </tr>
           </thead>
           <tbody>
-
+            <tr *ngFor="let tableList of tableList; let i = index">
+              <td>{{ tableList.name }}</td>
+              <td>{{ tableList.relationship }}</td>
+              <td>{{ tableList.designation }}</td>
+              <td>{{ tableList.phone }}</td>
+              <td>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="primary"
+                  value="Edit"
+                  size="sm"
+                  mat-button
+                  >Edit
+                </Button>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="danger"
+                  value="Delete"
+                  size="sm"
+                  mat-button
+                  style="color: white"
+                  (click)="deleteReferee(tableList)"
+                  >Delete
+                </Button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 @Slf4j
 public class PersonalDetailMapper {
 
-    public PersonalDetail toEntity(PersonalDetail personalDetail, Candidate candidate, Integer idCommunicationInformation,
+    public PersonalDetail toEntity(PersonalDetail personalDetail, Integer idCommunicationInformation,
                                    Integer idLocationInformation, PersonalDetailRequestDTO dto) {
         log.info("PersonalDetailMapper -> toEntity() => started!");
 
@@ -35,7 +35,6 @@ public class PersonalDetailMapper {
         personalDetail.setSalutation(dto.getSalutation());
         personalDetail.setIdCommunicationInformation(idCommunicationInformation);
         personalDetail.setIdLocationInformation(idLocationInformation);
-        personalDetail.setCandidate(candidate);
 
         log.info("PersonalDetailMapper -> toEntity() => ended!");
         return personalDetail;

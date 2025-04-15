@@ -1,5 +1,4 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
@@ -8,97 +7,121 @@
       <c-card-body>
         <form cForm>
           <div class="row">
-
-            <input id="id_user" type="hidden">
-            <input id="user_image_name" type="hidden">
+            <input id="id_user" type="hidden" />
+            <input id="user_image_name" type="hidden" />
 
             <div class="col-md-6">
               <div class="mb-3">
                 <label cLabel>User name</label>
-                <input cFormControl
-                       id="user_name"
-                       placeholder="Enter user name"
-                       type="text"
+                <input
+                  cFormControl
+                  id="user_name"
+                  placeholder="Enter user name"
+                  type="text"
                 />
               </div>
 
               <div class="mb-3">
                 <label cLabel>Password</label>
-                <input cFormControl
-                       id="user_password"
-                       placeholder="Enter password"
-                       type="password"
+                <input
+                  cFormControl
+                  id="user_password"
+                  placeholder="Enter password"
+                  type="password"
                 />
               </div>
 
               <div class="mb-3">
                 <label cLabel>Confirm password</label>
-                <input cFormControl
-                       id="user_confirm_password"
-                       placeholder="Enter confirm password"
-                       type="password"
+                <input
+                  cFormControl
+                  id="user_confirm_password"
+                  placeholder="Enter confirm password"
+                  type="password"
                 />
               </div>
 
               <div class="mb-3">
                 <label cLabel>Email</label>
-                <input cFormControl
-                       id="email"
-                       placeholder="Enter email"
-                       type="text"
+                <input
+                  cFormControl
+                  id="email"
+                  placeholder="Enter email"
+                  type="text"
                 />
               </div>
 
               <div class="mb-3">
                 <label cLabel>Confirm Email</label>
-                <input cFormControl
-                       id="confirm_email"
-                       placeholder="Enter confirm email"
-                       type="text"
+                <input
+                  cFormControl
+                  id="confirm_email"
+                  placeholder="Enter confirm email"
+                  type="text"
                 />
               </div>
 
               <p><i>If you forget your password.</i></p>
               <div class="mb-3">
                 <label cLabel>Secret Question</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="user_user_role_id_user_role">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  id="user_user_role_id_user_role"
+                >
                   <option value="-1">Select a Question</option>
                 </select>
               </div>
 
               <div class="mb-3">
                 <label cLabel>Secret Answer</label>
-                <input cFormControl
-                       id="secret_asnwer"
-                       placeholder="Enter secret answer"
-                       type="text"
+                <input
+                  cFormControl
+                  id="secret_asnwer"
+                  placeholder="Enter secret answer"
+                  type="text"
                 />
               </div>
             </div>
 
             <div class="col-md-6" style="align-content: center">
               <div class="mb-3">
-                <img id="imagePreview" [src]="imageSrc" alt="Preview" style="display: block;
-                                                            width: 300px; height: 300px;"/>
-                <input cFormControl #fileInput
-                       formControlName="userImage"
-                       id="user_image"
-                       type="file"
-                       (change)="previewImage()"
-                       style="width: 300px"/>
+                <img
+                  id="imagePreview"
+                  [src]="imageSrc"
+                  alt="Preview"
+                  style="display: block; width: 300px; height: 300px"
+                />
+                <input
+                  cFormControl
+                  #fileInput
+                  formControlName="userImage"
+                  id="user_image"
+                  type="file"
+                  (change)="previewImage()"
+                  style="width: 300px"
+                />
               </div>
-
             </div>
-
           </div>
-          <input cButton class="me-1" color="primary" type="button" value="Update Details">
-          <input cButton class="me-1" color="success" type="button" value="Reset" style="color: white">
+          <input
+            cButton
+            class="me-1"
+            color="primary"
+            type="button"
+            value="Update Details"
+          />
+          <input
+            cButton
+            class="me-1"
+            color="success"
+            type="button"
+            value="Reset"
+            style="color: white"
+          />
         </form>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

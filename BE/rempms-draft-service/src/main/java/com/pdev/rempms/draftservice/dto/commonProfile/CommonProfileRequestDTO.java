@@ -39,7 +39,7 @@ public class CommonProfileRequestDTO {
     private List<RefereeDTO> referees;
     private List<FamilyInformationDTO> familyInformation;
     private List<JobPreferenceDTO> jobPreferences;
-    private PreferredJobLocationDTO preferredJobLocations;
+    private List<PreferredJobLocationDTO> preferredJobLocations;
     private List<CommonProfileDocumentRequest> documentDetails;
 
 }

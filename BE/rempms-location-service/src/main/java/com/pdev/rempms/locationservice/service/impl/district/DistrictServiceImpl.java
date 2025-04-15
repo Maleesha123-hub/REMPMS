@@ -1,6 +1,6 @@
 package com.pdev.rempms.locationservice.service.impl.district;
 
-import com.pdev.rempms.locationservice.constants.enums.CommonStatus;
+import com.pdev.rempms.locationservice.enums.CommonStatus;
 import com.pdev.rempms.locationservice.constants.validation.CommonValidationMessage;
 import com.pdev.rempms.locationservice.constants.validation.DistrictValidationMessage;
 import com.pdev.rempms.locationservice.dto.district.DistrictDTO;
@@ -15,6 +15,7 @@ import com.pdev.rempms.locationservice.repository.DistrictRepository;
 import com.pdev.rempms.locationservice.repository.ProvinceRepository;
 import com.pdev.rempms.locationservice.service.district.DistrictService;
 import com.pdev.rempms.locationservice.util.CommonResponse;
+import com.pdev.rempms.locationservice.util.CommonUtil;
 import com.pdev.rempms.locationservice.util.CommonValidation;
 import com.pdev.rempms.locationservice.util.DateTimeUtil;
 import jakarta.transaction.Transactional;
@@ -24,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +34,7 @@ import java.util.Optional;
 @Service
 public class DistrictServiceImpl implements DistrictService {
 
+    private final CommonUtil commonUtil;
     private final ProvinceRepository provinceRepository;
     private final DistrictRepository districtRepository;
     private final DistrictMapper districtMapper;
@@ -66,12 +69,10 @@ public class DistrictServiceImpl implements DistrictService {
             district = districtRepository.findById(Long.valueOf(dto.getIdDistrict())).get();
             district = districtMapper.toEntity(district, dto, province, country);
             district.getAuditData().setUpdatedOn(DateTimeUtil.getSriLankaTime());
-            district.getAuditData().setUpdatedBy(Long.valueOf(1)); //need further development for authorization
+            district.getAuditData().setUpdatedBy(commonUtil.getUsername()); //need further development for authorization
         } else {
             log.info("DistrictServiceImpl -> saveUpdateDistrict() => Save new district!");
-            AuditData auditData = new AuditData();
-            auditData.setCreatedOn(DateTimeUtil.getSriLankaTime());
-            auditData.setCreatedBy(Long.valueOf(1)); //need further development for authorization
+            AuditData auditData = new AuditData(LocalDateTime.now(), commonUtil.getUsername());
             district = districtMapper.toEntity(district, dto, province, country);
             district.setAuditData(auditData);
         }
@@ -179,7 +180,7 @@ public class DistrictServiceImpl implements DistrictService {
             log.info("DistrictServiceImpl -> deleteDistrictById() => District found!");
             district.get().setCommonStatus(CommonStatus.DELETED.getValue());
             district.get().getAuditData().setUpdatedOn(DateTimeUtil.getSriLankaTime());
-            district.get().getAuditData().setUpdatedBy(Long.valueOf(1)); //need further development for authorization
+            district.get().getAuditData().setUpdatedBy(commonUtil.getUsername());
             districtRepository.save(district.get());
             commonResponse.setMessage(DistrictValidationMessage.DISTRICT_DELETED_SUCCESS);
             commonResponse.setStatus(HttpStatus.OK);

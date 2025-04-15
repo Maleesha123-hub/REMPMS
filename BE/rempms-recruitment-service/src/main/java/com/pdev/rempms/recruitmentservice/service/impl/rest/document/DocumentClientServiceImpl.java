@@ -3,7 +3,7 @@ package com.pdev.rempms.recruitmentservice.service.impl.rest.document;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pdev.rempms.recruitmentservice.client.document.DocumentServiceClient;
-import com.pdev.rempms.recruitmentservice.constants.enums.FolderType;
+import com.pdev.rempms.recruitmentservice.enums.FolderType;
 import com.pdev.rempms.recruitmentservice.dto.document.upload.DocumentUploadResponseDTO;
 import com.pdev.rempms.recruitmentservice.exception.BaseException;
 import com.pdev.rempms.recruitmentservice.exception.FeignCustomException;

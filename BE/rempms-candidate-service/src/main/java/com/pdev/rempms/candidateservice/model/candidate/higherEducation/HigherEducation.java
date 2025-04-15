@@ -32,11 +32,11 @@ public class HigherEducation {
     @Column(name = "award_type")
     private String awardType; //enum
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "qualification_id_qualification")
     private HigherEduQualification higherEduQualification;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "area_of_study_id_area_of_study")
     private AreaOfStudy areaOfStudy;
 
@@ -71,7 +71,7 @@ public class HigherEducation {
     private AuditData auditData;
 
     @JoinColumn(name = "candidate_id_candidate")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Candidate candidate;
 

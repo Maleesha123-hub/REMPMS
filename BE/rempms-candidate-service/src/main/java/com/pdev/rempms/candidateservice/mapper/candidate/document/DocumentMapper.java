@@ -1,8 +1,10 @@
 package com.pdev.rempms.candidateservice.mapper.candidate.document;
 
 import com.pdev.rempms.candidateservice.dto.candidate.document.DocumentDTO;
+import com.pdev.rempms.candidateservice.dto.document.upload.DocumentUploadResponseDTO;
 import com.pdev.rempms.candidateservice.model.candidate.Candidate;
 import com.pdev.rempms.candidateservice.model.candidate.cvOrCertificate.Document;
+import com.pdev.rempms.candidateservice.model.candidate.cvOrCertificate.DocumentType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -11,14 +13,16 @@ import org.springframework.stereotype.Component;
 public class DocumentMapper {
 
     public Document toEntity(Document document,
-                             DocumentDTO dto,
+                             DocumentUploadResponseDTO dto,
+                             DocumentType type,
                              Candidate candidate) {
         log.info("DocumentMapper -> toEntity() => started!");
 
-        document.setDocumentName(dto.getDocumentName());
+        document.setDocumentName(dto.getDocName());
         document.setDocumentType(document.getDocumentType());
         document.setCandidate(candidate);
-        document.setFilePath(document.getFilePath());
+        document.setFilePath(dto.getPathUrl());
+        document.setDocumentType(type);
         document.setActive(true);
 
         log.info("DocumentMapper -> toEntity() => ended!");

@@ -72,16 +72,14 @@ public class CandidateMapper {
 
     }
 
-    public void toEntity(Candidate candidate, PersonalDetail personalDetail, List<ProfessionalExperience> professionalExperienceList,
+    public void toEntity(Candidate candidate, List<ProfessionalExperience> professionalExperienceList,
                          List<HigherEducation> higherEducationList, List<SchoolEducation> schoolEducations,
                          List<Membership> membershipList, List<LanguageProficiency> languageProficiencyList,
-                         List<Research> researchList, Achievement achievement, List<Referee> refereeList,
+                         List<Research> researchList , List<Referee> refereeList,
                          List<FamilyInformation> familyInformationList, List<JobPreference> jobPreferenceList,
                          List<PreferredJobLocation> preferredJobLocationList, List<Document> documentList) {
 
-        candidate.setPersonalDetail(personalDetail);
         candidate.setProfessionalExperienceList(professionalExperienceList);
-        candidate.setAchievement(achievement);
         candidate.setFamilyInformationList(familyInformationList);
         candidate.setHigherEducationList(higherEducationList);
         candidate.setSchoolEducationList(schoolEducations);

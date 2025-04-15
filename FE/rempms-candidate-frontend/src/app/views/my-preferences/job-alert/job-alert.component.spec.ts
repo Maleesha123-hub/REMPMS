@@ -8,9 +8,8 @@ describe('CommonProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [JobAlertComponent]
-    })
-    .compileComponents();
+      imports: [JobAlertComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(JobAlertComponent);
     component = fixture.componentInstance;

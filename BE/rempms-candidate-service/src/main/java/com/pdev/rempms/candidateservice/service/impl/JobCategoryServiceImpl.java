@@ -1,6 +1,6 @@
 package com.pdev.rempms.candidateservice.service.impl;
 
-import com.pdev.rempms.candidateservice.constants.enums.CommonStatus;
+import com.pdev.rempms.candidateservice.enums.CommonStatus;
 import com.pdev.rempms.candidateservice.dto.jobCategory.JobCategoryDTO;
 import com.pdev.rempms.candidateservice.exception.RecordNotFoundException;
 import com.pdev.rempms.candidateservice.mapper.jobCategory.JobCategoryMapper;

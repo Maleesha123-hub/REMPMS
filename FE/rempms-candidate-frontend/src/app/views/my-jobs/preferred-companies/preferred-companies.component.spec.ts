@@ -8,10 +8,9 @@ describe('PreferredCompaniesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PreferredCompaniesComponent]
-    })
-    .compileComponents();
-    
+      imports: [PreferredCompaniesComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(PreferredCompaniesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

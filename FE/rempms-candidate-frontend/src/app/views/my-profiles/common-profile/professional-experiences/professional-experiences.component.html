@@ -1,122 +1,252 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>Professional Experiences</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="professionalExperienceForm" cForm>
           <div class="row">
-
-            <input id="id_job_category" type="hidden">
+            <input
+              id="idProfessionalExperience"
+              type="hidden"
+              formControlName="idProfessionalExperience"
+            />
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Industry</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_cateus">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  id="idIndustry"
+                  formControlName="idIndustry"
+                >
                   <option value="-1">Select an industry</option>
+                  <option
+                    *ngFor="let industry of industries"
+                    [value]="industry.id"
+                  >
+                    {{ industry.name }}
+                  </option>
                 </select>
+              </div>
+
+              <!-- Display error messages for industry field -->
+              <div
+                *ngIf="
+                  professionalExperienceForm.get('idIndustry').errors
+                    ?.required &&
+                  professionalExperienceForm.get('idIndustry').touched
+                "
+              >
+                <p class="form-validation">Industry is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Organization</label>
-                <input cFormControl
-                       id="job_category_name"
-                       placeholder="Enter an organization"
-                       type="text"
+                <input
+                  cFormControl
+                  id="organization"
+                  placeholder="Enter an organization"
+                  type="text"
+                  formControlName="organization"
                 />
+              </div>
+
+              <!-- Display error messages for organization field -->
+              <div
+                *ngIf="
+                  professionalExperienceForm.get('organization').errors
+                    ?.required &&
+                  professionalExperienceForm.get('organization').touched
+                "
+              >
+                <p class="form-validation">Organization is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Job category</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_catfeus">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  id="idCategory"
+                  formControlName="idJobCategory"
+                >
                   <option value="-1">Select a job category</option>
+                  <option
+                    *ngFor="let jobCategory of jobCategories"
+                    [value]="jobCategory.idJobCategory"
+                  >
+                    {{ jobCategory.jobCategoryName }}
+                  </option>
                 </select>
+              </div>
+
+              <!-- Display error messages for job category field -->
+              <div
+                *ngIf="
+                  professionalExperienceForm.get('idJobCategory').errors
+                    ?.required &&
+                  professionalExperienceForm.get('idJobCategory').touched
+                "
+              >
+                <p class="form-validation">Job category is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Designation</label>
-                <input cFormControl
-                       id="job_category_description"
-                       placeholder="Enter a designation"
-                       type="text"
+                <input
+                  cFormControl
+                  id="designation"
+                  placeholder="Enter a designation"
+                  type="text"
+                  formControlName="designation"
                 />
+              </div>
+
+              <!-- Display error messages for designation field -->
+              <div
+                *ngIf="
+                  professionalExperienceForm.get('designation').errors
+                    ?.required &&
+                  professionalExperienceForm.get('designation').touched
+                "
+              >
+                <p class="form-validation">Designation is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Commenced date</label>
-                <input cFormControl
-                       id="job_cadsssteds"
-                       type="Date"
+                <input
+                  cFormControl
+                  id="commencedDate"
+                  type="Date"
+                  formControlName="commencedDate"
                 />
+              </div>
+
+              <!-- Display error messages for commencedDate field -->
+              <div
+                *ngIf="
+                  professionalExperienceForm.get('commencedDate').errors
+                    ?.required &&
+                  professionalExperienceForm.get('commencedDate').touched
+                "
+              >
+                <p class="form-validation">Commenced Date is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Completion date</label>
-                <input cFormControl
-                       id="job_cafdssteds"
-                       type="Date"
+                <input
+                  cFormControl
+                  id="completionDate"
+                  formControlName="completionDate"
+                  type="Date"
                 />
+              </div>
+
+              <!-- Display error messages for completionDate field -->
+              <div
+                *ngIf="
+                  professionalExperienceForm.get('completionDate').errors
+                    ?.required &&
+                  professionalExperienceForm.get('completionDate').touched
+                "
+              >
+                <p class="form-validation">Completion Date is required.</p>
               </div>
             </div>
 
             <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>Job description</label>
-                <textarea cFormControl
-                          id="job_czzs" rows="2" style="width: 300px"
-                          placeholder="Enter a description"></textarea>
+                <textarea
+                  cFormControl
+                  id="description"
+                  rows="2"
+                  style="width: 300px"
+                  formControlName="description"
+                  placeholder="Enter a description"
+                ></textarea>
+              </div>
+
+              <!-- Display error messages for description field -->
+              <div
+                *ngIf="
+                  professionalExperienceForm.get('description').errors
+                    ?.required &&
+                  professionalExperienceForm.get('description').touched
+                "
+              >
+                <p class="form-validation">Description is required.</p>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
-                <input cButton class="btn-secondary" type="button" value="Add To List"
-                       style="text-align: center; color:white; height: 30px; line-height: 1px;"/>
+                <input
+                  cButton
+                  class="btn-secondary"
+                  type="button"
+                  value="Add To List"
+                  style="
+                    text-align: center;
+                    color: white;
+                    height: 30px;
+                    line-height: 1px;
+                  "
+                  (click)="professionalExperiencesForTempListTable()"
+                />
               </div>
             </div>
-
           </div>
         </form>
 
         <c-card-body>
+          <ng-container *ngIf="emptyListErrorVisible">
+            <div class="error-message" style="color: red">
+              The professional experiences cart table is empty.
+            </div>
+          </ng-container>
+
           <table [striped]="true" cTable>
             <thead>
-            <tr>
-              <th scope="col">Organization</th>
-              <th scope="col">Designation</th>
-              <th scope="col">From</th>
-              <th scope="col">To</th>
-              <th scope="col">Action</th>
-            </tr>
+              <tr>
+                <th scope="col">Organization</th>
+                <th scope="col">Designation</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Description</th>
+                <th scope="col">Action</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td><a href="#">remove</a></td>
-            </tr>
+              <tr *ngFor="let tempList of tempList; let i = index">
+                <td>{{ tempList.organization }}</td>
+                <td>{{ tempList.designation }}</td>
+                <td>{{ tempList.commencedDate }}</td>
+                <td>{{ tempList.completionDate }}</td>
+                <td>{{ tempList.description }}</td>
+                <td><a (click)="removeTempItem(i)">remove</a></td>
+              </tr>
             </tbody>
           </table>
         </c-card-body>
-
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -124,9 +254,44 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
-          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="<<Back"
+            (click)="redirectToBack()"
+          />
+          &nbsp;
+
+          <Button
+            cButton
+            class="me-1"
+            color="success"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showSaveButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >&nbsp;Save&nbsp;
+          </Button>
+
+          <Button
+            cButton
+            class="me-1"
+            color="info"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showUpdateButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >Update </Button
+          >&nbsp;
+
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="Next>>"
+            (click)="redirectToNext()"
+          />
         </div>
       </c-card-body>
     </c-card>
@@ -137,23 +302,50 @@
       <c-card-body>
         <table [striped]="true" cTable>
           <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Organization</th>
-            <th scope="col">Designation</th>
-            <th scope="col">From</th>
-            <th scope="col">To</th>
-            <th scope="col">Action</th>
-          </tr>
+            <tr>
+              <th scope="col">Organization</th>
+              <th scope="col">Designation</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+              <th scope="col">Description</th>
+              <th scope="col">Action</th>
+            </tr>
           </thead>
           <tbody>
-
+            <tr *ngFor="let proffex of tableList">
+              <td>{{ proffex.organization }}</td>
+              <td>{{ proffex.designation }}</td>
+              <td>{{ proffex.commencedDate }}</td>
+              <td>{{ proffex.completionDate }}</td>
+              <td>{{ proffex.description }}</td>
+              <td>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="primary"
+                  value="Edit"
+                  size="sm"
+                  mat-button
+                  (click)="editProfessionalExperience(proffex)"
+                  >Edit
+                </Button>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="danger"
+                  value="Delete"
+                  size="sm"
+                  mat-button
+                  style="color: white"
+                  (click)="deleteProfessionalExperience(proffex)"
+                >
+                  Delete
+                </Button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

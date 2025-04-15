@@ -1,5 +1,6 @@
 package com.pdev.rempms.candidateservice.repository.candidate;
 
+import com.pdev.rempms.candidateservice.model.candidate.Candidate;
 import com.pdev.rempms.candidateservice.model.candidate.referee.Referee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,4 +11,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RefereeRepository extends JpaRepository<Referee, Integer> {
+    void deleteByCandidate(Candidate candidate);
 }

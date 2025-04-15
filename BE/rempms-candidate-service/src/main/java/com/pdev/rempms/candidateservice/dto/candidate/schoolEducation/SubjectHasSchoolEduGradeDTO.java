@@ -15,7 +15,7 @@ public class SubjectHasSchoolEduGradeDTO {
     private Integer idSubjectHasSchoolEduGradeDTO;
 
     private Integer idSubject;
-    private SubjectDTO subject;
+    private SubjectDTO subjects;
 
     private Integer idSchoolEducation;
     private String grade; //enum : grade

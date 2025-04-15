@@ -1,65 +1,102 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>Documents</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="documentDetailsForm" cForm>
           <div class="row">
-
-            <input id="id_job_category" type="hidden">
+            <input id="documentId" type="hidden" />
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Document type</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_cateuss">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  id="documentTypeId"
+                  formControlName="documentTypeId"
+                >
                   <option value="-1">Select a document type</option>
+                  <option
+                    *ngFor="let documentType of documentTypes"
+                    [value]="documentType.id"
+                  >
+                    {{ documentType.name }}
+                  </option>
                 </select>
               </div>
             </div>
             &nbsp;&nbsp;&nbsp;
             <div class="col-md-6" style="align-content: center">
               <div class="mb-3">
-                <img id="imagePreview" [src]="imageSrc" alt="Preview" style="display: block;
-                                                            width: 500px; height: 500px;"/>
-                <br>
-                <input cFormControl #fileInput
-                       formControlName="userImage"
-                       id="user_image"
-                       type="file"
-                       (change)="previewImage()"
-                       style="width: 300px"/>
+                <img
+                  id="imagePreview"
+                  [src]="imageSrc"
+                  alt="Preview"
+                  style="display: block; width: 500px; height: 500px"
+                />
+                <br />
+                <input
+                  cFormControl
+                  #fileInput
+                  formControlName="document"
+                  id="document"
+                  type="file"
+                  (change)="previewImage()"
+                  style="width: 300px"
+                />
               </div>
-
             </div>
 
+            <div class="col-md-4" style="padding-left: 20px">
+              <div class="mb-2">
+                <label cLabel style="color: white"></label><br /><br />
+                <input
+                  cButton
+                  class="btn-secondary"
+                  type="button"
+                  value="Add To List"
+                  style="
+                    text-align: center;
+                    color: white;
+                    height: 30px;
+                    line-height: 1px;
+                  "
+                  (click)="documentTempListTable()"
+                />
+              </div>
+            </div>
           </div>
         </form>
 
         <c-card-body>
+          <ng-container *ngIf="emptyListErrorVisible">
+            <div class="error-message" style="color: red">
+              The document cart table is empty.
+            </div>
+          </ng-container>
+
           <table [striped]="true" cTable>
             <thead>
-            <tr>
-              <th scope="col">Document</th>
-              <th scope="col">Document type</th>
-              <th scope="col">Action</th>
-            </tr>
+              <tr>
+                <th scope="col">Document</th>
+                <th scope="col">Document type</th>
+                <th scope="col">Action</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td><a href="#">remove</a></td>
-            </tr>
+              <tr *ngFor="let tempList of tempList; let i = index">
+                <td>{{ tempList.actualFileName }}</td>
+                <td>{{ tempList.documentType }}</td>
+                <td><a (click)="removeTempItem(i)">remove</a></td>
+              </tr>
             </tbody>
           </table>
         </c-card-body>
-
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -67,8 +104,22 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="<<Back"
+            (click)="redirectToBack()"
+          />
+          &nbsp;
+          <input
+            cButton
+            class="btn-sm"
+            color="primary"
+            type="button"
+            value="Save All"
+            (click)="createOrModifyCommonProfileDraft()"
+          />
+          &nbsp;
         </div>
       </c-card-body>
     </c-card>
@@ -79,20 +130,43 @@
       <c-card-body>
         <table [striped]="true" cTable>
           <thead>
-          <tr>
-            <th scope="col">Document</th>
-            <th scope="col">Document type</th>
-            <th scope="col">Action</th>
-          </tr>
+            <tr>
+              <th scope="col">Document</th>
+              <th scope="col">Document type</th>
+              <th scope="col">Action</th>
+            </tr>
           </thead>
           <tbody>
-
+            <tr *ngFor="let table of tableList; let i = index">
+              <td>{{ table.actualFileName }}</td>
+              <td>{{ table.documentType }}</td>
+              <td>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="primary"
+                  value="Edit"
+                  size="sm"
+                  mat-button
+                  (click)="getDocumentById(table)"
+                  >Edit
+                </Button>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="danger"
+                  value="Delete"
+                  size="sm"
+                  mat-button
+                  style="color: white"
+                >
+                  Delete
+                </Button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

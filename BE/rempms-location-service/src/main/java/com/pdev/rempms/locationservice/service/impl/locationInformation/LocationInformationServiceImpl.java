@@ -1,6 +1,6 @@
 package com.pdev.rempms.locationservice.service.impl.locationInformation;
 
-import com.pdev.rempms.locationservice.constants.enums.CommonStatus;
+import com.pdev.rempms.locationservice.enums.CommonStatus;
 import com.pdev.rempms.locationservice.constants.validation.CommonValidationMessage;
 import com.pdev.rempms.locationservice.constants.validation.LocationInformationValidationMessage;
 import com.pdev.rempms.locationservice.dto.locationInformation.LocationInformationDTO;
@@ -10,6 +10,7 @@ import com.pdev.rempms.locationservice.model.*;
 import com.pdev.rempms.locationservice.repository.*;
 import com.pdev.rempms.locationservice.service.locationInformation.LocationInformationService;
 import com.pdev.rempms.locationservice.util.CommonResponse;
+import com.pdev.rempms.locationservice.util.CommonUtil;
 import com.pdev.rempms.locationservice.util.CommonValidation;
 import com.pdev.rempms.locationservice.util.DateTimeUtil;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +32,7 @@ import java.util.Optional;
 @Service
 public class LocationInformationServiceImpl implements LocationInformationService {
 
+    private final CommonUtil commonUtil;
     private final LocationInformationRepository locationInformationRepository;
     private final LocationInformationMapper locationInformationMapper;
     private final CityRepository cityRepository;
@@ -65,12 +68,10 @@ public class LocationInformationServiceImpl implements LocationInformationServic
             locationInformation = locationInformationRepository.findById(Long.valueOf(dto.getIdLocationInformation())).get();
             locationInformation = locationInformationMapper.toEntity(locationInformation, dto, city, district, province, country);
             locationInformation.getAuditData().setUpdatedOn(DateTimeUtil.getSriLankaTime());
-            locationInformation.getAuditData().setUpdatedBy(Long.valueOf(1)); //need further development for authorization
+            locationInformation.getAuditData().setUpdatedBy(commonUtil.getUsername()); //need further development for authorization
         } else {
             log.info("LocationInformationServiceImpl -> saveUpdateLocationInformation() => Save new LocationInfo!");
-            AuditData auditData = new AuditData();
-            auditData.setCreatedOn(DateTimeUtil.getSriLankaTime());
-            auditData.setCreatedBy(Long.valueOf(1)); //need further development for authorization
+            AuditData auditData = new AuditData(LocalDateTime.now(), commonUtil.getUsername());
             locationInformation.setAuditData(auditData);
             locationInformation = locationInformationMapper.toEntity(locationInformation, dto, city, district, province, country);
         }
@@ -154,7 +155,6 @@ public class LocationInformationServiceImpl implements LocationInformationServic
         if (!locationInformationList.isEmpty()) {
             log.info("LocationInformationServiceImpl -> getAllActiveLocationInformation() => Locations found.");
             List<LocationInformationDTO> locationInformationDTOList = locationInformationList.stream()
-                    .filter(locationInformation -> locationInformation.getCommonStatus().equalsIgnoreCase(CommonStatus.ACTIVE.getValue()))
                     .map(locationInformation -> {
                         LocationInformationDTO dto = new LocationInformationDTO();
                         return locationInformationMapper.toDto(dto, locationInformation);
@@ -187,7 +187,7 @@ public class LocationInformationServiceImpl implements LocationInformationServic
             log.info("deleteLocationInformationById -> deleteLocationInformationById() => Location Information found.");
             locationInformation.get().setCommonStatus(CommonStatus.DELETED.getValue());
             locationInformation.get().getAuditData().setUpdatedOn(DateTimeUtil.getSriLankaTime());
-            locationInformation.get().getAuditData().setUpdatedBy(Long.valueOf(1)); //need further development for authorization
+            locationInformation.get().getAuditData().setUpdatedBy(commonUtil.getUsername()); //need further development for authorization
             locationInformationRepository.save(locationInformation.get());
             commonResponse.setMessage(LocationInformationValidationMessage.LOCATION_INFO_DELETED_SUCCESS);
             commonResponse.setStatus(HttpStatus.OK);

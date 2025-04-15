@@ -1,6 +1,6 @@
 package com.pdev.rempms.recruitmentservice.client.document;
 
-import com.pdev.rempms.recruitmentservice.constants.enums.FolderType;
+import com.pdev.rempms.recruitmentservice.enums.FolderType;
 import com.pdev.rempms.recruitmentservice.util.CommonResponse;
 import feign.Headers;
 import org.springframework.cloud.openfeign.FeignClient;

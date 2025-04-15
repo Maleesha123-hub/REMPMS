@@ -1,8 +1,8 @@
 package com.pdev.rempms.recruitmentservice.service.impl.jobVacancy;
 
 import com.pdev.rempms.recruitmentservice.builder.UniqueNumberBuilder;
-import com.pdev.rempms.recruitmentservice.constants.enums.DocumentType;
-import com.pdev.rempms.recruitmentservice.constants.enums.FolderType;
+import com.pdev.rempms.recruitmentservice.enums.DocumentType;
+import com.pdev.rempms.recruitmentservice.enums.FolderType;
 import com.pdev.rempms.recruitmentservice.dto.jobVacancy.JobVacancySavedLazyResponseDTO;
 import com.pdev.rempms.recruitmentservice.dto.document.upload.DocumentUploadResponseDTO;
 import com.pdev.rempms.recruitmentservice.dto.jobVacancy.JobVacancyRequest;

@@ -7,44 +7,48 @@ spring:
   main:
     web-application-type: reactive
   cloud:
+    consul:
+      discovery:
+        register: true
+        prefer-ip-address: true
     gateway:
       routes:
+        - id: iam-service
+          uri: http://192.168.1.189:9001
+          predicates:
+            - Path=/api/iam/**
+
+        - id: pdev-keycloak-service
+          uri: http://192.168.1.189:8888
+          predicates:
+            - Path=/api/kcs/**
+
         - id: rempms-location-service
-          uri: lb://rempms-location-service
+          uri: http://192.168.1.189:8185
           predicates:
             - Path=/api/location/**
 
         - id: rempms-communication-service
-          uri: lb://rempms-communication-service
+          uri: http://192.168.1.189:8184
           predicates:
             - Path=/api/communication/**
 
-        - id: rempms-admin-service
-          uri: lb://rempms-admin-service
-          predicates:
-            - Path=/api/admin/**
-
-        - id: rempms-user-service
-          uri: lb://rempms-user-service
-          predicates:
-            - Path=/api/user/**
-
         - id: rempms-recruitment-service
-          uri: lb://rempms-recruitment-service
+          uri: http://192.168.1.189:8181
           predicates:
             - Path=/api/recruitment/**
 
         - id: rempms-candidate-service
-          uri: lb://rempms-candidate-service
+          uri: http://192.168.1.189:7080
           predicates:
             - Path=/api/candidate/**
 
         - id: rempms-document-service
-          uri: lb://rempms-document-service
+          uri: http://192.168.1.189:8197
           predicates:
             - Path=/api/document/**
 
         - id: rempms-draft-service
-          uri: lb://rempms-draft-service
+          uri: http://192.168.1.189:8199
           predicates:
             - Path=/api/draft/**

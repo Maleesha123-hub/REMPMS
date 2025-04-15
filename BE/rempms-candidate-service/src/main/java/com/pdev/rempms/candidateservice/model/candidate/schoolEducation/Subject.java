@@ -2,7 +2,6 @@ package com.pdev.rempms.candidateservice.model.candidate.schoolEducation;
 
 import com.pdev.rempms.candidateservice.model.AuditData;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,7 +26,7 @@ public class Subject {
     private String schoolEduQualification; //enum - school qualification - OL/AL
 
     @JoinColumn(name = "scheme_id_scheme")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Scheme scheme;
 
     @Embedded

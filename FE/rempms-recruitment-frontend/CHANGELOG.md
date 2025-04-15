@@ -4,7 +4,7 @@
 
 #### `4.5.25`
 
-- chore(dependencies): update 
+- chore(dependencies): update
 
 ---
 
@@ -68,8 +68,9 @@
 - chore(dependencies): update `@coreui/utils` to version `^2.0.1`
 
 imports update required :boom: :exclamation:
+
 - from `import {getStyle, ...} from '@coreui/utils/src`
-- to `import  {getStyle, ...} from '@coreui/utils` 
+- to `import  {getStyle, ...} from '@coreui/utils`
 
 ---
 
@@ -83,11 +84,13 @@ imports update required :boom: :exclamation:
 #### `4.3.0`
 
 update to:
+
 - `Angular 15`
 - `TypeScript 4.8`
 - `RxJS 7.5`
 
-refactor: 
+refactor:
+
 - refactor(AppComponent): change selector to `app-root`
 
 ---

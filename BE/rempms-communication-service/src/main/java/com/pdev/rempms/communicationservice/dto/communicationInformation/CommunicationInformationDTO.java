@@ -11,12 +11,13 @@ import lombok.Data;
 @Data
 public class CommunicationInformationDTO {
     private String idCommunicationInformation;
+    private String customerName;
     private String phoneNo;
     private String mobileNo;
     private String email;
-    private String commonStatus;
+    private String commInfoCommonStatus;
     private LanguageDTO language;
     private PreferredCommunicationDTO preferredCommunication;
-    private String idLanguage;
-    private String idPreferredCommunication;
+    private String commInfoIdPreferredCommunication;
+    private String commInfoIdLanguage;
 }

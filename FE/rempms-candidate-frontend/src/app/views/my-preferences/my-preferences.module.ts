@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import {
   AvatarModule,
@@ -12,13 +12,13 @@ import {
   NavModule,
   ProgressModule,
   TableModule,
-  TabsModule
+  TabsModule,
 } from '@coreui/angular';
-import {IconModule} from '@coreui/icons-angular';
-import {ChartjsModule} from '@coreui/angular-chartjs';
-import {DocsComponentsModule} from "@docs-components/docs-components.module";
-import {MyPreferencesRoutingModule} from "./my-preferences-routing.module";
-import {JobAlertComponent} from "./job-alert/job-alert.component";
+import { IconModule } from '@coreui/icons-angular';
+import { ChartjsModule } from '@coreui/angular-chartjs';
+import { DocsComponentsModule } from '@docs-components/docs-components.module';
+import { MyPreferencesRoutingModule } from './my-preferences-routing.module';
+import { JobAlertComponent } from './job-alert/job-alert.component';
 
 @NgModule({
   imports: [
@@ -38,9 +38,8 @@ import {JobAlertComponent} from "./job-alert/job-alert.component";
     ChartjsModule,
     AvatarModule,
     TableModule,
-    DocsComponentsModule
+    DocsComponentsModule,
   ],
-  declarations: [JobAlertComponent]
+  declarations: [JobAlertComponent],
 })
-export class MyPreferencesModule {
-}
+export class MyPreferencesModule {}

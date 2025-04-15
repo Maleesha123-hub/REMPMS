@@ -22,5 +22,4 @@ public class SchoolEducationRequestDTO {
     private String description;
     private Integer idScheme;
     private List<SubjectHasSchoolEduGradeDTO> subjectHasSchoolEduGrades;
-
 }

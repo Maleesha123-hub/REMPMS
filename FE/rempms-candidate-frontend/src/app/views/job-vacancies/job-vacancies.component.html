@@ -1,45 +1,61 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-body>
         <form cForm>
           <div class="row">
-
-            <input id="id_job_category" type="hidden">
+            <input id="id_job_category" type="hidden" />
 
             <c-form-check>
-              <input id="checkOne" type="checkbox" style="cursor: pointer"/>
+              <input id="checkOne" type="checkbox" style="cursor: pointer" />
               <label cFormCheckLabel for="checkOne">Govt.jobs</label>
               &nbsp;
-              <input id="checkTwo" type="checkbox" style="cursor: pointer"/>
+              <input id="checkTwo" type="checkbox" style="cursor: pointer" />
               <label cFormCheckLabel for="checkTwo">Part time</label>
               &nbsp;
-              <input id="checkThree" type="checkbox" style="cursor: pointer"/>
+              <input id="checkThree" type="checkbox" style="cursor: pointer" />
               <label cFormCheckLabel for="checkThree">Full time</label>
               &nbsp;
-              <input id="checkFour" type="checkbox" style="cursor: pointer"/>
+              <input id="checkFour" type="checkbox" style="cursor: pointer" />
               <label cFormCheckLabel for="checkFour">Walk in interviews</label>
 
               &nbsp;
-              <input id="job_ref_no" placeholder="Job.Ref.no" type="text" style="width: 120px; height: 22px;"/>
-              <input id="key_word" placeholder="Key word" type="text" style="width: 120px; height: 22px;"/>
+              <input
+                id="job_ref_no"
+                placeholder="Job.Ref.no"
+                type="text"
+                style="width: 120px; height: 22px"
+              />
+              <input
+                id="key_word"
+                placeholder="Key word"
+                type="text"
+                style="width: 120px; height: 22px"
+              />
 
-              <input cButton class="btn-secondary" type="submit" value="search"
-                     style="text-align: center; justify-content: center; color:white; height: 22px; line-height: 1px;"/>
+              <input
+                cButton
+                class="btn-secondary"
+                type="submit"
+                value="search"
+                style="
+                  text-align: center;
+                  justify-content: center;
+                  color: white;
+                  height: 22px;
+                  line-height: 1px;
+                "
+              />
 
               &nbsp;
-                <input type="radio" value="one" style="cursor:pointer;">
-                <label cFormCheckLabel>Open</label>
+              <input type="radio" value="one" style="cursor: pointer" />
+              <label cFormCheckLabel>Open</label>
 
-                <input type="radio" value="two" style="cursor:pointer;"/>
-                <label cFormCheckLabel>Close</label>
-
+              <input type="radio" value="two" style="cursor: pointer" />
+              <label cFormCheckLabel>Close</label>
             </c-form-check>
-
           </div>
         </form>
-
       </c-card-body>
     </c-card>
   </c-col>
@@ -49,21 +65,18 @@
       <c-card-body>
         <table [striped]="true" cTable>
           <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Job.Ref.No</th>
-            <th scope="col">Position & Employer</th>
-            <th scope="col">Job description</th>
-            <th scope="col">Open date</th>
-            <th scope="col">Close date</th>
-          </tr>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Job.Ref.No</th>
+              <th scope="col">Position & Employer</th>
+              <th scope="col">Job description</th>
+              <th scope="col">Open date</th>
+              <th scope="col">Close date</th>
+            </tr>
           </thead>
-          <tbody>
-
-          </tbody>
+          <tbody></tbody>
         </table>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>

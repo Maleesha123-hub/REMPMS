@@ -11,10 +11,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Data
 public class CommonProperties {
-
-    @Value("${document.max.image}")
-    private String maxImageSize;
-
-    @Value("${document.max.document}")
-    private String maxDocumentSize;
 }

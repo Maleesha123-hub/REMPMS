@@ -88,7 +88,7 @@ import {
   cilUser,
   cilUserFemale,
   cilUserFollow,
-  cilUserUnfollow
+  cilUserUnfollow,
 } from '@coreui/icons';
 
 export const iconSubset = {
@@ -181,7 +181,7 @@ export const iconSubset = {
   cilUser,
   cilUserFemale,
   cilUserFollow,
-  cilUserUnfollow
+  cilUserUnfollow,
 };
 
 export enum IconSubset {

@@ -1,10 +1,8 @@
 package com.pdev.rempms.candidateservice.model.candidate.proffesionalExperience;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pdev.rempms.candidateservice.model.AuditData;
 import com.pdev.rempms.candidateservice.model.candidate.Candidate;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,11 +37,11 @@ public class ProfessionalExperience {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "industry_id_industry")
     private Industry industry;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "jobCategory_id_jobCategory")
     private JobCategory jobCategory;
 
@@ -60,8 +58,23 @@ public class ProfessionalExperience {
     private AuditData auditData;
 
     @JoinColumn(name = "candidate_id_candidate")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     private Candidate candidate;
 
+    @Override
+    public String toString() {
+        return "ProfessionalExperience{" +
+                "id=" + id +
+                ", organization='" + organization + '\'' +
+                ", designation='" + designation + '\'' +
+                ", commencedDate=" + commencedDate +
+                ", completionDate=" + completionDate +
+                ", description='" + description + '\'' +
+                ", industry=" + industry +
+                ", jobCategory=" + jobCategory +
+                ", stillWorking=" + stillWorking +
+                ", auditData=" + auditData +
+                // Exclude candidate to prevent recursion
+                '}';
+    }
 }

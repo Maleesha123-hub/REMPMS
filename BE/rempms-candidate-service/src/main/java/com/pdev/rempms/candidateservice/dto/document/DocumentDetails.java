@@ -1,6 +1,5 @@
 package com.pdev.rempms.candidateservice.dto.document;
 
-import com.pdev.rempms.candidateservice.constants.enums.FolderType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +11,8 @@ import lombok.Setter;
 @Setter
 public class DocumentDetails {
 
-    private FolderType folderType;
+    private String folderType;
     private String refNo;
-    private String documentType;
+    private Integer documentTypeId;
 
 }

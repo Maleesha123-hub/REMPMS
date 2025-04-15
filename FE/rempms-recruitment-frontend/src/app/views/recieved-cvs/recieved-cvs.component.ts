@@ -37,7 +37,7 @@ export class RecievedCvsComponent {
   constructor(
     private formBuilder: FormBuilder,
     private jobVacancyStore: Store<{ jobVacancy: JobVacancyState }>,
-    private recivedCvsStore: Store<{ recievedCvsState: RecievedCvsState }>
+    private recivedCvsStore: Store<{ recievedCvsState: RecievedCvsState }>,
   ) {}
 
   ngOnInit(): void {
@@ -56,14 +56,14 @@ export class RecievedCvsComponent {
 
   getRecievedCvsById(id: number) {
     this.recivedCvsStore.dispatch(
-      RecievdedCvsActions.loadRecievedCvsByVacancyId({ id })
+      RecievdedCvsActions.loadRecievedCvsByVacancyId({ id }),
     );
   }
 
   getAllJobVacancies() {
     this.jobVacancyStore.dispatch(JobVacancyActions.loadJobVacancies());
     this.selectJobVacanciesDetails$ = this.jobVacancyStore.select(
-      selectJobVacanciesDetails
+      selectJobVacanciesDetails,
     );
     this.selectJobVacanciesDetails$
       .pipe(takeUntil(this.unsubscribe$))
@@ -79,7 +79,7 @@ export class RecievedCvsComponent {
 
   handleErrorOfJobVacancy(): void {
     this.error$ = this.jobVacancyStore.pipe(
-      select(selectJobVacancyErrorResponse)
+      select(selectJobVacancyErrorResponse),
     );
     this.error$.pipe(takeUntil(this.unsubscribe$)).subscribe((state) => {
       if (state) {
@@ -109,7 +109,7 @@ export class RecievedCvsComponent {
 
   handleErrorOfRecievedCvs(): void {
     this.error$ = this.recivedCvsStore.pipe(
-      select(selectRecievedCvsErrorResponse)
+      select(selectRecievedCvsErrorResponse),
     );
     this.error$.pipe(takeUntil(this.unsubscribe$)).subscribe((state) => {
       if (state) {
@@ -140,7 +140,7 @@ export class RecievedCvsComponent {
   resetForm(): void {
     this.receivedCvsForm.reset();
     const updateButton = document.querySelector(
-      'input[value="Update"]'
+      'input[value="Update"]',
     ) as HTMLInputElement;
     if (updateButton) {
       updateButton.value = 'Create';

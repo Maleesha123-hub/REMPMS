@@ -1,16 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-job-alert',
   templateUrl: './job-alert.component.html',
-  styleUrl: './job-alert.component.scss'
+  styleUrl: './job-alert.component.scss',
 })
-export class JobAlertComponent implements OnInit{
+export class JobAlertComponent implements OnInit {
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
-  constructor() {
-  }
-
+  constructor() {}
 }

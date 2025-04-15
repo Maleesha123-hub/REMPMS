@@ -38,7 +38,7 @@ export class EmployerComponent implements OnInit, OnDestroy {
   // Called first time before the ngOnInit().
   constructor(
     private formBuilder: FormBuilder,
-    private store: Store<{ employer: EmployerState }>
+    private store: Store<{ employer: EmployerState }>,
   ) {}
 
   // ngOninit() is a life cycle hook in angular.
@@ -112,7 +112,7 @@ export class EmployerComponent implements OnInit, OnDestroy {
       };
       this.store.dispatch(EmployersActions.saveOrModifyEmployer({ employer }));
       this.employerSavedOrModifiedResponse$ = this.store.pipe(
-        select(selectEmployerSavedOrModifiedResponseData)
+        select(selectEmployerSavedOrModifiedResponseData),
       );
       this.employerSavedOrModifiedResponse$
         .pipe(takeUntil(this.unsubscribe$))
@@ -138,7 +138,7 @@ export class EmployerComponent implements OnInit, OnDestroy {
   deleteById(id: number): void {
     this.store.dispatch(EmployersActions.deleteEmployer({ id }));
     this.employerDeletedResponse$ = this.store.pipe(
-      select(selectEmployerDeletedResponseData)
+      select(selectEmployerDeletedResponseData),
     );
     this.employerDeletedResponse$
       .pipe(takeUntil(this.unsubscribe$))
@@ -186,7 +186,7 @@ export class EmployerComponent implements OnInit, OnDestroy {
   // This method is allowed to change the 'Create' btn name as 'Update.
   onCreateClick(): void {
     const createButton = document.querySelector(
-      'input[value="Create"]'
+      'input[value="Create"]',
     ) as HTMLInputElement;
     if (createButton) {
       createButton.value = 'Update';
@@ -197,7 +197,7 @@ export class EmployerComponent implements OnInit, OnDestroy {
   resetForm(): void {
     this.employerForm.reset();
     const updateButton = document.querySelector(
-      'input[value="Update"]'
+      'input[value="Update"]',
     ) as HTMLInputElement;
     if (updateButton) {
       updateButton.value = 'Create';

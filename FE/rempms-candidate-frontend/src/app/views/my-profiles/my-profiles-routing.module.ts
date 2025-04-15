@@ -1,13 +1,13 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {MyCvDocumentComponent} from "./my-cv-document/my-cv-document.component";
-import {MyLoginComponent} from "./my-login/my-login.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { MyCvDocumentComponent } from './my-cv-document/my-cv-document.component';
+import { MyLoginComponent } from './my-login/my-login.component';
 
 const routes: Routes = [
   {
     path: '',
     data: {
-      title: $localize`MyProfiles`
+      title: $localize`MyProfiles`,
     },
     children: [
       {
@@ -23,14 +23,13 @@ const routes: Routes = [
         data: {
           title: 'My Login',
         },
-      }
+      },
     ],
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MyProfilesRoutingModule {
-}
+export class MyProfilesRoutingModule {}

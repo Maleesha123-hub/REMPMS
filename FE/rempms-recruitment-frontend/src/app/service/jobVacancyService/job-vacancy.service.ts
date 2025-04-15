@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { CommonResponse } from 'src/app/model/commonResponse/CommonResponse';
-import { JobVacancyRequest } from 'src/app/model/jobVacancy/JobVacancyRequest';
-import { environment } from 'src/environments/environment';
+import { CommonResponse } from '../../model/commonResponse/CommonResponse';
+import { JobVacancyRequest } from '../../model/jobVacancy/JobVacancyRequest';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,7 @@ export class JobVacancyService {
       map((response) => response),
       catchError((error) => {
         return this.handleError(error);
-      })
+      }),
     );
   }
 
@@ -39,7 +39,7 @@ export class JobVacancyService {
       map((response) => response),
       catchError((error) => {
         return this.handleError(error);
-      })
+      }),
     );
   }
 

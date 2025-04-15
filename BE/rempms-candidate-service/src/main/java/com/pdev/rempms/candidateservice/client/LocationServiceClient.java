@@ -25,7 +25,7 @@ public interface LocationServiceClient {
      * @return {@link CommonResponse} - saved location response
      * @author @Maleesha99
      */
-    @PostMapping(value = "/api/v1/location/locationInformation/saveUpdate")
+    @PostMapping(value = "/api/location/v1/locationInformation/saveUpdate")
     CommonResponse saveUpdateLocationInfo(@RequestBody LocationInformationRequestDTO dto);
 
     /**
@@ -35,7 +35,7 @@ public interface LocationServiceClient {
      * @return {@link ResponseEntity<CommonResponse>} - country response
      * @author @Maleesha99
      */
-    @GetMapping(value = "api/v1/location/country/getById/{idCountry}")
+    @GetMapping(value = "/api/location/v1/country/getById/{idCountry}")
     ResponseEntity<CommonResponse> getById(@PathVariable Integer idCountry);
 
 }

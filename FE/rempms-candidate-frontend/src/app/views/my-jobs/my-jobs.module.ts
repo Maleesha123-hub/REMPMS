@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import {
   AvatarModule,
@@ -12,14 +12,14 @@ import {
   NavModule,
   ProgressModule,
   TableModule,
-  TabsModule
+  TabsModule,
 } from '@coreui/angular';
-import {IconModule} from '@coreui/icons-angular';
-import {ChartjsModule} from '@coreui/angular-chartjs';
-import {DocsComponentsModule} from "@docs-components/docs-components.module";
-import {MyJobsRoutingModule} from "./my-jobs-routing.module";
-import {FlaggedJobsComponent} from './flagged-jobs/flagged-jobs.component';
-import {PreferredCompaniesComponent} from "./preferred-companies/preferred-companies.component";
+import { IconModule } from '@coreui/icons-angular';
+import { ChartjsModule } from '@coreui/angular-chartjs';
+import { DocsComponentsModule } from '@docs-components/docs-components.module';
+import { MyJobsRoutingModule } from './my-jobs-routing.module';
+import { FlaggedJobsComponent } from './flagged-jobs/flagged-jobs.component';
+import { PreferredCompaniesComponent } from './preferred-companies/preferred-companies.component';
 
 @NgModule({
   imports: [
@@ -39,9 +39,8 @@ import {PreferredCompaniesComponent} from "./preferred-companies/preferred-compa
     ChartjsModule,
     AvatarModule,
     TableModule,
-    DocsComponentsModule
+    DocsComponentsModule,
   ],
-  declarations: [FlaggedJobsComponent, PreferredCompaniesComponent]
+  declarations: [FlaggedJobsComponent, PreferredCompaniesComponent],
 })
-export class MyJobsModule {
-}
+export class MyJobsModule {}

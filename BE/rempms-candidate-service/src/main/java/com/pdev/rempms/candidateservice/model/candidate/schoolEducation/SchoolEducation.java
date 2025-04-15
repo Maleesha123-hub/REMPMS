@@ -44,7 +44,7 @@ public class SchoolEducation {
     private String description;
 
     @JoinColumn(name = "scheme_id_scheme")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Scheme scheme;
 
     @Embedded
@@ -57,7 +57,7 @@ public class SchoolEducation {
     private AuditData auditData;
 
     @JoinColumn(name = "candidate_id_candidate")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Candidate candidate;
 

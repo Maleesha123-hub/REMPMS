@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { CommonResponse } from 'src/app/model/commonResponse/CommonResponse';
+import { CommonResponse } from '../../../model/commonResponse/CommonResponse';
 import * as EmployersActions from './employer.actions';
 
 /**
@@ -95,5 +95,5 @@ export const employerReducer = createReducer(
     loading: false,
     employerDeletedResponse: null,
     error: error,
-  }))
+  })),
 );

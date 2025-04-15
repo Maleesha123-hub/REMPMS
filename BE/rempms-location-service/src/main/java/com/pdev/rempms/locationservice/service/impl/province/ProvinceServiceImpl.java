@@ -1,6 +1,6 @@
 package com.pdev.rempms.locationservice.service.impl.province;
 
-import com.pdev.rempms.locationservice.constants.enums.CommonStatus;
+import com.pdev.rempms.locationservice.enums.CommonStatus;
 import com.pdev.rempms.locationservice.constants.validation.CommonValidationMessage;
 import com.pdev.rempms.locationservice.constants.validation.ProvinceValidationMessage;
 import com.pdev.rempms.locationservice.dto.province.ProvinceDTO;
@@ -13,6 +13,7 @@ import com.pdev.rempms.locationservice.repository.CountryRepository;
 import com.pdev.rempms.locationservice.repository.ProvinceRepository;
 import com.pdev.rempms.locationservice.service.province.ProvinceService;
 import com.pdev.rempms.locationservice.util.CommonResponse;
+import com.pdev.rempms.locationservice.util.CommonUtil;
 import com.pdev.rempms.locationservice.util.CommonValidation;
 import com.pdev.rempms.locationservice.util.DateTimeUtil;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +35,7 @@ import java.util.Optional;
 @Service
 public class ProvinceServiceImpl implements ProvinceService {
 
+    private final CommonUtil commonUtil;
     private final CountryRepository countryRepository;
     private final ProvinceRepository provinceRepository;
     private final ProvinceMapper provinceMapper;
@@ -62,12 +65,10 @@ public class ProvinceServiceImpl implements ProvinceService {
             province = provinceRepository.findById(Long.valueOf(dto.getIdProvince())).get();
             province = provinceMapper.toEntity(province, dto, country);
             province.getAuditData().setUpdatedOn(DateTimeUtil.getSriLankaTime());
-            province.getAuditData().setUpdatedBy(Long.valueOf(1)); //need further development for authorization
+            province.getAuditData().setUpdatedBy(commonUtil.getUsername());
         } else {
             log.info("ProvinceServiceImpl -> saveUpdateProvince() => Save new province!");
-            AuditData auditData = new AuditData();
-            auditData.setCreatedOn(DateTimeUtil.getSriLankaTime());
-            auditData.setCreatedBy(Long.valueOf(1)); //need further development for authorization
+            AuditData auditData = new AuditData(LocalDateTime.now(), commonUtil.getUsername());
             province.setAuditData(auditData);
             province = provinceMapper.toEntity(province, dto, country);
         }
@@ -173,7 +174,7 @@ public class ProvinceServiceImpl implements ProvinceService {
             log.info("ProvinceServiceImpl -> deleteProvinceById() => Province found!");
             province.get().setCommonStatus(CommonStatus.DELETED.getValue());
             province.get().getAuditData().setUpdatedOn(DateTimeUtil.getSriLankaTime());
-            province.get().getAuditData().setUpdatedBy(Long.valueOf(1));
+            province.get().getAuditData().setUpdatedBy(commonUtil.getUsername());
             provinceRepository.save(province.get());
             commonResponse.setMessage(ProvinceValidationMessage.PROVINCE_DELETED_SUCCESS);
             commonResponse.setStatus(HttpStatus.OK);

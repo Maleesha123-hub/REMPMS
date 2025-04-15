@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/location/district")
+@RequestMapping("api/location/v1/district")
 public class DistrictController {
 
     private final DistrictService districtService;

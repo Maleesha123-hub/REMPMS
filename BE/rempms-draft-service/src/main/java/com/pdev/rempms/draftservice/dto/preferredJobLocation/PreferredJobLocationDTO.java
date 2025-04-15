@@ -15,6 +15,7 @@ public class PreferredJobLocationDTO {
 
     private String idPreferredJobLocation;
     private String idCandidate;
+    private Integer idCountry;
     private List<Integer> idCountries;
 
 }

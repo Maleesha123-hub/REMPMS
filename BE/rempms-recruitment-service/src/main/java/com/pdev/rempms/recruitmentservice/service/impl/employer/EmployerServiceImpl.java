@@ -1,16 +1,18 @@
 package com.pdev.rempms.recruitmentservice.service.impl.employer;
 
 import com.pdev.rempms.recruitmentservice.builder.UniqueNumberBuilder;
-import com.pdev.rempms.recruitmentservice.constants.enums.ReferenceNo;
+import com.pdev.rempms.recruitmentservice.enums.ReferenceNo;
 import com.pdev.rempms.recruitmentservice.dto.employer.EmployerDTO;
 import com.pdev.rempms.recruitmentservice.dto.employer.EmployerSavedLazyResponseDTO;
 import com.pdev.rempms.recruitmentservice.exception.BaseException;
 import com.pdev.rempms.recruitmentservice.exception.RecordNotFoundException;
 import com.pdev.rempms.recruitmentservice.mapper.employer.EmployerMapper;
+import com.pdev.rempms.recruitmentservice.model.AuditData;
 import com.pdev.rempms.recruitmentservice.model.employer.Employer;
 import com.pdev.rempms.recruitmentservice.repository.employer.EmployerRepository;
 import com.pdev.rempms.recruitmentservice.service.employer.EmployerService;
 import com.pdev.rempms.recruitmentservice.util.CommonResponse;
+import com.pdev.rempms.recruitmentservice.util.CommonUtil;
 import com.pdev.rempms.recruitmentservice.util.CommonValidation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +33,7 @@ public class EmployerServiceImpl implements EmployerService {
     private final EmployerRepository employerRepository;
     private final EmployerMapper employerMapper;
     private final UniqueNumberBuilder uniqueNumberBuilder;
+    private final CommonUtil commonUtil;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -45,6 +49,12 @@ public class EmployerServiceImpl implements EmployerService {
 
             employer = employerRepository.findById(dto.getId())
                     .orElseThrow(() -> new RecordNotFoundException("Employer is not exists."));
+
+            employer.getAuditData().setUpdatedBy(commonUtil.getUsername());
+            employer.getAuditData().setUpdatedOn(LocalDateTime.now());
+
+        } else {
+            employer.setAuditData(new AuditData(LocalDateTime.now(), commonUtil.getUsername()));
         }
 
         if (CommonValidation.integerNullValidation(dto.getId()) &&
@@ -98,7 +108,7 @@ public class EmployerServiceImpl implements EmployerService {
         employer = employerRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Employer is not exists."));
 
-        if (!employer.getJobVacancies().isEmpty()){
+        if (!employer.getJobVacancies().isEmpty()) {
             throw new BaseException(500, "Employer can not delete. It has job vacancies.");
         }
 

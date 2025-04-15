@@ -8,10 +8,9 @@ describe('LanguageProficiencyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LanguageProficiencyComponent]
-    })
-    .compileComponents();
-    
+      imports: [LanguageProficiencyComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LanguageProficiencyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

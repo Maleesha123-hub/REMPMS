@@ -13,7 +13,7 @@ export interface IChartProps {
 }
 
 @Injectable({
-  providedIn: 'any'
+  providedIn: 'any',
 })
 export class DashboardChartsData {
   constructor() {
@@ -60,7 +60,7 @@ export class DashboardChartsData {
         'September',
         'October',
         'November',
-        'December'
+        'December',
       ];
     } else {
       /* tslint:disable:max-line-length */
@@ -71,7 +71,7 @@ export class DashboardChartsData {
         'Thursday',
         'Friday',
         'Saturday',
-        'Sunday'
+        'Sunday',
       ];
       labels = week.concat(week, week, week);
     }
@@ -83,13 +83,13 @@ export class DashboardChartsData {
         borderColor: brandInfo,
         pointHoverBackgroundColor: brandInfo,
         borderWidth: 2,
-        fill: true
+        fill: true,
       },
       {
         // brandSuccess
         backgroundColor: 'transparent',
         borderColor: brandSuccess || '#4dbd74',
-        pointHoverBackgroundColor: '#fff'
+        pointHoverBackgroundColor: '#fff',
       },
       {
         // brandDanger
@@ -97,41 +97,41 @@ export class DashboardChartsData {
         borderColor: brandDanger || '#f86c6b',
         pointHoverBackgroundColor: brandDanger,
         borderWidth: 1,
-        borderDash: [8, 5]
-      }
+        borderDash: [8, 5],
+      },
     ];
 
     const datasets = [
       {
         data: this.mainChart['Data1'],
         label: 'Current',
-        ...colors[0]
+        ...colors[0],
       },
       {
         data: this.mainChart['Data2'],
         label: 'Previous',
-        ...colors[1]
+        ...colors[1],
       },
       {
         data: this.mainChart['Data3'],
         label: 'BEP',
-        ...colors[2]
-      }
+        ...colors[2],
+      },
     ];
 
     const plugins = {
       legend: {
-        display: false
+        display: false,
       },
       tooltip: {
         callbacks: {
-          labelColor: function(context: any) {
+          labelColor: function (context: any) {
             return {
-              backgroundColor: context.dataset.borderColor
+              backgroundColor: context.dataset.borderColor,
             };
-          }
-        }
-      }
+          },
+        },
+      },
     };
 
     const options = {
@@ -140,37 +140,36 @@ export class DashboardChartsData {
       scales: {
         x: {
           grid: {
-            drawOnChartArea: false
-          }
+            drawOnChartArea: false,
+          },
         },
         y: {
           beginAtZero: true,
           max: 250,
           ticks: {
             maxTicksLimit: 5,
-            stepSize: Math.ceil(250 / 5)
-          }
-        }
+            stepSize: Math.ceil(250 / 5),
+          },
+        },
       },
       elements: {
         line: {
-          tension: 0.4
+          tension: 0.4,
         },
         point: {
           radius: 0,
           hitRadius: 10,
           hoverRadius: 4,
-          hoverBorderWidth: 3
-        }
-      }
+          hoverBorderWidth: 3,
+        },
+      },
     };
 
     this.mainChart.type = 'line';
     this.mainChart.options = options;
     this.mainChart.data = {
       datasets,
-      labels
+      labels,
     };
   }
-
 }

@@ -21,11 +21,11 @@ public class SubjectHasSchoolEduGrade {
     private Integer id;
 
     @JoinColumn(name = "subject_id_subject")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Subject subject;
 
     @JoinColumn(name = "school_education_id_school_education")
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private SchoolEducation schoolEducation;
 
     @Column(name = "grade")

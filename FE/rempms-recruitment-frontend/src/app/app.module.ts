@@ -14,6 +14,9 @@ import { AppRoutingModule } from './app-routing.module';
 // Import app component
 import { AppComponent } from './app.component';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './interceptor/jwt.interceptor';
+
 // Import containers
 import {
   DefaultFooterComponent,
@@ -45,10 +48,10 @@ import {
 } from '@coreui/angular';
 
 import { IconModule, IconSetService } from '@coreui/icons-angular';
-import { DocsComponentsModule } from '@docs-components/docs-components.module';
 import { ChartjsComponent } from '@coreui/angular-chartjs';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { EmployerVisibilityToggle } from './directives/employer/EmployerVisibilityToggle.directive';
 
 const APP_CONTAINERS = [
   DefaultFooterComponent,
@@ -57,7 +60,7 @@ const APP_CONTAINERS = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, ...APP_CONTAINERS],
+  declarations: [EmployerVisibilityToggle, AppComponent, ...APP_CONTAINERS],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -85,7 +88,6 @@ const APP_CONTAINERS = [
     ListGroupModule,
     CardModule,
     NgScrollbarModule,
-    DocsComponentsModule,
     ChartjsComponent,
     TableColorDirective,
     TableDirective,
@@ -94,10 +96,16 @@ const APP_CONTAINERS = [
     StoreModule.forRoot({}), // Root state if any
     EffectsModule.forRoot([]), // Root effects if any
   ],
+  exports: [EmployerVisibilityToggle],
   providers: [
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true, // Important for multiple interceptors
     },
     IconSetService,
     Title,

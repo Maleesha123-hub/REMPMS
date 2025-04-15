@@ -1,22 +1,35 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>Job preferences</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="jobPreferenceForm" cForm>
           <div class="row">
-
-            <input id="id_job_category" type="hidden">
+            <input
+              id="idJobPreference"
+              type="hidden"
+              formControlName="idJobPreference"
+            />
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Job category</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_cateuss">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idJobCategory"
+                  id="idJobCategory"
+                >
                   <option value="-1">Select job category</option>
+                  <option
+                    *ngFor="let jobCategory of jobCategories"
+                    [value]="jobCategory.idJobCategory"
+                  >
+                    {{ jobCategory.jobCategoryName }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -24,19 +37,40 @@
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Industry</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_cdss">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="idIndustry"
+                  id="idIndustry"
+                >
                   <option value="-1">Select industry</option>
+                  <option
+                    *ngFor="let industry of industries"
+                    [value]="industry.id"
+                  >
+                    {{ industry.name }}
+                  </option>
                 </select>
               </div>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
-                <label cLabel>Preferred communication</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_csduss">
-                  <option value="-1">Select preferred communication</option>
+                <label cLabel>Preference</label>
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  formControlName="preference"
+                  id="preference"
+                >
+                  <option value="-1">Select preference</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
                 </select>
               </div>
             </div>
@@ -44,44 +78,64 @@
             <div class="col-md-4">
               <div class="mb-2">
                 <label cLabel>Remark</label>
-                <textarea cFormControl
-                          id="jobsdzzs" rows="6" style="width: 600px"
-                          placeholder="Enter remark"></textarea>
+                <textarea
+                  cFormControl
+                  formControlName="remark"
+                  id="remark"
+                  rows="6"
+                  style="width: 600px"
+                  placeholder="Enter remark"
+                ></textarea>
               </div>
             </div>
           </div>
 
           <div class="col-md-3">
             <div class="mb-2">
-              <input cButton class="btn-secondary" type="button" value="Add To List"
-                     style="text-align: center; color:white; height: 30px; line-height: 1px;"/>
+              <input
+                cButton
+                class="btn-secondary"
+                type="button"
+                value="Add To List"
+                style="
+                  text-align: center;
+                  color: white;
+                  height: 30px;
+                  line-height: 1px;
+                "
+                (click)="jobPreferenceTempListTable()"
+              />
             </div>
           </div>
         </form>
 
         <c-card-body>
+          <ng-container *ngIf="emptyListErrorVisible">
+            <div class="error-message" style="color: red">
+              The job preference cart table is empty.
+            </div>
+          </ng-container>
+
           <table [striped]="true" cTable>
             <thead>
-            <tr>
-              <th scope="col">Job category</th>
-              <th scope="col">Industry</th>
-              <th scope="col">Preferred communication</th>
-              <th scope="col">Action</th>
-            </tr>
+              <tr>
+                <th scope="col">Job category</th>
+                <th scope="col">Industry</th>
+                <th scope="col">Preference</th>
+                <th scope="col">Action</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td><a href="#">remove</a></td>
-            </tr>
+              <tr *ngFor="let tempList of tempList; let i = index">
+                <td>{{ tempList.jobCategory }}</td>
+                <td>{{ tempList.industry }}</td>
+                <td>{{ tempList.preference }}</td>
+                <td><a (click)="removeJobPreferenceItem(i)">remove</a></td>
+              </tr>
             </tbody>
           </table>
         </c-card-body>
-
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -89,9 +143,43 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
-          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="<<Back"
+            (click)="redirectToBack()"
+          />
+          &nbsp; &nbsp;
+          <Button
+            cButton
+            class="me-1"
+            color="success"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showSaveButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >&nbsp;Save&nbsp;
+          </Button>
+
+          <Button
+            cButton
+            class="me-1"
+            color="info"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showUpdateButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >Update </Button
+          >&nbsp;
+
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="Next>>"
+            (click)="redirectToNext()"
+          />
         </div>
       </c-card-body>
     </c-card>
@@ -102,21 +190,44 @@
       <c-card-body>
         <table [striped]="true" cTable>
           <thead>
-          <tr>
-            <th scope="col">Job category</th>
-            <th scope="col">Industry</th>
-            <th scope="col">Preferred communication</th>
-            <th scope="col">Action</th>
-          </tr>
+            <tr>
+              <th scope="col">Job category</th>
+              <th scope="col">Industry</th>
+              <th scope="col">Preference</th>
+              <th scope="col">Action</th>
+            </tr>
           </thead>
           <tbody>
-
+            <tr *ngFor="let tableList of tableList; let i = index">
+              <td>{{ tableList.jobCategory }}</td>
+              <td>{{ tableList.industry }}</td>
+              <td>{{ tableList.preference }}</td>
+              <td>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="primary"
+                  value="Edit"
+                  size="sm"
+                  mat-button
+                  >Edit
+                </Button>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="danger"
+                  value="Delete"
+                  size="sm"
+                  mat-button
+                  style="color: white"
+                  (click)="deleteJobPreference(tableList)"
+                  >Delete
+                </Button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

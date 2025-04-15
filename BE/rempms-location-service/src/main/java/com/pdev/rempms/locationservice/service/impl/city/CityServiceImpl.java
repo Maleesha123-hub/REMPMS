@@ -1,6 +1,6 @@
 package com.pdev.rempms.locationservice.service.impl.city;
 
-import com.pdev.rempms.locationservice.constants.enums.CommonStatus;
+import com.pdev.rempms.locationservice.enums.CommonStatus;
 import com.pdev.rempms.locationservice.constants.validation.CityValidationMessage;
 import com.pdev.rempms.locationservice.constants.validation.CommonValidationMessage;
 import com.pdev.rempms.locationservice.dto.city.CityDTO;
@@ -13,6 +13,7 @@ import com.pdev.rempms.locationservice.repository.DistrictRepository;
 import com.pdev.rempms.locationservice.repository.ProvinceRepository;
 import com.pdev.rempms.locationservice.service.city.CityService;
 import com.pdev.rempms.locationservice.util.CommonResponse;
+import com.pdev.rempms.locationservice.util.CommonUtil;
 import com.pdev.rempms.locationservice.util.CommonValidation;
 import com.pdev.rempms.locationservice.util.DateTimeUtil;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +35,7 @@ import java.util.Optional;
 @Service
 public class CityServiceImpl implements CityService {
 
+    private final CommonUtil commonUtil;
     private final CityMapper cityMapper;
     private final CityRepository cityRepository;
     private final DistrictRepository districtRepository;
@@ -69,12 +72,10 @@ public class CityServiceImpl implements CityService {
             city = cityRepository.findById(Long.valueOf(dto.getIdCity())).get();
             city = cityMapper.toEntity(city, dto, country, province, district);
             city.getAuditData().setUpdatedOn(DateTimeUtil.getSriLankaTime());
-            city.getAuditData().setUpdatedBy(Long.valueOf(1)); //need further development for authorization
+            city.getAuditData().setUpdatedBy(commonUtil.getUsername()); //need further development for authorization
         } else {
             log.info("CityServiceImpl -> saveUpdateCity() => Save new city!");
-            AuditData auditData = new AuditData();
-            auditData.setCreatedOn(DateTimeUtil.getSriLankaTime());
-            auditData.setCreatedBy(Long.valueOf(1)); //need further development for authorization
+            AuditData auditData = new AuditData(LocalDateTime.now(), commonUtil.getUsername());
             city.setAuditData(auditData);
             city = cityMapper.toEntity(city, dto, country, province, district);
         }
@@ -186,7 +187,7 @@ public class CityServiceImpl implements CityService {
             log.info("CityServiceImpl -> deleteCityById() => City found.");
             city.get().setCommonStatus(CommonStatus.DELETED.getValue());
             city.get().getAuditData().setUpdatedOn(DateTimeUtil.getSriLankaTime());
-            city.get().getAuditData().setUpdatedBy(Long.valueOf(1)); //need further development for authorization
+            city.get().getAuditData().setUpdatedBy(commonUtil.getUsername()); //need further development for authorization
             cityRepository.save(city.get());
             commonResponse.setMessage(CityValidationMessage.CITY_DELETED_SUCCESS);
             commonResponse.setStatus(HttpStatus.OK);

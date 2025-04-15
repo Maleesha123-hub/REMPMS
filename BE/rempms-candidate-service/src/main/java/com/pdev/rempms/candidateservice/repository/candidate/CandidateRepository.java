@@ -21,4 +21,6 @@ public interface CandidateRepository extends JpaRepository<Candidate, Integer>, 
      */
     Optional<Candidate> findTopByOrderByIdDesc();
 
+    Optional<Candidate> findByUserAccount(Integer userId);
+
 }

@@ -10,7 +10,7 @@ export class JobVacancyEffects {
   constructor(
     private actions$: Actions,
     private jobVacancyService: JobVacancyService,
-    private documentService: DocumentService
+    private documentService: DocumentService,
   ) {}
 
   saveOrModify$ = createEffect(() =>
@@ -23,14 +23,14 @@ export class JobVacancyEffects {
             map((commonResponse) =>
               JobVacancyActions.saveOrModifyJobVacancySuccess({
                 commonResponse,
-              })
+              }),
             ),
             catchError((error) =>
-              of(JobVacancyActions.saveOrModifyJobVacancyFailure({ error }))
-            )
-          )
-      )
-    )
+              of(JobVacancyActions.saveOrModifyJobVacancyFailure({ error })),
+            ),
+          ),
+      ),
+    ),
   );
 
   getAll$ = createEffect(() =>
@@ -41,13 +41,13 @@ export class JobVacancyEffects {
           map((commonResponse) =>
             JobVacancyActions.loadJobVacanciesSuccess({
               commonResponse,
-            })
+            }),
           ),
           catchError((error) =>
-            of(JobVacancyActions.loadJobVacanciesFailure({ error }))
-          )
-        )
-      )
-    )
+            of(JobVacancyActions.loadJobVacanciesFailure({ error })),
+          ),
+        ),
+      ),
+    ),
   );
 }

@@ -1,89 +1,181 @@
 <c-row ngPreserveWhitespaces>
-
   <c-col xs="12">
     <c-card class="mb-3">
       <c-card-header>
         <strong>Language Proficiency</strong>
       </c-card-header>
       <c-card-body>
-        <form cForm>
+        <form [formGroup]="languageProficiencyForm" cForm>
           <div class="row">
-
-            <input id="id_job_category" type="hidden">
+            <input
+              id="idLanguageProficiency"
+              type="hidden"
+              formControlName="idLanguageProficiency"
+            />
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Language</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_catsuss">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  id="idLanguage"
+                  formControlName="idLanguage"
+                >
                   <option value="-1">Select a language</option>
+                  <option
+                    *ngFor="let language of languages"
+                    [value]="language.idLanguage"
+                  >
+                    {{ language.languageName }}
+                  </option>
                 </select>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                languageProficiencyForm.get('idLanguage').errors?.required &&
+                languageProficiencyForm.get('idLanguage').touched
+              "
+            >
+              <p class="form-validation">Language is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Spoken</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_caswuss">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  id="spoken"
+                  formControlName="spoken"
+                >
                   <option value="-1">Select spoken</option>
+                  <option value="EXCELLENT">Excellent</option>
+                  <option value="GOOD">Good</option>
+                  <option value="AVERAGE">Average</option>
+                  <option value="POOR">Poor</option>
                 </select>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                languageProficiencyForm.get('spoken').errors?.required &&
+                languageProficiencyForm.get('spoken').touched
+              "
+            >
+              <p class="form-validation">Spoken is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Reading</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_cwss">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  id="reading"
+                  formControlName="reading"
+                >
                   <option value="-1">Select reading</option>
+                  <option value="EXCELLENT">Excellent</option>
+                  <option value="GOOD">Good</option>
+                  <option value="AVERAGE">Average</option>
+                  <option value="POOR">Poor</option>
                 </select>
               </div>
+            </div>
+
+            <div
+              *ngIf="
+                languageProficiencyForm.get('reading').errors?.required &&
+                languageProficiencyForm.get('reading').touched
+              "
+            >
+              <p class="form-validation">Reading is required.</p>
             </div>
 
             <div class="col-md-3">
               <div class="mb-2">
                 <label cLabel>Writing</label>
-                <select aria-label="Small select example" cSelect class="mb-3"
-                        id="job_cateswuss">
+                <select
+                  aria-label="Small select example"
+                  cSelect
+                  class="mb-3"
+                  id="writing"
+                  formControlName="writing"
+                >
                   <option value="-1">Select writing</option>
+                  <option value="EXCELLENT">Excellent</option>
+                  <option value="GOOD">Good</option>
+                  <option value="AVERAGE">Average</option>
+                  <option value="POOR">Poor</option>
                 </select>
               </div>
             </div>
 
-            <div class="col-md-3">
-              <div class="mb-2">
-                <input cButton class="btn-secondary" type="button" value="Add To List"
-                       style="text-align: center; color:white; height: 30px; line-height: 1px;"/>
-              </div>
+            <div
+              *ngIf="
+                languageProficiencyForm.get('writing').errors?.required &&
+                languageProficiencyForm.get('writing').touched
+              "
+            >
+              <p class="form-validation">Writing is required.</p>
             </div>
 
+            <div class="col-md-3">
+              <div class="mb-2">
+                <input
+                  cButton
+                  class="btn-secondary"
+                  type="button"
+                  value="Add To List"
+                  style="
+                    text-align: center;
+                    color: white;
+                    height: 30px;
+                    line-height: 1px;
+                  "
+                  (click)="tempListTable()"
+                />
+              </div>
+            </div>
           </div>
         </form>
 
         <c-card-body>
+          <ng-container *ngIf="emptyListErrorVisible">
+            <div class="error-message" style="color: red">
+              The language proficiency cart table is empty.
+            </div>
+          </ng-container>
+
           <table [striped]="true" cTable>
             <thead>
-            <tr>
-              <th scope="col">Language</th>
-              <th scope="col">Spoken</th>
-              <th scope="col">Reading</th>
-              <th scope="col">Writing</th>
-            </tr>
+              <tr>
+                <th scope="col">Language</th>
+                <th scope="col">Spoken</th>
+                <th scope="col">Reading</th>
+                <th scope="col">Writing</th>
+                <th scope="col">Action</th>
+              </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td>ddd</td>
-              <td><a href="#">remove</a></td>
-            </tr>
+              <tr *ngFor="let tempList of tempList; let i = index">
+                <td>{{ tempList.languageName }}</td>
+                <td>{{ tempList.spoken }}</td>
+                <td>{{ tempList.reading }}</td>
+                <td>{{ tempList.writing }}</td>
+                <td><a (click)="removeTempLangProfItem(i)">remove</a></td>
+              </tr>
             </tbody>
           </table>
         </c-card-body>
-
       </c-card-body>
-
     </c-card>
   </c-col>
 
@@ -91,9 +183,43 @@
     <c-card class="mb-4">
       <c-card-body>
         <div class="d-flex justify-content-end">
-          <input type="button" class="btn btn-outline-dark btn-sm" value="<<Back" (click)="redirectToBack()"/> &nbsp;
-          <input cButton class="btn-sm" color="primary" type="button" value="Save All"/> &nbsp;
-          <input type="button" class="btn btn-outline-dark btn-sm" value="Next>>" (click)="redirectToNext()"/>
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="<<Back"
+            (click)="redirectToBack()"
+          />
+          &nbsp;
+
+          <Button
+            cButton
+            class="me-1"
+            color="success"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showSaveButton"
+            (click)="createOrModifyCommonProfileDraft()"
+            >&nbsp;Save&nbsp;
+          </Button>
+
+          <Button
+            cButton
+            class="me-1"
+            color="info"
+            size="sm"
+            mat-button
+            style="color: white"
+            [hidden]="!showUpdateButton"
+            >Update </Button
+          >&nbsp;
+
+          <input
+            type="button"
+            class="btn btn-outline-dark btn-sm"
+            value="Next>>"
+            (click)="redirectToNext()"
+          />
         </div>
       </c-card-body>
     </c-card>
@@ -104,21 +230,46 @@
       <c-card-body>
         <table [striped]="true" cTable>
           <thead>
-          <tr>
-            <th scope="col">Language</th>
-            <th scope="col">Spoken</th>
-            <th scope="col">Reading</th>
-            <th scope="col">Writing</th>
-          </tr>
+            <tr>
+              <th scope="col">Language</th>
+              <th scope="col">Spoken</th>
+              <th scope="col">Reading</th>
+              <th scope="col">Writing</th>
+              <th scope="col">Action</th>
+            </tr>
           </thead>
           <tbody>
-
+            <tr *ngFor="let tableList of tableList; let i = index">
+              <td>{{ tableList.languageName }}</td>
+              <td>{{ tableList.spoken }}</td>
+              <td>{{ tableList.reading }}</td>
+              <td>{{ tableList.writing }}</td>
+              <td>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="primary"
+                  value="Edit"
+                  size="sm"
+                  mat-button
+                  >Edit
+                </Button>
+                <Button
+                  cButton
+                  class="me-1"
+                  color="danger"
+                  value="Delete"
+                  size="sm"
+                  mat-button
+                  style="color: white"
+                  (click)="deleteLanguageProficiency(tableList)"
+                  >Delete
+                </Button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </c-card-body>
     </c-card>
   </c-col>
-
 </c-row>
-
-

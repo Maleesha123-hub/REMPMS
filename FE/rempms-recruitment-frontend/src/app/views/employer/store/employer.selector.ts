@@ -20,20 +20,20 @@ export const selectEmployerState =
  */
 export const selectEmployersData = createSelector(
   selectEmployerState,
-  (state: EmployerState) => state.employersResponse
+  (state: EmployerState) => state.employersResponse,
 );
 
 export const selectEmployerSavedOrModifiedResponseData = createSelector(
   selectEmployerState,
-  (state: EmployerState) => state.employerSavedOrModifiedResponse
+  (state: EmployerState) => state.employerSavedOrModifiedResponse,
 );
 
 export const selectEmployerDeletedResponseData = createSelector(
   selectEmployerState,
-  (state: EmployerState) => state.employerDeletedResponse
+  (state: EmployerState) => state.employerDeletedResponse,
 );
 
 export const selectEmployerErrorResponseData = createSelector(
   selectEmployerState,
-  (state: EmployerState) => state.error
+  (state: EmployerState) => state.error,
 );

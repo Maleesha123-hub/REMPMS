@@ -1,16 +1,15 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { RecievedCvsState } from "./recieved-cvs.reducer";
-
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { RecievedCvsState } from './recieved-cvs.reducer';
 
 export const selectRecievedCvsState =
-    createFeatureSelector<RecievedCvsState>('recievedCvsState');
+  createFeatureSelector<RecievedCvsState>('recievedCvsState');
 
 export const selectRecievedCvsDetails = createSelector(
-    selectRecievedCvsState,
-    (state: RecievedCvsState) => state.recievedCvsResponse
+  selectRecievedCvsState,
+  (state: RecievedCvsState) => state.recievedCvsResponse,
 );
 
 export const selectRecievedCvsErrorResponse = createSelector(
-    selectRecievedCvsState,
-    (state: RecievedCvsState) => state.error
+  selectRecievedCvsState,
+  (state: RecievedCvsState) => state.error,
 );
