@@ -1,31 +1,7 @@
-server:
-  port: 8081
-
-profiles:
-  active: prod
-
 spring:
-  application:
-    name: rempms-api-gateway-service
-  main:
-    web-application-type: reactive
   cloud:
-    consul:
-      discovery:
-        register: true
-        prefer-ip-address: true
     gateway:
       routes:
-        - id: iam-service
-          uri: lb://iam-service  # Replace with actual service port
-          predicates:
-            - Path=/api/iam/**
-
-        - id: pdev-keycloak-service
-          uri: lb://pdev-keycloak-service  # Replace with actual service port
-          predicates:
-            - Path=/api/kcs/**
-
         - id: rempms-location-service
           uri: lb://rempms-location-service  # Replace with actual service port
           predicates:

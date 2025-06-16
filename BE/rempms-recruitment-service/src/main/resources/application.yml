@@ -19,7 +19,7 @@ spring:
         enabled: true         # Enable okhttp for OpenFeign clients
 
   profiles:
-    active: dev
+    active: prod
   application:
     name: rempms-recruitment-service
 
