@@ -1,84 +1,51 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCardGroup,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
+import styles from './login.module.css'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate() // Initialize useNavigate
+
+  const handleLogin = (e) => {
+    e.preventDefault() // Prevent the default form submission
+    navigate('/dashboard')
+  }
   return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={8}>
-            <CCardGroup>
-              <CCard className="p-4">
-                <CCardBody>
-                  <CForm>
-                    <h1>Login</h1>
-                    <p className="text-body-secondary">Sign In to your account</p>
-                    <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
-                    </CInputGroup>
-                    <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
-                      />
-                    </CInputGroup>
-                    <CRow>
-                      <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
-                          Login
-                        </CButton>
-                      </CCol>
-                      <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
-                          Forgot password?
-                        </CButton>
-                      </CCol>
-                    </CRow>
-                  </CForm>
-                </CCardBody>
-              </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
-                    <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link>
-                  </div>
-                </CCardBody>
-              </CCard>
-            </CCardGroup>
-          </CCol>
-        </CRow>
-      </CContainer>
+    <div className={styles.container}>
+      <div className="row">
+        <div className="col-lg-3 col-md-2"></div>
+        <div className={`col-lg-6 col-md-8 ${styles['login-box']}`}>
+          <div className={`col-lg-12 ${styles['login-key']}`}>
+            <i className="fa fa-key" aria-hidden="true"></i>
+          </div>
+          <div className={`col-lg-12 ${styles['login-title']}`}>PIXEL IAM PANEL</div>
+
+          <div className={`col-lg-12 ${styles['login-form']}`}>
+            <div className={`col-lg-12 ${styles['login-form']}`}>
+              <form onSubmit={handleLogin}>
+                <div className={styles['form-group']}>
+                  <label className={styles['form-control-label']}>USERNAME</label>
+                  <input type="text" className="form-control" />
+                </div>
+                <div className={styles['form-group']}>
+                  <label className={styles['form-control-label']}>PASSWORD</label>
+                  <input type="password" className="form-control" />
+                </div>
+
+                <div
+                  className={`col-lg-12 ${styles['loginbttm']} text-end`}
+                  style={{ paddingBottom: '30px' }}
+                >
+                  <button type="submit" className={`btn ${styles['btn-outline-primary']}`}>
+                    LOGIN
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className={`col-lg-3 col-md-2`}></div>
+        </div>
+      </div>
     </div>
   )
 }

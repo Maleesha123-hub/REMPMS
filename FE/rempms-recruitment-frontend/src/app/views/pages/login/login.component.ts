@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
-  ) {}
+  ) { }
 
   private unsubscribe$ = new Subject<void>();
 
@@ -118,7 +118,7 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           Swal.fire({
             title: 'Error!',
-            text: 'Network Error.',
+            text: error.error.message,
             icon: 'error',
             confirmButtonText: 'OK',
           });
@@ -139,9 +139,8 @@ export class LoginComponent implements OnInit {
 
           this.loading = false;
 
-          if (
-            userDetails.userHasApplicationScopeHasUserRole.userRole.role ===
-            UserRoles.RECRUITMENT_ADMIN
+          if (userDetails.userHasApplicationScopeHasUserRole.userRole.role !== null &&
+            userDetails.userHasApplicationScopeHasUserRole.userRole.role !== ''
           ) {
             this.authService.setAuthenticationStatus(AuthStatus.YES);
             this.router.navigate(['/dashboard']);

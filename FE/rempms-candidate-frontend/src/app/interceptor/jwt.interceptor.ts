@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 export class JwtInterceptor implements HttpInterceptor {
   private jwtHelperService = new JwtHelperService();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -32,11 +32,14 @@ export class JwtInterceptor implements HttpInterceptor {
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     const token = sessionStorage.getItem('accessToken');
-    const authRequest = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    let authRequest = request;
+    if (token != null && token != '') {
+      authRequest = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
 
     return this.handleAccess(authRequest, next);
   }
@@ -50,8 +53,8 @@ export class JwtInterceptor implements HttpInterceptor {
       const timeDifferenceMinutes =
         tokenExpiredTime !== null
           ? Math.floor(
-              (tokenExpiredTime.getTime() - dateNow.getTime()) / (1000 * 60),
-            )
+            (tokenExpiredTime.getTime() - dateNow.getTime()) / (1000 * 60),
+          )
           : 0;
 
       if (timeDifferenceMinutes <= 5) {

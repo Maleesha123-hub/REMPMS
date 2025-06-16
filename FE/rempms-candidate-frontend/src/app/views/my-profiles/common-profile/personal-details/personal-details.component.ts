@@ -64,7 +64,7 @@ export class PersonalDetailsComponent implements OnInit {
     private languageService: LanguageService,
     private preferredCommunicationMethodService: PreferredCommunicationMethodService,
     private store: Store<{ commonProfileState: CommonProfileState }>,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const userDetailsString = sessionStorage.getItem('userDetails') ?? '{}'; // Default to an empty JSON object
@@ -429,26 +429,6 @@ export class PersonalDetailsComponent implements OnInit {
           }
         });
 
-      //   .createOrModifyCommonProfileDraft(commonProfileDraft, this.files)
-      //   .subscribe(
-      //     (data) => {
-      //       if (data.status == 'OK') {
-      //         Swal.fire('Draft saved success.!', data.message, 'success');
-
-      //         this.resetCommonProfileForm();
-
-      //         // Use the Router service to navigate to the 'higher-education' route
-      //         this.router.navigate([
-      //           '/common-profile/professional-experiences',
-      //         ]);
-      //       } else {
-      //         Swal.fire('Cancelled', data.message, 'error');
-      //       }
-      //     },
-      //     (error) => {
-      //       console.log('createOrModifyCommonProfileDraft() >> ' + error.get);
-      //     }
-      //   );
     } else {
       this.personalDetailsForm.markAllAsTouched();
     }

@@ -22,7 +22,7 @@ RUN npx ngcc --properties es2024 browser module main --first-only --create-ivy-e
 COPY . .
 
 # Generate the build of the applciation
-RUN npm run build
+RUN npm run builddocker 
 
 # Use official nginx image as the base image
 FROM nginx:latest

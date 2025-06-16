@@ -9,7 +9,7 @@ import { UserRegisterDTO } from '../../../model/user/register/UserRegisterDTO';
   providedIn: 'root',
 })
 export class UserService {
-  private userApi = `${environment.loginUrl}` + '/v1/user';
+  private userApi = `${environment.loginUrl}` + '/user/v1';
 
   constructor(private http: HttpClient) {}
 

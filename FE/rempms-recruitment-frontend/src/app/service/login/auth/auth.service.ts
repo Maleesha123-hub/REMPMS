@@ -9,7 +9,7 @@ import { UserRequestDTO } from '../../../model/user/UserRequestDTO';
   providedIn: 'root',
 })
 export class AuthService {
-  private authApi = `${environment.loginUrl}` + '/v1/auth/user';
+  private authApi = `${environment.loginUrl}` + '/auth/user/v1';
 
   constructor(private http: HttpClient) {}
 

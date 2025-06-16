@@ -1,4 +1,5 @@
 import React from 'react'
+import { Navigate } from 'react-router-dom'
 import Component from './components/application-settings/component/Component'
 import ComponentElement from './components/application-settings/component-element/ComponentElement'
 import AuthParty from './components/permission/auth-party/AuthParty'
@@ -8,6 +9,7 @@ import UserRole from './components/user-role/UserRole'
 import AccessControl from './components/application-settings/access-control/AccessControl'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+const Login = React.lazy(() => import('./views/pages/login/Login'))
 
 const ApplicationScope = React.lazy(
   () => import('./components/application-settings/application-scope/ApplicationScope'),
@@ -16,7 +18,8 @@ const Module = React.lazy(() => import('./components/application-settings/module
 const User = React.lazy(() => import('./components/user/User'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, element: () => <Navigate to="/login" replace /> },
+  { path: '/login', name: 'Login', element: Login },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/main/user', name: 'Users', element: User },
   { path: '/application/scope', name: 'Application Scope', element: ApplicationScope },
